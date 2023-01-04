@@ -1,8 +1,10 @@
 package src.piece;
 
 import src.board.Board;
+import src.board.BoardChanges;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Queen implements Piece {
     public char pieceColor;
@@ -15,21 +17,31 @@ public class Queen implements Piece {
         this.pieceColor = pieceColor;
         this.PieceImage = "PieceImages/" + pieceColor + "Queen.png";
         this.locationNumber = locationNumber;// if taken maybe -1
+        if(pieceColor == 'W'){
+            Board.whitePieces.add(this);
+        }else{
+            Board.blackPieces.add(this);
+        }
     }
 
     @Override
-    public void move(Board board) {
-
+    public void move(Board board, int newLocation) {
+        Piece pieceAtDesiredLocation = Board.board[newLocation];
+        pieceAtDesiredLocation.erase();
+        Board.board[newLocation] = this;
+        Board.board[locationNumber] = new EmptySpace(locationNumber);
+        locationNumber = newLocation;
     }
 
     @Override
     public void erase() {
-
+        locationNumber = (pieceColor == 'W') ? -1: -2;
+        BoardChanges.erasedPieces.add(this);
     }
 
     @Override
-    public ArrayList<Integer> generatePossibleMoves(Board board) {
-        ArrayList<Integer> possibleDestinations = new ArrayList<>();
+    public HashSet<Integer> generatePossibleMoves(Board board) {
+        HashSet<Integer> possibleDestinations = new HashSet<>();
         possibleDestinations.addAll(optionsToMoveN(board));
         possibleDestinations.addAll(optionsToMoveS(board));
         possibleDestinations.addAll(optionsToMoveW(board));
@@ -40,8 +52,8 @@ public class Queen implements Piece {
         possibleDestinations.addAll(optionsToMoveSE(board));
         return possibleDestinations;
     }
-    public ArrayList<Integer> optionsToMoveN(Board board){
-        ArrayList<Integer> possibleDestinations = new ArrayList<>();
+    public HashSet<Integer> optionsToMoveN(Board board){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
         Piece adjacentPieceN = board.getAdjacentPieceN(locationNumber);
         if(adjacentPieceN == null){
             return possibleDestinations;
@@ -58,8 +70,8 @@ public class Queen implements Piece {
         }
         return possibleDestinations;
     }
-    public ArrayList<Integer> optionsToMoveS(Board board){
-        ArrayList<Integer> possibleDestinations = new ArrayList<>();
+    public HashSet<Integer> optionsToMoveS(Board board){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
         Piece adjacentPieceS = board.getAdjacentPieceS(locationNumber);
         if(adjacentPieceS == null){
             return possibleDestinations;
@@ -76,8 +88,8 @@ public class Queen implements Piece {
         }
         return possibleDestinations;
     }
-    public ArrayList<Integer> optionsToMoveW(Board board){
-        ArrayList<Integer> possibleDestinations = new ArrayList<>();
+    public HashSet<Integer> optionsToMoveW(Board board){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
         Piece adjacentPieceW = board.getAdjacentPieceW(locationNumber);
         if(adjacentPieceW == null){
             return possibleDestinations;
@@ -95,8 +107,8 @@ public class Queen implements Piece {
         }
         return possibleDestinations;
     }
-    public ArrayList<Integer> optionsToMoveE(Board board){
-        ArrayList<Integer> possibleDestinations = new ArrayList<>();
+    public HashSet<Integer> optionsToMoveE(Board board){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
         Piece adjacentPieceE = board.getAdjacentPieceE(locationNumber);
         if(adjacentPieceE == null){
             return possibleDestinations;
@@ -114,8 +126,8 @@ public class Queen implements Piece {
         }
         return possibleDestinations;
     }
-    public ArrayList<Integer> optionsToMoveNW(Board board){
-        ArrayList<Integer> possibleDestinations = new ArrayList<>();
+    public HashSet<Integer> optionsToMoveNW(Board board){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
         Piece adjacentPieceNW = board.getAdjacentPieceNW(locationNumber);
         if(adjacentPieceNW == null){
             return possibleDestinations;
@@ -133,8 +145,8 @@ public class Queen implements Piece {
         }
         return possibleDestinations;
     }
-    public ArrayList<Integer> optionsToMoveNE(Board board){
-        ArrayList<Integer> possibleDestinations = new ArrayList<>();
+    public HashSet<Integer> optionsToMoveNE(Board board){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
         Piece adjacentPieceNE = board.getAdjacentPieceNE(locationNumber);
         if(adjacentPieceNE == null){
             return possibleDestinations;
@@ -152,8 +164,8 @@ public class Queen implements Piece {
         }
         return possibleDestinations;
     }
-    public ArrayList<Integer> optionsToMoveSW(Board board){
-        ArrayList<Integer> possibleDestinations = new ArrayList<>();
+    public HashSet<Integer> optionsToMoveSW(Board board){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
         Piece adjacentPieceSW = board.getAdjacentPieceSW(locationNumber);
         if(adjacentPieceSW == null){
             return possibleDestinations;
@@ -171,8 +183,8 @@ public class Queen implements Piece {
         }
         return possibleDestinations;
     }
-    public ArrayList<Integer> optionsToMoveSE(Board board){
-        ArrayList<Integer> possibleDestinations = new ArrayList<>();
+    public HashSet<Integer> optionsToMoveSE(Board board){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
         Piece adjacentPieceSE = board.getAdjacentPieceSE(locationNumber);
         if(adjacentPieceSE == null){
             return possibleDestinations;

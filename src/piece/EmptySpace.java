@@ -3,6 +3,7 @@ package src.piece;
 import src.board.Board;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class EmptySpace implements Piece{
 
@@ -22,7 +23,7 @@ public class EmptySpace implements Piece{
 
 
     @Override
-    public void move(Board board) {
+    public void move(Board board, int location) {
 
     }
 
@@ -32,7 +33,7 @@ public class EmptySpace implements Piece{
     }
 
     @Override
-    public ArrayList<Integer> generatePossibleMoves(Board board) {
+    public HashSet<Integer> generatePossibleMoves(Board board) {
         return null;
     }
     @Override

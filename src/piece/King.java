@@ -4,11 +4,12 @@ import src.board.Board;
 import src.piece.Piece;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class King implements Piece{
 
     public char pieceColor;
-
+    public static boolean isMoved;
     public String PieceImage;
     public char pieceAbbreviation = 'K';
     public int pieceValue = 1000;
@@ -17,9 +18,14 @@ public class King implements Piece{
         this.pieceColor = pieceColor;
         this.PieceImage = "PieceImages/" + pieceColor + "King.png";
         this.locationNumber = locationNumber;
+        if(pieceColor == 'W'){
+            Board.whitePieces.add(this);
+        }else{
+            Board.blackPieces.add(this);
+        }
     }
     @Override
-    public void move(Board board) {
+    public void move(Board board, int location) {
 
     }
 
@@ -29,7 +35,7 @@ public class King implements Piece{
     }
 
     @Override
-    public ArrayList<Integer> generatePossibleMoves(Board board) {
+    public HashSet<Integer> generatePossibleMoves(Board board) {
         return null;
     }
     @Override

@@ -5,6 +5,7 @@ import src.piece.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Board {
     public static int Size = 8;
@@ -12,6 +13,9 @@ public class Board {
     public static Piece[] board = new Piece[64];
 
     public static Piece selectedPiece = null;
+
+    public static HashSet<Piece> whitePieces = new HashSet<>();
+    public static HashSet<Piece> blackPieces = new HashSet<>();
 
     public Board(int size) {
         Size = size;
@@ -77,7 +81,7 @@ public class Board {
      * Activates when piece is clicked. Highlights the square underneath it and simulates possible moves.
      * @return the clicked piece
      */
-    public void clickOnPiece(){
+    public Piece clickOnPiece(){
         //if a piece able to move is clicked
         selectedPiece = Mouse.scanMousePosition(this);
         if(!selectedPiece.getClass().equals(EmptySpace.class)){
@@ -88,20 +92,19 @@ public class Board {
             int selectedPieceRank = getPieceRank(selectedPiece.locationNumber());
             BS[selectedPieceFile][selectedPieceRank] = new BoardSquare(selectedPiece, selectedPieceSQColor, selectedPiece.pieceImage());
             //changes the color of the possible squares to CYAN.
-            ArrayList<Integer> movesToPutShadowOn = selectedPiece.generatePossibleMoves(this);
-            if(!movesToPutShadowOn.isEmpty()) {
-                for (int i = 0; i <= movesToPutShadowOn.size()-1; i++) {
+            HashSet<Integer> movesToPutShadowOn = selectedPiece.generatePossibleMoves(this);
+            if(movesToPutShadowOn != null) {
+                for (int i: movesToPutShadowOn) {
                     Color squareColor = Color.CYAN;
-                    int file = getPieceFile(movesToPutShadowOn.get(i));
-                    int rank = getPieceRank(movesToPutShadowOn.get(i));
-                    Piece pieceAtSquare = getPieceAtSquare(movesToPutShadowOn.get(i));
+                    int file = getPieceFile(i);
+                    int rank = getPieceRank(i);
+                    Piece pieceAtSquare = getPieceAtSquare(i);
                     BS[file][rank] = new BoardSquare(pieceAtSquare, squareColor, pieceAtSquare.pieceImage());
                 }
             }
-            BoardRender render = new BoardRender();
-            render.initialize(ProgramRunner.WIDTH, ProgramRunner.HEIGHT, 4, 4);
-            render.renderFrame(BS);
+            ProgramRunner.visualizeBoardBS(BS);
         }
+        return selectedPiece;
     }
 
     /**
@@ -112,7 +115,16 @@ public class Board {
      *
      */
     public void confirmMove(Piece selectedPiece){
-
+        Piece selectedDestinationPiece = Mouse.scanMousePosition(this);
+        StdDraw.pause(1000);
+        HashSet<Integer> allowedDestinations = selectedPiece.generatePossibleMoves(this);
+        if(allowedDestinations.contains(selectedDestinationPiece.locationNumber())){
+            BoardChanges newChange = new BoardChanges(selectedPiece, selectedPiece.locationNumber(), selectedDestinationPiece.locationNumber(), selectedDestinationPiece);
+            BoardChanges.lastEntry = newChange;
+            selectedPiece.move(this, selectedDestinationPiece.locationNumber());
+        } else if (selectedDestinationPiece.pieceColor() == selectedPiece.pieceColor()) {
+            clickOnPiece();
+        }
     }
 
     public String toString() {
@@ -208,5 +220,8 @@ public class Board {
             return board[adjacentSquareNum];
         }
         return null;
+    }
+    public static char getOppositeColor(Piece selectedPiece){
+        return (selectedPiece.pieceColor() == 'W') ? 'B': 'W';
     }
 }

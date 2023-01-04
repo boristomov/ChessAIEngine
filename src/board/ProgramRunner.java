@@ -1,7 +1,7 @@
 package src.board;
 
 import edu.princeton.cs.algs4.StdDraw;
-import src.board.*;
+import src.piece.*;
 
 public class ProgramRunner {
     public static int WIDTH = 64;
@@ -12,6 +12,12 @@ public class ProgramRunner {
         render.initialize(WIDTH, HEIGHT, 4, 4);
         render.renderFrame(board);
         return board;
+    }
+    public static BoardSquare[][] visualizeBoardBS(BoardSquare[][] BS) {
+        BoardRender render = new BoardRender();
+        render.initialize(WIDTH, HEIGHT, 4, 4);
+        render.renderFrame(BS);
+        return BS;
     }
 
     public static void startGame() {
@@ -48,8 +54,11 @@ public class ProgramRunner {
     public static void startTestGame(Board board) {
         while(true){
             if(StdDraw.isMousePressed()){
-                board.clickOnPiece();
-                break;
+                Piece selectedPiece = board.clickOnPiece();
+                StdDraw.pause(1000);
+                if(StdDraw.isMousePressed()) {
+                    board.confirmMove(selectedPiece);
+                }
             }
         }
     }

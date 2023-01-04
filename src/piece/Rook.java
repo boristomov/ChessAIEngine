@@ -4,6 +4,7 @@ import src.board.Board;
 import src.piece.Piece;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Rook implements Piece{
     public char pieceColor;
@@ -15,9 +16,14 @@ public class Rook implements Piece{
         this.pieceColor = pieceColor;
         this.PieceImage = "PieceImages/" + pieceColor + "Rook.png";
         this.locationNumber = locationNumber;
+        if(pieceColor == 'W'){
+            Board.whitePieces.add(this);
+        }else{
+            Board.blackPieces.add(this);
+        }
     }
     @Override
-    public void move(Board board) {
+    public void move(Board board, int location) {
 
     }
 
@@ -27,7 +33,7 @@ public class Rook implements Piece{
     }
 
     @Override
-    public ArrayList<Integer> generatePossibleMoves(Board board) {
+    public HashSet<Integer> generatePossibleMoves(Board board) {
         return null;
     }
     @Override
