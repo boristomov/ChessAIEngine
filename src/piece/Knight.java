@@ -34,7 +34,7 @@ public class Knight implements Piece{
     }
 
     @Override
-    public HashSet<Integer> generatePossibleMoves(Board board) {
+    public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves) {
         HashSet<Integer> possibleDestinations = new HashSet<>();
         optionsToMoveNW1(board, possibleDestinations);
         optionsToMoveNW2(board, possibleDestinations);
@@ -44,7 +44,13 @@ public class Knight implements Piece{
         optionsToMoveSW2(board, possibleDestinations);
         optionsToMoveSE1(board, possibleDestinations);
         optionsToMoveSE2(board, possibleDestinations);
-
+        if(!allowedMoves.isEmpty()) {
+            for (int i : possibleDestinations) {
+                if (!allowedMoves.contains(i)) {
+                    possibleDestinations.remove(i);
+                }
+            }
+        }
         return possibleDestinations;
     }
     public void optionsToMoveNW1(Board board, HashSet<Integer> possibleDestinations){

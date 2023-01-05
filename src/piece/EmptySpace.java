@@ -33,8 +33,9 @@ public class EmptySpace implements Piece{
     }
 
     @Override
-    public HashSet<Integer> generatePossibleMoves(Board board) {
-        return null;
+    public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves) {
+        HashSet<Integer> possibleDestinations = new HashSet<>();
+        return possibleDestinations;
     }
     @Override
     public String pieceImage() {
@@ -53,4 +54,5 @@ public class EmptySpace implements Piece{
     public char pieceColor() {
         return pieceColor;
     }
+
 }

@@ -70,7 +70,7 @@ public class Pawn implements Piece{
     }
 
     @Override
-    public HashSet<Integer> generatePossibleMoves(Board board) {
+    public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves) {
         HashSet<Integer> possibleDestinations = new HashSet<>();
         optionsToMoveU1(board, possibleDestinations);
         optionsToMoveU2(board, possibleDestinations);
@@ -80,6 +80,13 @@ public class Pawn implements Piece{
             possibleDestinations.addAll(enPassantLocations(board));
         } else if (pieceColor == 'B' && Board.getPieceRank(locationNumber) == 3) {
             possibleDestinations.addAll(enPassantLocations(board));
+        }
+        if(!allowedMoves.isEmpty()) {
+            for (int i : possibleDestinations) {
+                if (!allowedMoves.contains(i)) {
+                    possibleDestinations.remove(i);
+                }
+            }
         }
         return possibleDestinations;
     }

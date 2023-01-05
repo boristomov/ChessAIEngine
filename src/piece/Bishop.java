@@ -34,12 +34,19 @@ public class Bishop implements Piece {
     }
 
     @Override
-    public HashSet<Integer> generatePossibleMoves(Board board) {
+    public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves) {
         HashSet<Integer> possibleDestinations = new HashSet<>();
         possibleDestinations.addAll(optionsToMoveNW(board));
         possibleDestinations.addAll(optionsToMoveNE(board));
         possibleDestinations.addAll(optionsToMoveSW(board));
         possibleDestinations.addAll(optionsToMoveSE(board));
+        if(!allowedMoves.isEmpty()) {
+            for (int i : possibleDestinations) {
+                if (!allowedMoves.contains(i)) {
+                    possibleDestinations.remove(i);
+                }
+            }
+        }
         return possibleDestinations;
     }
     public HashSet<Integer> optionsToMoveNW(Board board){
@@ -135,4 +142,5 @@ public class Bishop implements Piece {
     public char pieceColor() {
         return pieceColor;
     }
+
 }

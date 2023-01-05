@@ -3,6 +3,9 @@ package src.board;
 import edu.princeton.cs.algs4.StdDraw;
 import src.piece.*;
 
+import javax.swing.*;
+import java.awt.event.MouseEvent;
+
 public class ProgramRunner {
     public static int WIDTH = 64;
     public static int HEIGHT = 64;
@@ -52,13 +55,14 @@ public class ProgramRunner {
     }
 
     public static void startTestGame(Board board) {
-        while(true){
-            if(StdDraw.isMousePressed()){
+        while(true) {
+            if (StdDraw.isMousePressed()) {
                 Piece selectedPiece = board.clickOnPiece();
-                StdDraw.pause(1000);
-                if(StdDraw.isMousePressed()) {
+                StdDraw.pause(2000);
+                if (StdDraw.isMousePressed()) {
                     board.confirmMove(selectedPiece);
                 }
+                StdDraw.pause(1000);
             }
         }
     }

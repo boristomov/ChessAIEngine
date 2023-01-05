@@ -15,6 +15,6 @@ public interface Piece {
     public char pieceAbbreviation();
     public int locationNumber();
     public char pieceColor();
-    public HashSet<Integer> generatePossibleMoves(Board board);
+    public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves);
 
 }

@@ -40,7 +40,7 @@ public class Queen implements Piece {
     }
 
     @Override
-    public HashSet<Integer> generatePossibleMoves(Board board) {
+    public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves) {
         HashSet<Integer> possibleDestinations = new HashSet<>();
         possibleDestinations.addAll(optionsToMoveN(board));
         possibleDestinations.addAll(optionsToMoveS(board));
@@ -50,6 +50,24 @@ public class Queen implements Piece {
         possibleDestinations.addAll(optionsToMoveNE(board));
         possibleDestinations.addAll(optionsToMoveSW(board));
         possibleDestinations.addAll(optionsToMoveSE(board));
+        if(!allowedMoves.isEmpty()) {
+            for (int i : possibleDestinations) {
+                if (!allowedMoves.contains(i)) {
+                    possibleDestinations.remove(i);
+                }
+            }
+        }
+        return possibleDestinations;
+    }
+    public HashSet<Integer> DangerScopeN(Board board){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
+        Piece adjacentPieceN = board.getAdjacentPieceN(locationNumber);
+        int currentAdjPieceFile = Board.getPieceFile(adjacentPieceN.locationNumber());
+        while(adjacentPieceN != null && Board.getPieceFile(adjacentPieceN.locationNumber()) + 1 == currentAdjPieceFile) {
+            possibleDestinations.add(adjacentPieceN.locationNumber());
+            adjacentPieceN = board.getAdjacentPieceN(adjacentPieceN.locationNumber());
+            currentAdjPieceFile = Board.getPieceFile(adjacentPieceN.locationNumber());
+        }
         return possibleDestinations;
     }
     public HashSet<Integer> optionsToMoveN(Board board){

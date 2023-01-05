@@ -5,6 +5,7 @@ import src.piece.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class Board {
@@ -29,6 +30,7 @@ public class Board {
         board[0] = new Rook('W', 0);
         board[7] = new Rook('W', 7);
 
+
         board[56] = new Rook('B', 56);
         board[63] = new Rook('B', 63);
         //Knights
@@ -46,10 +48,15 @@ public class Board {
         //Pawns
         for (int i = 8; i <= 15; i++) {
             board[i] = new Pawn('W', i);
+            whitePieces.add(board[i]);
         }
         for (int i = 48; i <= 55; i++) {
             board[i] = new Pawn('B', i);
+            blackPieces.add(board[i]);
         }
+        whitePieces.addAll(Arrays.asList(board).subList(0, 8));
+        blackPieces.addAll(Arrays.asList(board).subList(56, 64));
+
         //EmptySpaces
         for (int i = 16; i <= 47; i++) {
             board[i] = new EmptySpace(i);
@@ -91,8 +98,10 @@ public class Board {
             int selectedPieceFile = getPieceFile(selectedPiece.locationNumber());
             int selectedPieceRank = getPieceRank(selectedPiece.locationNumber());
             BS[selectedPieceFile][selectedPieceRank] = new BoardSquare(selectedPiece, selectedPieceSQColor, selectedPiece.pieceImage());
-            //changes the color of the possible squares to CYAN.
-            HashSet<Integer> movesToPutShadowOn = selectedPiece.generatePossibleMoves(this);
+            //Checks for special move restrictions following a pin on the selected piece.
+            HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(selectedPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(selectedPiece) : new HashSet<>();
+            HashSet<Integer> movesToPutShadowOn = selectedPiece.generatePossibleMoves(this, allowedMoves);
+            AttacksOnKing.pPiecesAndAllowedMoves.clear();
             if(movesToPutShadowOn != null) {
                 for (int i: movesToPutShadowOn) {
                     Color squareColor = Color.CYAN;
@@ -115,15 +124,19 @@ public class Board {
      *
      */
     public void confirmMove(Piece selectedPiece){
+        Color squareColor;
         Piece selectedDestinationPiece = Mouse.scanMousePosition(this);
-        StdDraw.pause(1000);
-        HashSet<Integer> allowedDestinations = selectedPiece.generatePossibleMoves(this);
+        HashSet<Integer> set = new HashSet<>();
+        HashSet<Integer> allowedDestinations = selectedPiece.generatePossibleMoves(this, set);
         if(allowedDestinations.contains(selectedDestinationPiece.locationNumber())){
             BoardChanges newChange = new BoardChanges(selectedPiece, selectedPiece.locationNumber(), selectedDestinationPiece.locationNumber(), selectedDestinationPiece);
             BoardChanges.lastEntry = newChange;
             selectedPiece.move(this, selectedDestinationPiece.locationNumber());
+            BoardSquare[][] BS = BoardRender.BoardToBSConverter(this);
+            ProgramRunner.visualizeBoardBS(BS);
         } else if (selectedDestinationPiece.pieceColor() == selectedPiece.pieceColor()) {
             clickOnPiece();
+            ProgramRunner.visualizeBoard(this);
         }
     }
 
