@@ -56,11 +56,25 @@ public class TestBoard {
         Board.board[11] = new EmptySpace(11);
         Board.board[52] = new EmptySpace(52);
         Board.board[61] = new EmptySpace(61);
+        Board.board[59] = new EmptySpace(59);
         Board.board[1] = new EmptySpace(1);
         Board.board[27] = new Pawn('W', 27);
         Board.board[36] = new Pawn('B', 36);
-        Board.board[25] = new Queen('B', 25);
+        Board.board[25] = new Bishop('B', 25);
         Board.board[18] = new Knight('W', 18);
+        Board.board[31] = new Queen('B', 31);
+        return board;
+    }
+    public static Board testBRQatTheCorners(){
+        Board board = new Board();
+        for(int i = 0; i <=63; i++){
+            Board.board[i] = new EmptySpace(i);
+        }
+        Board.board[32] = new Bishop('W',32);
+        Board.board[16] = new Queen('W',16);
+        Board.board[63] = new Queen('W',63);
+        Board.board[0] = new Queen('W',0);
+        Board.board[55] = new Rook('W',55);
         return board;
     }
     public static Board testVerticalPin(){
@@ -70,6 +84,15 @@ public class TestBoard {
         }
         emptyBoard.board[4] = new King('W',4);
         emptyBoard.board[36] = new Queen('B',36);
+        return emptyBoard;
+    }
+    public static Board testHorizontalPin(){
+        Board emptyBoard = new Board();
+        for(int i = 0; i <=63; i++){
+            emptyBoard.board[i] = new EmptySpace(i);
+        }
+        emptyBoard.board[29] = new King('W',29);
+        emptyBoard.board[26] = new Queen('B',26);
         return emptyBoard;
     }
 }

@@ -82,7 +82,8 @@ public class Pawn implements Piece{
             possibleDestinations.addAll(enPassantLocations(board));
         }
         if(!allowedMoves.isEmpty()) {
-            for (int i : possibleDestinations) {
+            HashSet<Integer> clone = (HashSet<Integer>) possibleDestinations.clone();
+            for (int i : clone) {
                 if (!allowedMoves.contains(i)) {
                     possibleDestinations.remove(i);
                 }

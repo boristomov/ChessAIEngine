@@ -88,7 +88,7 @@ public class Board {
      * Activates when piece is clicked. Highlights the square underneath it and simulates possible moves.
      * @return the clicked piece
      */
-    public Piece clickOnPiece(){
+    public Piece clickOnPiece(char turnColor){
         //if a piece able to move is clicked
         selectedPiece = Mouse.scanMousePosition(this);
         if(!selectedPiece.getClass().equals(EmptySpace.class)){
@@ -99,6 +99,8 @@ public class Board {
             int selectedPieceRank = getPieceRank(selectedPiece.locationNumber());
             BS[selectedPieceFile][selectedPieceRank] = new BoardSquare(selectedPiece, selectedPieceSQColor, selectedPiece.pieceImage());
             //Checks for special move restrictions following a pin on the selected piece.
+            int kingLocation = (turnColor == 'W')? AttacksOnKing.WkingLocation : AttacksOnKing.BkingLocation;
+            AttacksOnKing.checkForPins(this, kingLocation);
             HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(selectedPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(selectedPiece) : new HashSet<>();
             HashSet<Integer> movesToPutShadowOn = selectedPiece.generatePossibleMoves(this, allowedMoves);
             AttacksOnKing.pPiecesAndAllowedMoves.clear();
@@ -123,7 +125,7 @@ public class Board {
      * @param selectedPiece - piece which was clicked on earlier during the move
      *
      */
-    public void confirmMove(Piece selectedPiece){
+    public void confirmMove(Piece selectedPiece, char turnColor){
         Color squareColor;
         Piece selectedDestinationPiece = Mouse.scanMousePosition(this);
         HashSet<Integer> set = new HashSet<>();
@@ -135,7 +137,7 @@ public class Board {
             BoardSquare[][] BS = BoardRender.BoardToBSConverter(this);
             ProgramRunner.visualizeBoardBS(BS);
         } else if (selectedDestinationPiece.pieceColor() == selectedPiece.pieceColor()) {
-            clickOnPiece();
+            clickOnPiece(turnColor);
             ProgramRunner.visualizeBoard(this);
         }
     }

@@ -21,8 +21,10 @@ public class King implements Piece{
         this.locationNumber = locationNumber;
         if(pieceColor == 'W'){
             Board.whitePieces.add(this);
+            AttacksOnKing.WkingLocation = locationNumber;
         }else{
             Board.blackPieces.add(this);
+            AttacksOnKing.BkingLocation = locationNumber;
         }
     }
     @Override
@@ -44,34 +46,11 @@ public class King implements Piece{
         return PieceImage;
     }
     //KING PINNING.
-//    public HashSet<Piece> pinningPieces(){
-//        HashSet<Piece> pinningPieces = new HashSet<>();
-//
-//    }
+
     // returns the piece who is pinning;
     // after discovering an opposing color piece of a threading class (having encountered only 1 own color piece), goes back and calls a function which adds
     // the pinned piece to AttacksOnKing hashmap.
-    public Piece pinningPieceN(Board board){
-        Piece adjacentPieceN = board.getAdjacentPieceN(locationNumber);
-        ArrayList<Piece> potentialPPieces = new ArrayList<>();
-        if(adjacentPieceN == null){
-            return null;
-        }
-        while(adjacentPieceN.pieceColor() != Board.getOppositeColor(this)){
-            if(adjacentPieceN.pieceColor() == pieceColor){
-                potentialPPieces.add(adjacentPieceN);
-            }
-            adjacentPieceN = board.getAdjacentPieceN(adjacentPieceN.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceN == null){
-                return null;
-            }
-        }
-        if(potentialPPieces.size() == 1 && (adjacentPieceN.getClass().equals(Queen.class) || adjacentPieceN.getClass().equals(Rook.class))){
 
-            return adjacentPieceN;
-        }
-        return null;
-    }
 
     @Override
     public char pieceAbbreviation() {

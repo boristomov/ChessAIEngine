@@ -30,4 +30,14 @@ public class Testing {
         set1.add(20);
         assertEquals(set, set1);
     }
+    @Test
+    public void test_horizontalPin(){
+        Board board = TestBoard.testHorizontalPin();
+        HashSet<Integer> set = AttacksOnKing.dangerScopeE(board, Board.board[26]);
+        HashSet<Integer> set1 = new HashSet<>();
+        set1.add(26);
+        set1.add(27);
+        set1.add(28);
+        assertEquals(set, set1);
+    }
 }

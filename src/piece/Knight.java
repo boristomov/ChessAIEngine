@@ -45,7 +45,8 @@ public class Knight implements Piece{
         optionsToMoveSE1(board, possibleDestinations);
         optionsToMoveSE2(board, possibleDestinations);
         if(!allowedMoves.isEmpty()) {
-            for (int i : possibleDestinations) {
+            HashSet<Integer> clone = (HashSet<Integer>) possibleDestinations.clone();
+            for (int i : clone) {
                 if (!allowedMoves.contains(i)) {
                     possibleDestinations.remove(i);
                 }

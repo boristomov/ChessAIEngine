@@ -57,10 +57,10 @@ public class ProgramRunner {
     public static void startTestGame(Board board) {
         while(true) {
             if (StdDraw.isMousePressed()) {
-                Piece selectedPiece = board.clickOnPiece();
+                Piece selectedPiece = board.clickOnPiece( 'W');
                 StdDraw.pause(2000);
                 if (StdDraw.isMousePressed()) {
-                    board.confirmMove(selectedPiece);
+                    board.confirmMove(selectedPiece, 'W');
                 }
                 StdDraw.pause(1000);
             }

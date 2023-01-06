@@ -41,7 +41,8 @@ public class Bishop implements Piece {
         possibleDestinations.addAll(optionsToMoveSW(board));
         possibleDestinations.addAll(optionsToMoveSE(board));
         if(!allowedMoves.isEmpty()) {
-            for (int i : possibleDestinations) {
+            HashSet<Integer> clone = (HashSet<Integer>) possibleDestinations.clone();
+            for (int i : clone) {
                 if (!allowedMoves.contains(i)) {
                     possibleDestinations.remove(i);
                 }
@@ -55,9 +56,13 @@ public class Bishop implements Piece {
         if(adjacentPieceNW == null){
             return possibleDestinations;
         }
+        int currentAdjPieceFile = Board.getPieceFile(adjacentPieceNW.locationNumber());
+        if(Board.getPieceFile(locationNumber) - 1 != currentAdjPieceFile) {
+            return possibleDestinations;
+        }
         while(adjacentPieceNW.getClass().equals(EmptySpace.class)){
             possibleDestinations.add(adjacentPieceNW.locationNumber());
-            int currentAdjPieceFile = Board.getPieceFile(adjacentPieceNW.locationNumber());
+            currentAdjPieceFile = Board.getPieceFile(adjacentPieceNW.locationNumber());
             adjacentPieceNW = board.getAdjacentPieceNW(adjacentPieceNW.locationNumber()); //looks for the adjacent square to the one just checked.
             if(adjacentPieceNW == null || Board.getPieceFile(adjacentPieceNW.locationNumber()) + 1 != currentAdjPieceFile){
                 return possibleDestinations;
@@ -74,9 +79,13 @@ public class Bishop implements Piece {
         if(adjacentPieceNE == null){
             return possibleDestinations;
         }
+        int currentAdjPieceFile = Board.getPieceFile(adjacentPieceNE.locationNumber());
+        if(Board.getPieceFile(locationNumber) + 1 != currentAdjPieceFile) {
+            return possibleDestinations;
+        }
         while(adjacentPieceNE.getClass().equals(EmptySpace.class)){
             possibleDestinations.add(adjacentPieceNE.locationNumber());
-            int currentAdjPieceFile = Board.getPieceFile(adjacentPieceNE.locationNumber());
+            currentAdjPieceFile = Board.getPieceFile(adjacentPieceNE.locationNumber());
             adjacentPieceNE = board.getAdjacentPieceNE(adjacentPieceNE.locationNumber()); //looks for the adjacent square to the one just checked.
             if(adjacentPieceNE == null || Board.getPieceFile(adjacentPieceNE.locationNumber()) - 1 != currentAdjPieceFile){
                 return possibleDestinations;
@@ -93,9 +102,13 @@ public class Bishop implements Piece {
         if(adjacentPieceSW == null){
             return possibleDestinations;
         }
+        int currentAdjPieceFile = Board.getPieceFile(adjacentPieceSW.locationNumber());
+        if(Board.getPieceFile(locationNumber) - 1 != currentAdjPieceFile) {
+            return possibleDestinations;
+        }
         while(adjacentPieceSW.getClass().equals(EmptySpace.class)){
             possibleDestinations.add(adjacentPieceSW.locationNumber());
-            int currentAdjPieceFile = Board.getPieceFile(adjacentPieceSW.locationNumber());
+            currentAdjPieceFile = Board.getPieceFile(adjacentPieceSW.locationNumber());
             adjacentPieceSW = board.getAdjacentPieceSW(adjacentPieceSW.locationNumber()); //looks for the adjacent square to the one just checked.
             if(adjacentPieceSW == null || Board.getPieceFile(adjacentPieceSW.locationNumber()) + 1 != currentAdjPieceFile){
                 return possibleDestinations;
@@ -112,13 +125,18 @@ public class Bishop implements Piece {
         if(adjacentPieceSE == null){
             return possibleDestinations;
         }
+        int currentAdjPieceFile = Board.getPieceFile(adjacentPieceSE.locationNumber());
+        if(Board.getPieceFile(locationNumber) + 1 != currentAdjPieceFile) {
+            return possibleDestinations;
+        }
         while(adjacentPieceSE.getClass().equals(EmptySpace.class)){
             possibleDestinations.add(adjacentPieceSE.locationNumber());
-            int currentAdjPieceFile = Board.getPieceFile(adjacentPieceSE.locationNumber());
+            currentAdjPieceFile = Board.getPieceFile(adjacentPieceSE.locationNumber());
             adjacentPieceSE = board.getAdjacentPieceSE(adjacentPieceSE.locationNumber()); //looks for the adjacent square to the one just checked.
             if(adjacentPieceSE == null || Board.getPieceFile(adjacentPieceSE.locationNumber()) - 1 != currentAdjPieceFile){
                 return possibleDestinations;
             }
+            possibleDestinations.add(adjacentPieceSE.locationNumber());
         }
         if(adjacentPieceSE.pieceColor() != pieceColor){
             possibleDestinations.add(adjacentPieceSE.locationNumber());
