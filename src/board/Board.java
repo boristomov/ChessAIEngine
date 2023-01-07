@@ -91,7 +91,7 @@ public class Board {
     public Piece clickOnPiece(char turnColor) throws CloneNotSupportedException {
         //if a piece able to move is clicked
         Piece king = (turnColor == 'W')? board[AttacksOnKing.WkingLocation] : board[AttacksOnKing.BkingLocation];
-        AttacksOnKing.isCheckMate(this, king);
+
         selectedPiece = Mouse.scanMousePosition(this);
         if(!selectedPiece.getClass().equals(EmptySpace.class) && selectedPiece.pieceColor() == Main.turnColor){
             BoardSquare[][] BS = BoardRender.BoardToBSConverter(this);
@@ -103,11 +103,13 @@ public class Board {
             BS[selectedPieceFile][selectedPieceRank] = new BoardSquare(selectedPiece, selectedPieceSQColor, selectedPiece.pieceImage());
 
             //Checks for special move restrictions following a pin on the selected piece.
-            int kingLocation = (turnColor == 'W')? AttacksOnKing.WkingLocation : AttacksOnKing.BkingLocation;
+            int kingLocation = king.locationNumber();
             AttacksOnKing.checkForPins(this, kingLocation);
             HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(selectedPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(selectedPiece) : new HashSet<>();
+            if(AttacksOnKing.isPieceTargeted(this, turnColor, king.locationNumber())){// if king is in check
+                allowedMoves = AttacksOnKing.mergeAllowedMoves(allowedMoves, AttacksOnKing.applyDanSfunc(this, king));
+            }
             HashSet<Integer> movesToPutShadowOn = selectedPiece.generatePossibleMoves(this, allowedMoves);
-            AttacksOnKing.pPiecesAndAllowedMoves.clear();
             if(movesToPutShadowOn != null) {
                 for (int i: movesToPutShadowOn) {
                     Color squareColor = Color.CYAN;
@@ -131,20 +133,29 @@ public class Board {
      */
     public void confirmMove(Piece selectedPiece, char turnColor) throws CloneNotSupportedException {
         Piece selectedDestinationPiece = Mouse.scanMousePosition(this);
-        HashSet<Integer> set = new HashSet<>();
-        HashSet<Integer> allowedDestinations = selectedPiece.generatePossibleMoves(this, set);
+        HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(selectedPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(selectedPiece) : new HashSet<>();
+        HashSet<Integer> movesToPutShadowOn = selectedPiece.generatePossibleMoves(this, allowedMoves);
 
-        if(allowedDestinations.contains(selectedDestinationPiece.locationNumber())){
+
+        if(movesToPutShadowOn.contains(selectedDestinationPiece.locationNumber())){
             BoardChanges newChange = new BoardChanges(selectedPiece, selectedPiece.locationNumber(), selectedDestinationPiece.locationNumber(), selectedDestinationPiece);
             BoardChanges.lastEntry = newChange;
             selectedPiece.move(this, selectedDestinationPiece.locationNumber());
             BoardSquare[][] BS = BoardRender.BoardToBSConverter(this);
             ProgramRunner.visualizeBoardBS(BS);
             Main.turnColor = Board.getOppositeColorChar(Main.turnColor);
+            Piece king = (turnColor == 'W')? board[AttacksOnKing.BkingLocation] : board[AttacksOnKing.WkingLocation];
+            if(AttacksOnKing.isCheckMate(this, turnColor, king)){
+                System.out.println("game over");
+                System.exit(0);
+            }
         } else if (selectedDestinationPiece.pieceColor() == selectedPiece.pieceColor()) {
             clickOnPiece(turnColor);
             ProgramRunner.visualizeBoard(this);
         }
+
+        AttacksOnKing.pPiecesAndAllowedMoves.clear();
+        AttacksOnKing.checkingPieces.clear();
     }
 
     public String toString() {

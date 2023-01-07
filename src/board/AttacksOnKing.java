@@ -8,7 +8,7 @@ import src.piece.*;
 public class AttacksOnKing {
 
     public static HashMap<Piece, HashSet<Integer>> pPiecesAndAllowedMoves = new HashMap<>();
-    public static HashSet<Piece> checkingPieces = new HashSet<>();
+    public static ArrayList<Piece> checkingPieces = new ArrayList<>();
     public static int WkingLocation;
     public static int BkingLocation;
     public static void checkForPins(Board board, int kingLocation){
@@ -270,14 +270,20 @@ public class AttacksOnKing {
             pPiecesAndAllowedMoves.put(potentialPPieces.get(0), dangerScopeNW(board, adjacentPieceSE));
         }
     }
-    public static boolean isCheckMate(Board board, Piece king) throws CloneNotSupportedException {
-        HashSet<Integer> emptySet = new HashSet<>();
-        if(king.generatePossibleMoves(board, emptySet).isEmpty()){
-
+    public static boolean isCheckMate(Board board, char turnColor, Piece king) throws CloneNotSupportedException {
+        // use the function for tracked by...
+        if(isPieceTargeted(board, Board.getOppositeColorChar(turnColor), king.locationNumber())){
+            HashSet<Integer> allowedMoves = applyDanSfunc(board, king);
+            if(king.generatePossibleMoves(board, allowedMoves).isEmpty()){
+                // I think this king.loc arg is wrong. Use istracked func
+                if(checkingPieces.size() > 1){
+                    return true;
+                }
+            }
         }
         return false;
     }
-    private HashSet<Integer> applyDanSfunc(Board board, Piece king){
+    public static HashSet<Integer> applyDanSfunc(Board board, Piece king){
         HashSet<Integer> interceptionScope = new HashSet<>();
 
         for(Piece piece: checkingPieces){
@@ -294,7 +300,7 @@ public class AttacksOnKing {
                     interceptionScope.addAll(dangerScopeN(board, piece));
                 }
             }
-            else if(pieceRank == Board.getPieceRank(king.locationNumber()){
+            else if(pieceRank == Board.getPieceRank(king.locationNumber())){
                 if(pieceFile > kingFile){
                     interceptionScope.addAll(dangerScopeW(board, piece));
                 }
@@ -306,25 +312,41 @@ public class AttacksOnKing {
                 if(pieceFile > kingFile){
                     interceptionScope.addAll(dangerScopeSE(board, piece));
                 }
-                else{
+                else if(pieceFile < kingFile){
                     interceptionScope.addAll(dangerScopeSW(board, piece));
                 }
             } else if(pieceRank < kingRank && !piece.getClass().equals(Knight.class)) {
                 if(pieceFile > kingFile){
                     interceptionScope.addAll(dangerScopeNW(board, piece));
                 }
-                else{
+                else if(pieceFile < kingFile){
                     interceptionScope.addAll(dangerScopeNE(board, piece));
                 }
             }
             if(piece.getClass().equals(Knight.class)){
                 interceptionScope.add(piece.locationNumber());
             }
-            return interceptionScope;
+        }
+        return interceptionScope;
+    }
+    public static HashSet<Integer> mergeAllowedMoves(HashSet<Integer> pins, HashSet<Integer> interceptionOfMate){
+        if(pins.isEmpty()){
+            return interceptionOfMate;
+        }
+        if(!interceptionOfMate.isEmpty()) {
+            HashSet<Integer> clone = (HashSet<Integer>) pins.clone();
+            for (int i : clone) {
+                if (!interceptionOfMate.contains(i)) {
+                    pins.remove(i);
+                }
+            }
+            return pins;
+        }
+        else{
+            return pins;
         }
     }
     public static boolean isPieceTargeted(Board board, char turnColor, int location) throws CloneNotSupportedException {
-
         return (attackedSquares(board, turnColor, location).contains(location));
     }
     private static HashSet<Integer> attackedSquares(Board board, char turnColor, int location) throws CloneNotSupportedException {

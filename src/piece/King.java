@@ -37,7 +37,7 @@ public class King implements Piece, Cloneable{
     }
 
     @Override
-    public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves) throws CloneNotSupportedException {
+    public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> restrictedMoves) throws CloneNotSupportedException {
         HashSet<Integer> possibleDestinations = new HashSet<>();
 
         optionMoveN(board, possibleDestinations);
@@ -48,6 +48,18 @@ public class King implements Piece, Cloneable{
         optionMoveNE(board, possibleDestinations);
         optionMoveSW(board, possibleDestinations);
         optionMoveSE(board, possibleDestinations);
+        //those allowed moves are different from the ones at the other pieces. These are as a result of the check.
+        if(!restrictedMoves.isEmpty()) {
+            HashSet<Integer> clone = (HashSet<Integer>) restrictedMoves.clone();
+            for (int i : clone) {
+                if (possibleDestinations.contains(i)) {
+                    possibleDestinations.remove(i);
+                }
+            }
+        }
+        else{
+            return possibleDestinations;
+        }
 
         return possibleDestinations;
     }
@@ -60,13 +72,12 @@ public class King implements Piece, Cloneable{
 
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
-
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class)
-                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
-                || (adjacentPiece.pieceColor() == oppositeColor
-                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
-
+        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+        else if(adjacentPiece.pieceColor() == oppositeColor
+                && !AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), pieceColor, adjacentPiece.locationNumber())){
             board.replace(clone, adjacentPiece);
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
@@ -81,11 +92,11 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class)
-                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
-                || (adjacentPiece.pieceColor() == oppositeColor
-                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
-
+        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+        else if(adjacentPiece.pieceColor() == oppositeColor
+                && !AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), pieceColor, adjacentPiece.locationNumber())){
             board.replace(clone, adjacentPiece);
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
@@ -100,11 +111,11 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class)
-                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
-                || (adjacentPiece.pieceColor() == oppositeColor
-                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
-
+        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+        else if(adjacentPiece.pieceColor() == oppositeColor
+                && !AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), pieceColor, adjacentPiece.locationNumber())){
             board.replace(clone, adjacentPiece);
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
@@ -119,11 +130,11 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class)
-                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
-                || (adjacentPiece.pieceColor() == oppositeColor
-                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
-
+        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+        else if(adjacentPiece.pieceColor() == oppositeColor
+                && !AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), pieceColor, adjacentPiece.locationNumber())){
             board.replace(clone, adjacentPiece);
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
@@ -138,11 +149,11 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class)
-                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
-                || (adjacentPiece.pieceColor() == oppositeColor
-                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
-
+        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+        else if(adjacentPiece.pieceColor() == oppositeColor
+                && !AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), pieceColor, adjacentPiece.locationNumber())){
             board.replace(clone, adjacentPiece);
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
@@ -157,11 +168,11 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class)
-                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
-                || (adjacentPiece.pieceColor() == oppositeColor
-                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
-
+        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+        else if(adjacentPiece.pieceColor() == oppositeColor
+                && !AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), pieceColor, adjacentPiece.locationNumber())){
             board.replace(clone, adjacentPiece);
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
@@ -176,11 +187,11 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class)
-                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
-                || (adjacentPiece.pieceColor() == oppositeColor
-                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
-
+        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+        else if(adjacentPiece.pieceColor() == oppositeColor
+                && !AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), pieceColor, adjacentPiece.locationNumber())){
             board.replace(clone, adjacentPiece);
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
@@ -195,11 +206,11 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class)
-                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
-                || (adjacentPiece.pieceColor() == oppositeColor
-                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
-
+        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+        else if(adjacentPiece.pieceColor() == oppositeColor
+                && !AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), pieceColor, adjacentPiece.locationNumber())){
             board.replace(clone, adjacentPiece);
             possibleDestinations.add(adjacentPiece.locationNumber());
         }

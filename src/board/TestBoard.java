@@ -95,4 +95,39 @@ public class TestBoard {
         emptyBoard.board[26] = new Queen('B',26);
         return emptyBoard;
     }
+    public static Board testCheckMate(){
+        Board board = new Board(8);
+        Board.board[14] = new EmptySpace(14);
+        Board.board[52] = new EmptySpace(52);
+        Board.board[13] = new EmptySpace(13);
+        Board.board[30] = new Pawn('W', 30);
+        Board.board[29] = new Pawn('B', 29);
+
+        return board;
+    }
+    public static Board testQueenAndPawn(){
+        Board board = new Board(8);
+        Board.board[14] = new EmptySpace(14);
+        Board.board[13] = new EmptySpace(13);
+        Board.board[12] = new EmptySpace(12);
+        Board.board[30] = new Pawn('W', 30);
+        Board.board[29] = new Pawn('B', 29);
+        Board.board[52] = new Queen('B', 52);
+        Board.board[20] = new Pawn('B', 20);
+
+        return board;
+    }
+    public static Board testQueenAndPawn2(){
+        Board board = new Board(8);
+        Board.board[14] = new EmptySpace(14);
+        Board.board[13] = new EmptySpace(13);
+        Board.board[12] = new EmptySpace(12);
+        Board.board[59] = new EmptySpace(59);
+        Board.board[11] = new Pawn('B',11);
+        Board.board[30] = new Pawn('W', 30);
+        Board.board[29] = new Pawn('B', 29);
+        Board.board[52] = new Queen('B', 52);
+
+        return board;
+    }
 }
