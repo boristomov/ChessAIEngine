@@ -54,13 +54,13 @@ public class ProgramRunner {
         }
     }
 
-    public static void startTestGame(Board board) {
+    public static void startTestGame(Board board) throws CloneNotSupportedException {
         while(true) {
             if (StdDraw.isMousePressed()) {
-                Piece selectedPiece = board.clickOnPiece( 'W');
+                Piece selectedPiece = board.clickOnPiece( Main.turnColor);
                 StdDraw.pause(2000);
                 if (StdDraw.isMousePressed()) {
-                    board.confirmMove(selectedPiece, 'W');
+                    board.confirmMove(selectedPiece, Main.turnColor);
                 }
                 StdDraw.pause(1000);
             }

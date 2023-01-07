@@ -8,6 +8,7 @@ import src.piece.*;
 public class AttacksOnKing {
 
     public static HashMap<Piece, HashSet<Integer>> pPiecesAndAllowedMoves = new HashMap<>();
+    public static HashSet<Piece> checkingPieces = new HashSet<>();
     public static int WkingLocation;
     public static int BkingLocation;
     public static void checkForPins(Board board, int kingLocation){
@@ -108,12 +109,12 @@ public class AttacksOnKing {
         }
         return possibleDestinations;
     }
-    public static Piece pinnedPieceN(Board board, int kingLocation){
+    public static void pinnedPieceN(Board board, int kingLocation){
         Piece adjacentPieceN = board.getAdjacentPieceN(kingLocation);
         Piece king = Board.board[kingLocation];
         ArrayList<Piece> potentialPPieces = new ArrayList<>();
         if(adjacentPieceN == null){
-            return null;
+            return;
         }
         while(adjacentPieceN.pieceColor() != Board.getOppositeColor(king)){
             if(adjacentPieceN.pieceColor() == king.pieceColor()){
@@ -121,21 +122,19 @@ public class AttacksOnKing {
             }
             adjacentPieceN = board.getAdjacentPieceN(adjacentPieceN.locationNumber()); //looks for the adjacent square to the one just checked.
             if(adjacentPieceN == null){
-                return null;
+                return;
             }
         }
         if(potentialPPieces.size() == 1 && (adjacentPieceN.getClass().equals(Queen.class) || adjacentPieceN.getClass().equals(Rook.class))){
             pPiecesAndAllowedMoves.put(potentialPPieces.get(0), dangerScopeS(board, adjacentPieceN));
-            return potentialPPieces.get(0);
         }
-        return null;
     }
-    public static Piece pinnedPieceS(Board board, int kingLocation){
+    public static void pinnedPieceS(Board board, int kingLocation){
         Piece adjacentPieceS = board.getAdjacentPieceS(kingLocation);
         Piece king = Board.board[kingLocation];
         ArrayList<Piece> potentialPPieces = new ArrayList<>();
         if(adjacentPieceS == null){
-            return null;
+            return;
         }
         while(adjacentPieceS.pieceColor() != Board.getOppositeColor(king)){
             if(adjacentPieceS.pieceColor() == king.pieceColor()){
@@ -143,21 +142,19 @@ public class AttacksOnKing {
             }
             adjacentPieceS = board.getAdjacentPieceS(adjacentPieceS.locationNumber()); //looks for the adjacent square to the one just checked.
             if(adjacentPieceS == null){
-                return null;
+                return;
             }
         }
         if(potentialPPieces.size() == 1 && (adjacentPieceS.getClass().equals(Queen.class) || adjacentPieceS.getClass().equals(Rook.class))){
             pPiecesAndAllowedMoves.put(potentialPPieces.get(0), dangerScopeN(board, adjacentPieceS));
-            return potentialPPieces.get(0);
         }
-        return null;
     }
-    public static Piece pinnedPieceW(Board board, int kingLocation){
+    public static void pinnedPieceW(Board board, int kingLocation){
         Piece adjacentPieceW = board.getAdjacentPieceW(kingLocation);
         Piece king = Board.board[kingLocation];
         ArrayList<Piece> potentialPPieces = new ArrayList<>();
         if(adjacentPieceW == null){
-            return null;
+            return;
         }
         while(adjacentPieceW.pieceColor() != Board.getOppositeColor(king)){
             if(adjacentPieceW.pieceColor() == king.pieceColor()){
@@ -165,21 +162,19 @@ public class AttacksOnKing {
             }
             adjacentPieceW = board.getAdjacentPieceW(adjacentPieceW.locationNumber()); //looks for the adjacent square to the one just checked.
             if(adjacentPieceW == null){
-                return null;
+                return;
             }
         }
         if(potentialPPieces.size() == 1 && (adjacentPieceW.getClass().equals(Queen.class) || adjacentPieceW.getClass().equals(Rook.class))){
             pPiecesAndAllowedMoves.put(potentialPPieces.get(0), dangerScopeE(board, adjacentPieceW));
-            return potentialPPieces.get(0);
         }
-        return null;
     }
-    public static Piece pinnedPieceE(Board board, int kingLocation){
+    public static void pinnedPieceE(Board board, int kingLocation){
         Piece adjacentPieceE = board.getAdjacentPieceE(kingLocation);
         Piece king = Board.board[kingLocation];
         ArrayList<Piece> potentialPPieces = new ArrayList<>();
         if(adjacentPieceE == null){
-            return null;
+            return;
         }
         while(adjacentPieceE.pieceColor() != Board.getOppositeColor(king)){
             if(adjacentPieceE.pieceColor() == king.pieceColor()){
@@ -187,21 +182,20 @@ public class AttacksOnKing {
             }
             adjacentPieceE = board.getAdjacentPieceE(adjacentPieceE.locationNumber()); //looks for the adjacent square to the one just checked.
             if(adjacentPieceE == null){
-                return null;
+                return;
             }
         }
         if(potentialPPieces.size() == 1 && (adjacentPieceE.getClass().equals(Queen.class) || adjacentPieceE.getClass().equals(Rook.class))){
             pPiecesAndAllowedMoves.put(potentialPPieces.get(0), dangerScopeW(board, adjacentPieceE));
-            return potentialPPieces.get(0);
         }
-        return null;
+
     }
-    public static Piece pinnedPieceNW(Board board, int kingLocation){
+    public static void pinnedPieceNW(Board board, int kingLocation){
         Piece adjacentPieceNW = board.getAdjacentPieceNW(kingLocation);
         Piece king = Board.board[kingLocation];
         ArrayList<Piece> potentialPPieces = new ArrayList<>();
         if(adjacentPieceNW == null){
-            return null;
+            return;
         }
         while(adjacentPieceNW.pieceColor() != Board.getOppositeColor(king)){
             if(adjacentPieceNW.pieceColor() == king.pieceColor()){
@@ -209,21 +203,19 @@ public class AttacksOnKing {
             }
             adjacentPieceNW = board.getAdjacentPieceNW(adjacentPieceNW.locationNumber()); //looks for the adjacent square to the one just checked.
             if(adjacentPieceNW == null){
-                return null;
+                return;
             }
         }
         if(potentialPPieces.size() == 1 && (adjacentPieceNW.getClass().equals(Queen.class) || adjacentPieceNW.getClass().equals(Bishop.class))){
             pPiecesAndAllowedMoves.put(potentialPPieces.get(0), dangerScopeSE(board, adjacentPieceNW));
-            return potentialPPieces.get(0);
         }
-        return null;
     }
-    public static Piece pinnedPieceNE(Board board, int kingLocation){
+    public static void pinnedPieceNE(Board board, int kingLocation){
         Piece adjacentPieceNE = board.getAdjacentPieceNE(kingLocation);
         Piece king = Board.board[kingLocation];
         ArrayList<Piece> potentialPPieces = new ArrayList<>();
         if(adjacentPieceNE == null){
-            return null;
+            return;
         }
         while(adjacentPieceNE.pieceColor() != Board.getOppositeColor(king)){
             if(adjacentPieceNE.pieceColor() == king.pieceColor()){
@@ -231,21 +223,19 @@ public class AttacksOnKing {
             }
             adjacentPieceNE = board.getAdjacentPieceNE(adjacentPieceNE.locationNumber()); //looks for the adjacent square to the one just checked.
             if(adjacentPieceNE == null){
-                return null;
+                return;
             }
         }
         if(potentialPPieces.size() == 1 && (adjacentPieceNE.getClass().equals(Queen.class) || adjacentPieceNE.getClass().equals(Bishop.class))){
             pPiecesAndAllowedMoves.put(potentialPPieces.get(0), dangerScopeSW(board, adjacentPieceNE));
-            return potentialPPieces.get(0);
         }
-        return null;
     }
-    public static Piece pinnedPieceSW(Board board, int kingLocation){
+    public static void pinnedPieceSW(Board board, int kingLocation){
         Piece adjacentPieceSW = board.getAdjacentPieceSW(kingLocation);
         Piece king = Board.board[kingLocation];
         ArrayList<Piece> potentialPPieces = new ArrayList<>();
         if(adjacentPieceSW == null){
-            return null;
+            return;
         }
         while(adjacentPieceSW.pieceColor() != Board.getOppositeColor(king)){
             if(adjacentPieceSW.pieceColor() == king.pieceColor()){
@@ -253,21 +243,19 @@ public class AttacksOnKing {
             }
             adjacentPieceSW = board.getAdjacentPieceSW(adjacentPieceSW.locationNumber()); //looks for the adjacent square to the one just checked.
             if(adjacentPieceSW == null){
-                return null;
+                return;
             }
         }
         if(potentialPPieces.size() == 1 && (adjacentPieceSW.getClass().equals(Queen.class) || adjacentPieceSW.getClass().equals(Bishop.class))){
             pPiecesAndAllowedMoves.put(potentialPPieces.get(0), dangerScopeNE(board, adjacentPieceSW));
-            return potentialPPieces.get(0);
         }
-        return null;
     }
-    public static Piece pinnedPieceSE(Board board, int kingLocation){
+    public static void pinnedPieceSE(Board board, int kingLocation){
         Piece adjacentPieceSE = board.getAdjacentPieceSE(kingLocation);
         Piece king = Board.board[kingLocation];
         ArrayList<Piece> potentialPPieces = new ArrayList<>();
         if(adjacentPieceSE == null){
-            return null;
+            return;
         }
         while(adjacentPieceSE.pieceColor() != Board.getOppositeColor(king)){
             if(adjacentPieceSE.pieceColor() == king.pieceColor()){
@@ -275,13 +263,96 @@ public class AttacksOnKing {
             }
             adjacentPieceSE = board.getAdjacentPieceSE(adjacentPieceSE.locationNumber()); //looks for the adjacent square to the one just checked.
             if(adjacentPieceSE == null){
-                return null;
+                return;
             }
         }
         if(potentialPPieces.size() == 1 && (adjacentPieceSE.getClass().equals(Queen.class) || adjacentPieceSE.getClass().equals(Bishop.class))){
             pPiecesAndAllowedMoves.put(potentialPPieces.get(0), dangerScopeNW(board, adjacentPieceSE));
-            return potentialPPieces.get(0);
         }
-        return null;
+    }
+    public static boolean isCheckMate(Board board, Piece king) throws CloneNotSupportedException {
+        HashSet<Integer> emptySet = new HashSet<>();
+        if(king.generatePossibleMoves(board, emptySet).isEmpty()){
+
+        }
+        return false;
+    }
+    private HashSet<Integer> applyDanSfunc(Board board, Piece king){
+        HashSet<Integer> interceptionScope = new HashSet<>();
+
+        for(Piece piece: checkingPieces){
+            int pieceFile = Board.getPieceFile(piece.locationNumber());
+            int pieceRank = Board.getPieceRank(piece.locationNumber());
+            int kingFile = Board.getPieceFile(king.locationNumber());
+            int kingRank = Board.getPieceRank(king.locationNumber());
+
+            if(pieceFile == Board.getPieceFile(king.locationNumber())){
+                if(pieceRank > kingRank){
+                    interceptionScope.addAll(dangerScopeS(board, piece));
+                }
+                else{
+                    interceptionScope.addAll(dangerScopeN(board, piece));
+                }
+            }
+            else if(pieceRank == Board.getPieceRank(king.locationNumber()){
+                if(pieceFile > kingFile){
+                    interceptionScope.addAll(dangerScopeW(board, piece));
+                }
+                else{
+                    interceptionScope.addAll(dangerScopeE(board, piece));
+                }
+            }
+            if(pieceRank > kingRank && !piece.getClass().equals(Knight.class)){
+                if(pieceFile > kingFile){
+                    interceptionScope.addAll(dangerScopeSE(board, piece));
+                }
+                else{
+                    interceptionScope.addAll(dangerScopeSW(board, piece));
+                }
+            } else if(pieceRank < kingRank && !piece.getClass().equals(Knight.class)) {
+                if(pieceFile > kingFile){
+                    interceptionScope.addAll(dangerScopeNW(board, piece));
+                }
+                else{
+                    interceptionScope.addAll(dangerScopeNE(board, piece));
+                }
+            }
+            if(piece.getClass().equals(Knight.class)){
+                interceptionScope.add(piece.locationNumber());
+            }
+            return interceptionScope;
+        }
+    }
+    public static boolean isPieceTargeted(Board board, char turnColor, int location) throws CloneNotSupportedException {
+
+        return (attackedSquares(board, turnColor, location).contains(location));
+    }
+    private static HashSet<Integer> attackedSquares(Board board, char turnColor, int location) throws CloneNotSupportedException {
+        AttacksOnKing.checkForPins(board, location);
+        HashSet<Integer> attackedSquares = new HashSet<>();
+
+        if(turnColor == 'W'){
+            for(Piece enemyPiece: Board.blackPieces){
+                if(enemyPiece.getClass().equals(King.class)){continue;}
+                HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(enemyPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(enemyPiece) : new HashSet<>();
+                HashSet<Integer> attackingMoves = enemyPiece.generatePossibleMoves(board, allowedMoves);
+                if(attackingMoves.contains(location)) {
+                    checkingPieces.add(enemyPiece);
+                }
+                attackedSquares.addAll(attackingMoves);
+            }
+        }
+        else{
+            for(Piece enemyPiece: Board.whitePieces){
+                if(enemyPiece.getClass().equals(King.class)){continue;}
+                HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(enemyPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(enemyPiece) : new HashSet<>();
+                HashSet<Integer> attackingMoves = enemyPiece.generatePossibleMoves(board, allowedMoves);
+                if(attackingMoves.contains(location)) {
+                    checkingPieces.add(enemyPiece);
+                }
+                attackedSquares.addAll(attackingMoves);
+            }
+        }
+        return attackedSquares;
     }
 }

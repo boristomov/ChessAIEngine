@@ -5,7 +5,7 @@ import src.board.Board;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class EmptySpace implements Piece{
+public class EmptySpace implements Piece, Cloneable{
 
     public char pieceColor = 'e';
 
@@ -55,4 +55,13 @@ public class EmptySpace implements Piece{
         return pieceColor;
     }
 
+    @Override
+    public void changePieceColor() {
+
+    }
+
+    @Override
+    public Piece cloneInOppositeColor() throws CloneNotSupportedException {
+        return new EmptySpace(locationNumber);
+    }
 }

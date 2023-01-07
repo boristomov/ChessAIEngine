@@ -88,16 +88,20 @@ public class Board {
      * Activates when piece is clicked. Highlights the square underneath it and simulates possible moves.
      * @return the clicked piece
      */
-    public Piece clickOnPiece(char turnColor){
+    public Piece clickOnPiece(char turnColor) throws CloneNotSupportedException {
         //if a piece able to move is clicked
+        Piece king = (turnColor == 'W')? board[AttacksOnKing.WkingLocation] : board[AttacksOnKing.BkingLocation];
+        AttacksOnKing.isCheckMate(this, king);
         selectedPiece = Mouse.scanMousePosition(this);
-        if(!selectedPiece.getClass().equals(EmptySpace.class)){
+        if(!selectedPiece.getClass().equals(EmptySpace.class) && selectedPiece.pieceColor() == Main.turnColor){
             BoardSquare[][] BS = BoardRender.BoardToBSConverter(this);
+
             //changes the color of the selected piece to RED.
             Color selectedPieceSQColor = Color.RED;
             int selectedPieceFile = getPieceFile(selectedPiece.locationNumber());
             int selectedPieceRank = getPieceRank(selectedPiece.locationNumber());
             BS[selectedPieceFile][selectedPieceRank] = new BoardSquare(selectedPiece, selectedPieceSQColor, selectedPiece.pieceImage());
+
             //Checks for special move restrictions following a pin on the selected piece.
             int kingLocation = (turnColor == 'W')? AttacksOnKing.WkingLocation : AttacksOnKing.BkingLocation;
             AttacksOnKing.checkForPins(this, kingLocation);
@@ -125,17 +129,18 @@ public class Board {
      * @param selectedPiece - piece which was clicked on earlier during the move
      *
      */
-    public void confirmMove(Piece selectedPiece, char turnColor){
-        Color squareColor;
+    public void confirmMove(Piece selectedPiece, char turnColor) throws CloneNotSupportedException {
         Piece selectedDestinationPiece = Mouse.scanMousePosition(this);
         HashSet<Integer> set = new HashSet<>();
         HashSet<Integer> allowedDestinations = selectedPiece.generatePossibleMoves(this, set);
+
         if(allowedDestinations.contains(selectedDestinationPiece.locationNumber())){
             BoardChanges newChange = new BoardChanges(selectedPiece, selectedPiece.locationNumber(), selectedDestinationPiece.locationNumber(), selectedDestinationPiece);
             BoardChanges.lastEntry = newChange;
             selectedPiece.move(this, selectedDestinationPiece.locationNumber());
             BoardSquare[][] BS = BoardRender.BoardToBSConverter(this);
             ProgramRunner.visualizeBoardBS(BS);
+            Main.turnColor = Board.getOppositeColorChar(Main.turnColor);
         } else if (selectedDestinationPiece.pieceColor() == selectedPiece.pieceColor()) {
             clickOnPiece(turnColor);
             ProgramRunner.visualizeBoard(this);
@@ -161,6 +166,10 @@ public class Board {
 
     public static int getPieceRank(int locationNumber) {
         return (int) Math.floor(locationNumber / Board.Size);
+    }
+    public Board replace(Piece replacedPiece, Piece newPiece){
+        board[replacedPiece.locationNumber()] = newPiece;
+        return this;
     }
 
     public int getSquareNum(int file, int rank) {
@@ -238,5 +247,8 @@ public class Board {
     }
     public static char getOppositeColor(Piece selectedPiece){
         return (selectedPiece.pieceColor() == 'W') ? 'B': 'W';
+    }
+    public static char getOppositeColorChar(char currentColor){
+        return (currentColor == 'W') ? 'B': 'W';
     }
 }

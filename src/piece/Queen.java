@@ -6,7 +6,7 @@ import src.board.BoardChanges;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class Queen implements Piece {
+public class Queen implements Piece, Cloneable {
     public char pieceColor;
     public String PieceImage;
     public int pieceValue = 9;
@@ -36,7 +36,11 @@ public class Queen implements Piece {
     @Override
     public void erase() {
         locationNumber = (pieceColor == 'W') ? -1: -2;
-        BoardChanges.erasedPieces.add(this);
+        if(pieceColor == 'W') {
+            BoardChanges.erasedPiecesW.add(this);
+        }else{
+            BoardChanges.erasedPiecesB.add(this);
+        }
     }
 
     @Override
@@ -254,5 +258,16 @@ public class Queen implements Piece {
     @Override
     public int locationNumber() {
         return locationNumber;
+    }
+    @Override
+    public Piece cloneInOppositeColor() throws CloneNotSupportedException {
+        Piece clone = (Piece) this.clone();
+        clone.changePieceColor();
+        return clone;
+    }
+
+    @Override
+    public void changePieceColor() {
+        pieceColor = Board.getOppositeColorChar(pieceColor);
     }
 }

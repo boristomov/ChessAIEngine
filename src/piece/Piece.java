@@ -15,6 +15,8 @@ public interface Piece {
     public char pieceAbbreviation();
     public int locationNumber();
     public char pieceColor();
-    public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves);
+    public Piece cloneInOppositeColor() throws CloneNotSupportedException;
+    public void changePieceColor();
+    public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves) throws CloneNotSupportedException;
 
 }

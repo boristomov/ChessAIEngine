@@ -7,11 +7,12 @@ import src.board.Board;
 import src.board.BoardChanges;
 
 
-public class Pawn implements Piece{
+public class Pawn implements Piece, Cloneable{
     public int originalRank;
     public char pieceColor;
     public String PieceImage;
     public int locationNumber;
+    public int numberOfMovesMade = 0;
 
 
     public Pawn(char pieceColor, int locationNumber){
@@ -35,6 +36,16 @@ public class Pawn implements Piece{
     public void move(Board board, int location) {
     //check if the move is en passant ->if the piece behind is an opposite color pawn (en passant); promotion(rank 8/1) or just a normal capture;
         // also check if that was a double move
+        Piece pieceAtDesiredLocation = Board.board[location];
+        if(pieceAtDesiredLocation.getClass().equals(EmptySpace.class)){
+            int offset = (pieceColor == 'W') ? -8: 8;
+            Board.board[location + offset] = new EmptySpace(location + offset);
+        }
+        pieceAtDesiredLocation.erase();
+        Board.board[location] = this;
+        Board.board[locationNumber] = new EmptySpace(locationNumber);
+        locationNumber = location;
+        numberOfMovesMade ++;
     }
     public boolean isPromotion(int destination){
         int rank = Board.getPieceRank(destination);
@@ -50,15 +61,15 @@ public class Pawn implements Piece{
         //interacts with click or keyboard
     }
     public boolean hasMoved(){
-        return originalRank == Board.getPieceRank(locationNumber);
+        return originalRank != Board.getPieceRank(locationNumber);
     }
     public boolean hasMovedTwo(){
         if(pieceColor == 'W') {
-            if (!hasMoved() && Board.getPieceRank(locationNumber) == 3){
+            if (numberOfMovesMade == 1 && Board.getPieceRank(locationNumber) == 3){
                 return true;
             }
         }else{
-            if (!hasMoved() && Board.getPieceRank(locationNumber) == 4){
+            if (numberOfMovesMade == 1 && Board.getPieceRank(locationNumber) == 4){
                 return true;
             }
         }
@@ -120,13 +131,13 @@ public class Pawn implements Piece{
     public void optionsToMoveU1(Board board, HashSet<Integer> possibleDestinations){
         if(pieceColor == 'W') {
             Piece adjacentPieceU1 = board.getAdjacentPieceN(locationNumber);
-            if (adjacentPieceU1.getClass().equals(EmptySpace.class)) {
+            if (adjacentPieceU1 != null && adjacentPieceU1.getClass().equals(EmptySpace.class)) {
                 possibleDestinations.add(adjacentPieceU1.locationNumber());
             }
         }
         else{
             Piece adjacentPieceU1 = board.getAdjacentPieceS(locationNumber);
-            if (adjacentPieceU1.getClass().equals(EmptySpace.class)) {
+            if (adjacentPieceU1 != null &&adjacentPieceU1.getClass().equals(EmptySpace.class)) {
                 possibleDestinations.add(adjacentPieceU1.locationNumber());
             }
         }
@@ -134,16 +145,22 @@ public class Pawn implements Piece{
     public void optionsToMoveU2(Board board, HashSet<Integer> possibleDestinations){
         if(pieceColor == 'W') {
             Piece adjacentPieceU1 = board.getAdjacentPieceN(locationNumber);
+            if(adjacentPieceU1 == null){
+                return;
+            }
             Piece adjacentPieceU2 = board.getAdjacentPieceN(adjacentPieceU1.locationNumber());
-            if (adjacentPieceU1.getClass().equals(EmptySpace.class) && adjacentPieceU2.getClass().equals(EmptySpace.class) && !hasMovedTwo()) {
+            if (adjacentPieceU1.getClass().equals(EmptySpace.class) && adjacentPieceU2.getClass().equals(EmptySpace.class) && !hasMoved()) {
                 possibleDestinations.add(adjacentPieceU1.locationNumber());
                 possibleDestinations.add(adjacentPieceU2.locationNumber());
             }
         }
         else{
             Piece adjacentPieceU1 = board.getAdjacentPieceS(locationNumber);
+            if(adjacentPieceU1 == null){
+                return;
+            }
             Piece adjacentPieceU2 = board.getAdjacentPieceS(adjacentPieceU1.locationNumber());
-            if (adjacentPieceU1.getClass().equals(EmptySpace.class) && adjacentPieceU2.getClass().equals(EmptySpace.class) && !hasMovedTwo()) {
+            if (adjacentPieceU1.getClass().equals(EmptySpace.class) && adjacentPieceU2.getClass().equals(EmptySpace.class) && !hasMoved()) {
                 possibleDestinations.add(adjacentPieceU1.locationNumber());
                 possibleDestinations.add(adjacentPieceU2.locationNumber());
             }
@@ -189,6 +206,17 @@ public class Pawn implements Piece{
     @Override
     public char pieceColor() {
         return pieceColor;
+    }
+    @Override
+    public Piece cloneInOppositeColor() throws CloneNotSupportedException {
+        Piece clone = (Piece) this.clone();
+        clone.changePieceColor();
+        return clone;
+    }
+
+    @Override
+    public void changePieceColor() {
+        pieceColor = Board.getOppositeColorChar(pieceColor);
     }
 
     //en passant optimization: For white it can happen only on the 5th rank/ black 4th rank. Check only whenever we have

@@ -22,7 +22,8 @@ public class BoardChanges {
     }
 
     public LinkedList<BoardChanges> moveHistory;
-    public static ArrayList<Piece> erasedPieces;
+    public static ArrayList<Piece> erasedPiecesW = new ArrayList<>();
+    public static ArrayList<Piece> erasedPiecesB = new ArrayList<>();
     //when confirming a move
     public static boolean isLastEntryEqualTo(Piece lastPieceMoved){
         return lastEntry.movedPiece.equals(lastPieceMoved);

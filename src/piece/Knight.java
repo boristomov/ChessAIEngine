@@ -6,7 +6,7 @@ import src.piece.Piece;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class Knight implements Piece{
+public class Knight implements Piece, Cloneable{
     public char pieceColor;
 
     public String PieceImage;
@@ -25,7 +25,11 @@ public class Knight implements Piece{
     }
     @Override
     public void move(Board board, int location) {
-
+        Piece pieceAtDesiredLocation = Board.board[location];
+        pieceAtDesiredLocation.erase();
+        Board.board[location] = this;
+        Board.board[locationNumber] = new EmptySpace(locationNumber);
+        locationNumber = location;
     }
 
     @Override
@@ -151,5 +155,16 @@ public class Knight implements Piece{
     @Override
     public char pieceColor() {
         return pieceColor;
+    }
+    @Override
+    public Piece cloneInOppositeColor() throws CloneNotSupportedException {
+        Piece clone = (Piece) this.clone();
+        clone.changePieceColor();
+        return clone;
+    }
+
+    @Override
+    public void changePieceColor() {
+        pieceColor = Board.getOppositeColorChar(pieceColor);
     }
 }

@@ -2,12 +2,10 @@ package src.piece;
 
 import src.board.AttacksOnKing;
 import src.board.Board;
-import src.piece.Piece;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
-public class King implements Piece{
+public class King implements Piece, Cloneable{
 
     public char pieceColor;
     public static boolean isMoved;
@@ -29,7 +27,8 @@ public class King implements Piece{
     }
     @Override
     public void move(Board board, int location) {
-
+    //update king location in attacksonking
+        AttacksOnKing.checkingPieces.clear();
     }
 
     @Override
@@ -38,8 +37,172 @@ public class King implements Piece{
     }
 
     @Override
-    public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves) {
-        return null;
+    public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves) throws CloneNotSupportedException {
+        HashSet<Integer> possibleDestinations = new HashSet<>();
+
+        optionMoveN(board, possibleDestinations);
+        optionMoveS(board, possibleDestinations);
+        optionMoveW(board, possibleDestinations);
+        optionMoveE(board, possibleDestinations);
+        optionMoveNW(board, possibleDestinations);
+        optionMoveNE(board, possibleDestinations);
+        optionMoveSW(board, possibleDestinations);
+        optionMoveSE(board, possibleDestinations);
+
+        return possibleDestinations;
+    }
+    private void optionMoveN(Board board, HashSet<Integer> possibleDestinations) throws CloneNotSupportedException {
+        Piece adjacentPiece = board.getAdjacentPieceN(locationNumber);
+
+        if(adjacentPiece == null){
+            return;
+        }
+
+        char oppositeColor = Board.getOppositeColorChar(pieceColor);
+        Piece clone = adjacentPiece.cloneInOppositeColor();
+
+        // and is not guarded by anything
+        if((adjacentPiece.getClass().equals(EmptySpace.class)
+                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
+                || (adjacentPiece.pieceColor() == oppositeColor
+                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
+
+            board.replace(clone, adjacentPiece);
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void optionMoveS(Board board, HashSet<Integer> possibleDestinations) throws CloneNotSupportedException {
+        Piece adjacentPiece = board.getAdjacentPieceS(locationNumber);
+
+        if(adjacentPiece == null){
+            return;
+        }
+
+        char oppositeColor = Board.getOppositeColorChar(pieceColor);
+        Piece clone = adjacentPiece.cloneInOppositeColor();
+        // and is not guarded by anything
+        if((adjacentPiece.getClass().equals(EmptySpace.class)
+                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
+                || (adjacentPiece.pieceColor() == oppositeColor
+                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
+
+            board.replace(clone, adjacentPiece);
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void optionMoveW(Board board, HashSet<Integer> possibleDestinations) throws CloneNotSupportedException {
+        Piece adjacentPiece = board.getAdjacentPieceW(locationNumber);
+
+        if(adjacentPiece == null){
+            return;
+        }
+
+        char oppositeColor = Board.getOppositeColorChar(pieceColor);
+        Piece clone = adjacentPiece.cloneInOppositeColor();
+        // and is not guarded by anything
+        if((adjacentPiece.getClass().equals(EmptySpace.class)
+                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
+                || (adjacentPiece.pieceColor() == oppositeColor
+                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
+
+            board.replace(clone, adjacentPiece);
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void optionMoveE(Board board, HashSet<Integer> possibleDestinations) throws CloneNotSupportedException {
+        Piece adjacentPiece = board.getAdjacentPieceE(locationNumber);
+
+        if(adjacentPiece == null){
+            return;
+        }
+
+        char oppositeColor = Board.getOppositeColorChar(pieceColor);
+        Piece clone = adjacentPiece.cloneInOppositeColor();
+        // and is not guarded by anything
+        if((adjacentPiece.getClass().equals(EmptySpace.class)
+                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
+                || (adjacentPiece.pieceColor() == oppositeColor
+                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
+
+            board.replace(clone, adjacentPiece);
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void optionMoveNW(Board board, HashSet<Integer> possibleDestinations) throws CloneNotSupportedException {
+        Piece adjacentPiece = board.getAdjacentPieceNW(locationNumber);
+
+        if(adjacentPiece == null){
+            return;
+        }
+
+        char oppositeColor = Board.getOppositeColorChar(pieceColor);
+        Piece clone = adjacentPiece.cloneInOppositeColor();
+        // and is not guarded by anything
+        if((adjacentPiece.getClass().equals(EmptySpace.class)
+                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
+                || (adjacentPiece.pieceColor() == oppositeColor
+                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
+
+            board.replace(clone, adjacentPiece);
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void optionMoveNE(Board board, HashSet<Integer> possibleDestinations) throws CloneNotSupportedException {
+        Piece adjacentPiece = board.getAdjacentPieceNE(locationNumber);
+
+        if(adjacentPiece == null){
+            return;
+        }
+
+        char oppositeColor = Board.getOppositeColorChar(pieceColor);
+        Piece clone = adjacentPiece.cloneInOppositeColor();
+        // and is not guarded by anything
+        if((adjacentPiece.getClass().equals(EmptySpace.class)
+                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
+                || (adjacentPiece.pieceColor() == oppositeColor
+                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
+
+            board.replace(clone, adjacentPiece);
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void optionMoveSW(Board board, HashSet<Integer> possibleDestinations) throws CloneNotSupportedException {
+        Piece adjacentPiece = board.getAdjacentPieceSW(locationNumber);
+
+        if(adjacentPiece == null){
+            return;
+        }
+
+        char oppositeColor = Board.getOppositeColorChar(pieceColor);
+        Piece clone = adjacentPiece.cloneInOppositeColor();
+        // and is not guarded by anything
+        if((adjacentPiece.getClass().equals(EmptySpace.class)
+                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
+                || (adjacentPiece.pieceColor() == oppositeColor
+                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
+
+            board.replace(clone, adjacentPiece);
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void optionMoveSE(Board board, HashSet<Integer> possibleDestinations) throws CloneNotSupportedException {
+        Piece adjacentPiece = board.getAdjacentPieceSE(locationNumber);
+
+        if(adjacentPiece == null){
+            return;
+        }
+
+        char oppositeColor = Board.getOppositeColorChar(pieceColor);
+        Piece clone = adjacentPiece.cloneInOppositeColor();
+        // and is not guarded by anything
+        if((adjacentPiece.getClass().equals(EmptySpace.class)
+                && AttacksOnKing.isPieceTargeted(board, this.pieceColor, adjacentPiece.locationNumber()))
+                || (adjacentPiece.pieceColor() == oppositeColor
+                && AttacksOnKing.isPieceTargeted(board.replace(adjacentPiece, clone), oppositeColor, adjacentPiece.locationNumber()))){
+
+            board.replace(clone, adjacentPiece);
+            possibleDestinations.add(adjacentPiece.locationNumber());
+        }
     }
     @Override
     public String pieceImage() {
@@ -65,4 +228,15 @@ public class King implements Piece{
         return pieceColor;
     }
 
+    @Override
+    public Piece cloneInOppositeColor() throws CloneNotSupportedException {
+        Piece clone = (Piece) this.clone();
+        clone.changePieceColor();
+        return clone;
+    }
+
+    @Override
+    public void changePieceColor() {
+        pieceColor = Board.getOppositeColorChar(pieceColor);
+    }
 }
