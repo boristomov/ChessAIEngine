@@ -130,4 +130,32 @@ public class TestBoard {
 
         return board;
     }
+    public static Board testBishopNorhtSameFile(){
+        Board board = new Board(8);
+        Board.board[14] = new EmptySpace(14);
+        Board.board[13] = new EmptySpace(13);
+        Board.board[12] = new EmptySpace(12);
+        Board.board[59] = new EmptySpace(59);
+        Board.board[11] = new Pawn('B',11);
+        Board.board[30] = new Pawn('W', 30);
+        Board.board[29] = new Pawn('B', 29);
+        Board.board[52] = new Bishop('B', 52);
+
+        return board;
+    }
+    public static Board testCheckBlock(){
+        Board board = new Board(8);
+        Board.board[14] = new EmptySpace(14);
+        Board.board[13] = new EmptySpace(13);
+        Board.board[12] = new EmptySpace(12);
+        Board.board[59] = new EmptySpace(59);
+
+        Board.board[11] = new EmptySpace(11);
+        Board.board[28] = new Knight('W', 28);
+        Board.board[29] = new Pawn('B', 29);
+        Board.board[18] = new Bishop('B', 18);
+        Board.board[43] = new Queen('B', 43);
+
+        return board;
+    }
 }

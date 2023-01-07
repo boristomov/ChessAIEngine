@@ -28,6 +28,17 @@ public class King implements Piece, Cloneable{
     @Override
     public void move(Board board, int location) {
     //update king location in attacksonking
+        Piece pieceAtDesiredLocation = Board.board[location];
+        pieceAtDesiredLocation.erase();
+        Board.board[location] = this;
+        Board.board[locationNumber] = new EmptySpace(locationNumber);
+        locationNumber = location;
+        if(pieceColor == 'W'){
+            AttacksOnKing.WkingLocation = locationNumber;
+        }
+        else{
+            AttacksOnKing.BkingLocation = locationNumber;
+        }
         AttacksOnKing.checkingPieces.clear();
     }
 

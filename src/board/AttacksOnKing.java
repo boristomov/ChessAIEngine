@@ -310,10 +310,10 @@ public class AttacksOnKing {
             }
             if(pieceRank > kingRank && !piece.getClass().equals(Knight.class)){
                 if(pieceFile > kingFile){
-                    interceptionScope.addAll(dangerScopeSE(board, piece));
+                    interceptionScope.addAll(dangerScopeSW(board, piece));
                 }
                 else if(pieceFile < kingFile){
-                    interceptionScope.addAll(dangerScopeSW(board, piece));
+                    interceptionScope.addAll(dangerScopeSE(board, piece));
                 }
             } else if(pieceRank < kingRank && !piece.getClass().equals(Knight.class)) {
                 if(pieceFile > kingFile){
