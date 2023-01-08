@@ -3,6 +3,7 @@ package src.piece;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import src.board.AttacksOnKing;
 import src.board.Board;
 import src.board.BoardChanges;
 
@@ -99,6 +100,9 @@ public class Pawn implements Piece, Cloneable{
                     possibleDestinations.remove(i);
                 }
             }
+        }
+        else if(AttacksOnKing.pPiecesAndAllowedMoves.containsKey(this)){
+            return allowedMoves;
         }
         return possibleDestinations;
     }

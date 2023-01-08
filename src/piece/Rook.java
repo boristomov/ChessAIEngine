@@ -1,5 +1,6 @@
 package src.piece;
 
+import src.board.AttacksOnKing;
 import src.board.Board;
 import src.piece.Piece;
 
@@ -50,6 +51,9 @@ public class Rook implements Piece, Cloneable{
                     possibleDestinations.remove(i);
                 }
             }
+        }
+        else if(AttacksOnKing.pPiecesAndAllowedMoves.containsKey(this)){
+            return allowedMoves;
         }
         return possibleDestinations;
     }

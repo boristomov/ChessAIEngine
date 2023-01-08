@@ -62,8 +62,12 @@ public class ProgramRunner {
                 if (StdDraw.isMousePressed()) {
                     board.confirmMove(selectedPiece, Main.turnColor);
                 }
-                StdDraw.pause(1000);
             }
+        }
+    }
+    private void MovePhase1(Board board) throws CloneNotSupportedException {
+        if (StdDraw.isMousePressed()) {
+            Piece selectedPiece = board.clickOnPiece(Main.turnColor);
         }
     }
 }

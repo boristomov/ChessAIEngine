@@ -149,13 +149,11 @@ public class Board {
                 System.out.println("game over");
                 System.exit(0);
             }
-        } else if (selectedDestinationPiece.pieceColor() == selectedPiece.pieceColor()) {
-            clickOnPiece(turnColor);
-            ProgramRunner.visualizeBoard(this);
+            AttacksOnKing.pPiecesAndAllowedMoves.clear();
+            AttacksOnKing.checkingPieces.clear();
         }
+        ProgramRunner.visualizeBoard(this);
 
-        AttacksOnKing.pPiecesAndAllowedMoves.clear();
-        AttacksOnKing.checkingPieces.clear();
     }
 
     public String toString() {

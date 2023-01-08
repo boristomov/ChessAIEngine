@@ -1,5 +1,6 @@
 package src.piece;
 
+import src.board.AttacksOnKing;
 import src.board.Board;
 import src.board.BoardChanges;
 
@@ -61,6 +62,9 @@ public class Queen implements Piece, Cloneable {
                     possibleDestinations.remove(i);
                 }
             }
+        }
+        else if(AttacksOnKing.pPiecesAndAllowedMoves.containsKey(this)){
+            return allowedMoves;
         }
         return possibleDestinations;
     }

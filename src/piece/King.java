@@ -39,7 +39,7 @@ public class King implements Piece, Cloneable{
         else{
             AttacksOnKing.BkingLocation = locationNumber;
         }
-        AttacksOnKing.checkingPieces.clear();
+//        AttacksOnKing.checkingPieces.clear();
     }
 
     @Override

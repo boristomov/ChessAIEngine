@@ -158,4 +158,32 @@ public class TestBoard {
 
         return board;
     }
+    public static Board testKnightCheckBlock(){
+        Board board = new Board(8);
+        Board.board[14] = new EmptySpace(14);
+        Board.board[13] = new EmptySpace(13);
+        Board.board[12] = new EmptySpace(12);
+        Board.board[59] = new EmptySpace(59);
+
+        Board.board[10] = new Knight('W',10);
+        Board.board[29] = new Pawn('W', 29);
+        Board.board[18] = new Bishop('B', 18);
+        Board.board[36] = new Queen('B', 36);
+
+        return board;
+    }
+    public static Board testQueenAttack2ndRank(){
+        Board board = new Board(8);
+        Board.board[14] = new EmptySpace(14);
+        Board.board[13] = new EmptySpace(13);
+        Board.board[12] = new EmptySpace(12);
+        Board.board[59] = new EmptySpace(59);
+
+        Board.board[10] = new Knight('W',10);
+        Board.board[29] = new Pawn('W', 29);
+        Board.board[18] = new Queen('B', 18);
+        Board.board[36] = new Bishop('B', 36);
+
+        return board;
+    }
 }
