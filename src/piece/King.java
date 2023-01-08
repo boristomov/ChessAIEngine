@@ -60,17 +60,17 @@ public class King implements Piece, Cloneable{
         optionMoveSW(board, possibleDestinations);
         optionMoveSE(board, possibleDestinations);
         //those allowed moves are different from the ones at the other pieces. These are as a result of the check.
-        if(!restrictedMoves.isEmpty()) {
-            HashSet<Integer> clone = (HashSet<Integer>) restrictedMoves.clone();
-            for (int i : clone) {
-                if (possibleDestinations.contains(i)) {
-                    possibleDestinations.remove(i);
-                }
-            }
-        }
-        else{
-            return possibleDestinations;
-        }
+//        if(!restrictedMoves.isEmpty()) {
+//            HashSet<Integer> clone = (HashSet<Integer>) restrictedMoves.clone();
+//            for (int i : clone) {
+//                if (possibleDestinations.contains(i)) {
+//                    possibleDestinations.remove(i);
+//                }
+//            }
+//        }
+//        else{
+//            return possibleDestinations;
+//        }
 
         return possibleDestinations;
     }

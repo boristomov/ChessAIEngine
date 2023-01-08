@@ -194,4 +194,14 @@ public class TestBoard {
 
         return board;
     }
+    public static Board testWQueenCheckNoCM(){
+        Board board = new Board(8);
+        Board.board[52] = new EmptySpace(52);
+        Board.board[59] = new EmptySpace(59);
+        Board.board[3] = new EmptySpace(3);
+        Board.board[51] = new Queen('W', 51);
+        Board.board[31] = new Queen('B', 31);
+
+        return board;
+    }
 }

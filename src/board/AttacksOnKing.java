@@ -54,6 +54,7 @@ public class AttacksOnKing {
     public static HashSet<Integer> dangerScopeW(Board board, Piece piece){
         HashSet<Integer> possibleDestinations = new HashSet<>();
         possibleDestinations.add(piece.locationNumber());
+        possibleDestinations.add(piece.locationNumber());
         int currentAdjPieceRank = Board.getPieceRank(piece.locationNumber());
         int moveLocation = piece.locationNumber() - 1;
         while(moveLocation >= 0 && Board.getPieceRank(moveLocation) == currentAdjPieceRank && !Board.board[moveLocation].getClass().equals(King.class)) {
@@ -77,6 +78,7 @@ public class AttacksOnKing {
     }
     public static HashSet<Integer> dangerScopeNE(Board board, Piece piece){
         HashSet<Integer> possibleDestinations = new HashSet<>();
+        possibleDestinations.add(piece.locationNumber());
         int currentAdjPieceFile = Board.getPieceFile(piece.locationNumber());
         int moveLocation = piece.locationNumber() + 9;
         while(moveLocation <= 63 && Board.getPieceFile(moveLocation) - 1 == currentAdjPieceFile && !Board.board[moveLocation].getClass().equals(King.class)) {
@@ -88,6 +90,7 @@ public class AttacksOnKing {
     }
     public static HashSet<Integer> dangerScopeSW(Board board, Piece piece){
         HashSet<Integer> possibleDestinations = new HashSet<>();
+        possibleDestinations.add(piece.locationNumber());
         int currentAdjPieceFile = Board.getPieceFile(piece.locationNumber());
         int moveLocation = piece.locationNumber() - 9;
         while(moveLocation >= 0 && Board.getPieceFile(moveLocation) + 1 == currentAdjPieceFile && !Board.board[moveLocation].getClass().equals(King.class)) {
@@ -99,6 +102,7 @@ public class AttacksOnKing {
     }
     public static HashSet<Integer> dangerScopeSE(Board board, Piece piece){
         HashSet<Integer> possibleDestinations = new HashSet<>();
+        possibleDestinations.add(piece.locationNumber());
         int currentAdjPieceFile = Board.getPieceFile(piece.locationNumber());
         possibleDestinations.add(piece.locationNumber());
         int moveLocation = piece.locationNumber() - 7;
