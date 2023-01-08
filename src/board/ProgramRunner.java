@@ -61,6 +61,7 @@ public class ProgramRunner {
                 StdDraw.pause(2000);
                 if (StdDraw.isMousePressed()) {
                     board.confirmMove(selectedPiece, Main.turnColor);
+                    StdDraw.pause(1000);
                 }
             }
         }

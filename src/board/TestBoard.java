@@ -186,4 +186,12 @@ public class TestBoard {
 
         return board;
     }
+    public static Board testBishop25CheckNoCM(){
+        Board board = new Board(8);
+        Board.board[52] = new EmptySpace(52);
+        Board.board[11] = new EmptySpace(11);
+        Board.board[36] = new Pawn('W', 36);
+
+        return board;
+    }
 }

@@ -276,9 +276,18 @@ public class AttacksOnKing {
             HashSet<Integer> allowedMoves = applyDanSfunc(board, king);
             if(king.generatePossibleMoves(board, allowedMoves).isEmpty()){
                 // I think this king.loc arg is wrong. Use istracked func
-                if(checkingPieces.size() > 1){
+                if(checkingPieces.size() > 1 && !canCheckBeBlocked(board, allowedMoves, king, turnColor)){
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+    public static boolean canCheckBeBlocked(Board board, HashSet<Integer> dangerScope, Piece king, char turnColor) throws CloneNotSupportedException {
+        HashSet<Integer> defendedSquares = attackedSquares(board, turnColor, king.locationNumber());
+        for(int i: dangerScope){
+            if(defendedSquares.contains(i)){
+                return true;
             }
         }
         return false;
@@ -349,8 +358,8 @@ public class AttacksOnKing {
     public static boolean isPieceTargeted(Board board, char turnColor, int location) throws CloneNotSupportedException {
         return (attackedSquares(board, turnColor, location).contains(location));
     }
-    private static HashSet<Integer> attackedSquares(Board board, char turnColor, int location) throws CloneNotSupportedException {
-        AttacksOnKing.checkForPins(board, location);
+    public static HashSet<Integer> attackedSquares(Board board, char turnColor, int location) throws CloneNotSupportedException {
+        AttacksOnKing.checkForPins(board, location);// wonder if there should be two locations added. Here this is the king location
         HashSet<Integer> attackedSquares = new HashSet<>();
 
         if(turnColor == 'W'){

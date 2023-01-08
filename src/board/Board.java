@@ -143,14 +143,18 @@ public class Board {
             selectedPiece.move(this, selectedDestinationPiece.locationNumber());
             BoardSquare[][] BS = BoardRender.BoardToBSConverter(this);
             ProgramRunner.visualizeBoardBS(BS);
-            Main.turnColor = Board.getOppositeColorChar(Main.turnColor);
             Piece king = (turnColor == 'W')? board[AttacksOnKing.BkingLocation] : board[AttacksOnKing.WkingLocation];
             if(AttacksOnKing.isCheckMate(this, turnColor, king)){
                 System.out.println("game over");
                 System.exit(0);
             }
+            Main.turnColor = Board.getOppositeColorChar(Main.turnColor);
             AttacksOnKing.pPiecesAndAllowedMoves.clear();
             AttacksOnKing.checkingPieces.clear();
+        } else if (selectedDestinationPiece.pieceColor() == selectedPiece.pieceColor()) {
+            AttacksOnKing.pPiecesAndAllowedMoves.clear();
+            AttacksOnKing.checkingPieces.clear();
+            clickOnPiece(turnColor);
         }
         ProgramRunner.visualizeBoard(this);
 
