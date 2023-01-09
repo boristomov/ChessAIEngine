@@ -1,6 +1,7 @@
 package src.board;
 
 import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.StdDraw;
 import src.piece.*;
 
 import java.awt.*;
@@ -93,6 +94,7 @@ public class Board {
         Piece king = (turnColor == 'W')? board[AttacksOnKing.WkingLocation] : board[AttacksOnKing.BkingLocation];
 
         selectedPiece = Mouse.scanMousePosition(this);
+
         if(!selectedPiece.getClass().equals(EmptySpace.class) && selectedPiece.pieceColor() == Main.turnColor){
             BoardSquare[][] BS = BoardRender.BoardToBSConverter(this);
 

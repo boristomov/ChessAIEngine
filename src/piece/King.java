@@ -226,6 +226,9 @@ public class King implements Piece, Cloneable{
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
     }
+    private void optionsToCastleQueenSide(Board board, HashSet<Integer> possibleDestinations){
+        //king is not in check and there are no pieces intercepting its move when castling;
+    }
     @Override
     public String pieceImage() {
         return PieceImage;
