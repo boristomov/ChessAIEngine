@@ -84,7 +84,8 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+        AttacksOnKing.applyDanSfunc(board, )
+        if(adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor

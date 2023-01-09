@@ -204,4 +204,15 @@ public class TestBoard {
 
         return board;
     }
+    public static Board testWQueenCM(){
+        Board board = new Board(8);
+        Board.board[3] = new EmptySpace(3);
+        Board.board[11] = new EmptySpace(11);
+        Board.board[60] = new EmptySpace(60);
+        Board.board[35] = new Queen('W', 35);
+        Board.board[52] = new King('B', 52);
+
+
+        return board;
+    }
 }
