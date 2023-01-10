@@ -117,8 +117,8 @@ public class Pawn implements Piece, Cloneable{
     public HashSet<Integer> generateCaptureMoves(Board board, HashSet<Integer> allowedMoves) {
         HashSet<Integer> possibleDestinations = new HashSet<>();
 
-        optionsToMoveUW(board, possibleDestinations);
-        optionsToMoveUE(board, possibleDestinations);
+        guardingUW(board, possibleDestinations);
+        guardingUE(board, possibleDestinations);
         if(pieceColor == 'W' && Board.getPieceRank(locationNumber) == 4){
             possibleDestinations.addAll(enPassantLocations(board));
         } else if (pieceColor == 'B' && Board.getPieceRank(locationNumber) == 3) {
@@ -140,12 +140,25 @@ public class Pawn implements Piece, Cloneable{
     public void optionsToMoveUW(Board board, HashSet<Integer> possibleDestinations){
         if(pieceColor == 'W') {
             Piece adjacentPieceW = board.getAdjacentPieceNW(locationNumber);
-            if(adjacentPieceW != null && !adjacentPieceW.getClass().equals(EmptySpace.class) && adjacentPieceW.pieceColor() != 'W'){
+            if(adjacentPieceW != null && !adjacentPieceW.getClass().equals(EmptySpace.class) && adjacentPieceW.pieceColor() != 'W' && Board.getPieceFile(adjacentPieceW.locationNumber()) + 1 == Board.getPieceFile(locationNumber)){
                 possibleDestinations.add(adjacentPieceW.locationNumber());
             }
         }else{
             Piece adjacentPieceW = board.getAdjacentPieceSW(locationNumber);
-            if(adjacentPieceW != null && !adjacentPieceW.getClass().equals(EmptySpace.class) && adjacentPieceW.pieceColor() != 'B'){
+            if(adjacentPieceW != null && !adjacentPieceW.getClass().equals(EmptySpace.class) && adjacentPieceW.pieceColor() != 'B' && Board.getPieceFile(adjacentPieceW.locationNumber()) + 1 == Board.getPieceFile(locationNumber)){
+                possibleDestinations.add(adjacentPieceW.locationNumber());
+            }
+        }
+    }
+    public void guardingUW(Board board, HashSet<Integer> possibleDestinations){
+        if(pieceColor == 'W') {
+            Piece adjacentPieceW = board.getAdjacentPieceNW(locationNumber);
+            if(adjacentPieceW != null && adjacentPieceW.pieceColor() != 'W' && Board.getPieceFile(adjacentPieceW.locationNumber()) + 1 == Board.getPieceFile(locationNumber)){
+                possibleDestinations.add(adjacentPieceW.locationNumber());
+            }
+        }else{
+            Piece adjacentPieceW = board.getAdjacentPieceSW(locationNumber);
+            if(adjacentPieceW != null && adjacentPieceW.pieceColor() != 'B'&& Board.getPieceFile(adjacentPieceW.locationNumber()) + 1 == Board.getPieceFile(locationNumber)){
                 possibleDestinations.add(adjacentPieceW.locationNumber());
             }
         }
@@ -153,12 +166,25 @@ public class Pawn implements Piece, Cloneable{
     public void optionsToMoveUE(Board board, HashSet<Integer> possibleDestinations){
         if(pieceColor == 'W') {
             Piece adjacentPieceE = board.getAdjacentPieceNE(locationNumber);
-            if(adjacentPieceE != null && !adjacentPieceE.getClass().equals(EmptySpace.class) && adjacentPieceE.pieceColor() != 'W'){
+            if(adjacentPieceE != null && !adjacentPieceE.getClass().equals(EmptySpace.class) && adjacentPieceE.pieceColor() != 'W' && Board.getPieceFile(adjacentPieceE.locationNumber()) - 1 == Board.getPieceFile(locationNumber)){
                 possibleDestinations.add(adjacentPieceE.locationNumber());
             }
         }else{
             Piece adjacentPieceE = board.getAdjacentPieceSE(locationNumber);
-            if(adjacentPieceE != null && !adjacentPieceE.getClass().equals(EmptySpace.class) && adjacentPieceE.pieceColor() != 'B'){
+            if(adjacentPieceE != null && !adjacentPieceE.getClass().equals(EmptySpace.class) && adjacentPieceE.pieceColor() != 'B'&& Board.getPieceFile(adjacentPieceE.locationNumber()) - 1== Board.getPieceFile(locationNumber)){
+                possibleDestinations.add(adjacentPieceE.locationNumber());
+            }
+        }
+    }
+    public void guardingUE(Board board, HashSet<Integer> possibleDestinations){
+        if(pieceColor == 'W') {
+            Piece adjacentPieceE = board.getAdjacentPieceNE(locationNumber);
+            if(adjacentPieceE != null && adjacentPieceE.pieceColor() != 'W' && Board.getPieceFile(adjacentPieceE.locationNumber()) - 1 == Board.getPieceFile(locationNumber)){
+                possibleDestinations.add(adjacentPieceE.locationNumber());
+            }
+        }else{
+            Piece adjacentPieceE = board.getAdjacentPieceSE(locationNumber);
+            if(adjacentPieceE != null && adjacentPieceE.pieceColor() != 'B'&& Board.getPieceFile(adjacentPieceE.locationNumber()) - 1 == Board.getPieceFile(locationNumber)){
                 possibleDestinations.add(adjacentPieceE.locationNumber());
             }
         }
