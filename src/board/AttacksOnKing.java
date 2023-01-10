@@ -543,7 +543,13 @@ public class AttacksOnKing {
             for(Piece enemyPiece: Board.blackPieces){
                 if(enemyPiece.getClass().equals(King.class)){continue;}
                 HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(enemyPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(enemyPiece) : new HashSet<>();
-                HashSet<Integer> attackingMoves = enemyPiece.generatePossibleMoves(board, allowedMoves);
+                HashSet<Integer> attackingMoves;
+                if(!enemyPiece.getClass().equals(Pawn.class)){
+                    attackingMoves = enemyPiece.generatePossibleMoves(board, allowedMoves);
+                }
+                else{
+                    attackingMoves = ((Pawn) enemyPiece).generateCaptureMoves(board, allowedMoves);
+                }
                 if(attackingMoves.contains(location)) {
                     checkingPieces.add(enemyPiece);
                 }

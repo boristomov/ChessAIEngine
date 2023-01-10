@@ -5,10 +5,14 @@ import src.piece.*;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
+import java.util.HashSet;
 
 public class ProgramRunner {
     public static int WIDTH = 64;
     public static int HEIGHT = 64;
+
+    public static HashSet<Integer> movesToPutShadowOn;
+    public static Piece selectedPiece = null;
 
     public static Board visualizeBoard(Board board) {
         BoardRender render = new BoardRender();
@@ -56,21 +60,24 @@ public class ProgramRunner {
 
     public static void startTestGame(Board board) throws CloneNotSupportedException {
         while(true) {
-            if (StdDraw.isMousePressed()) {
-                StdDraw.pause(300);
-                StdDraw.enableDoubleBuffering();
-                Piece selectedPiece = board.clickOnPiece( Main.turnColor);
-                StdDraw.show();
-                while(!StdDraw.isMousePressed()) {
-                    StdDraw.pause(10);
-                    if (StdDraw.isMousePressed()) {
-                        System.out.println("confirm");
-                        StdDraw.pause(300);
-                        board.confirmMove(selectedPiece, Main.turnColor);
-                        break;
-                    }
+            while(selectedPiece == null){
+                if(StdDraw.isMousePressed()) {
+                    StdDraw.pause(300);
+                    StdDraw.enableDoubleBuffering();
+                    selectedPiece = board.clickOnPiece(Main.turnColor);
+                    StdDraw.pause(300);
                 }
             }
+            StdDraw.show();
+            boolean completed = false;
+            while(!completed) {
+                if (StdDraw.isMousePressed()) {
+                    StdDraw.pause(300);
+                    completed = board.confirmMove(selectedPiece, Main.turnColor, movesToPutShadowOn);
+                    StdDraw.pause(300);
+                }
+            }
+            selectedPiece = null;
         }
     }
     private void MovePhase1(Board board) throws CloneNotSupportedException {

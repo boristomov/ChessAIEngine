@@ -1,11 +1,8 @@
 package src.board;
 
-import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.StdDraw;
 import src.piece.*;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -95,9 +92,10 @@ public class Board {
 
         selectedPiece = Mouse.scanMousePosition(this);
 
+
         if(!selectedPiece.getClass().equals(EmptySpace.class) && selectedPiece.pieceColor() == Main.turnColor){
             BoardSquare[][] BS = BoardRender.BoardToBSConverter(this);
-
+            ProgramRunner.selectedPiece = selectedPiece;
             //changes the color of the selected piece to RED.
             Color selectedPieceSQColor = Color.RED;
             int selectedPieceFile = getPieceFile(selectedPiece.locationNumber());
@@ -112,6 +110,7 @@ public class Board {
                 allowedMoves = AttacksOnKing.mergeAllowedMoves(allowedMoves, AttacksOnKing.applyDanSfunc(this, king));
             }
             HashSet<Integer> movesToPutShadowOn = selectedPiece.generatePossibleMoves(this, allowedMoves);
+            ProgramRunner.movesToPutShadowOn = movesToPutShadowOn;// sets the holder variable
             if(movesToPutShadowOn != null) {
                 for (int i: movesToPutShadowOn) {
                     Color squareColor = Color.CYAN;
@@ -122,22 +121,20 @@ public class Board {
                 }
             }
             ProgramRunner.visualizeBoardBS(BS);
+            return selectedPiece;
         }
-
-        return selectedPiece;
+        return null;
     }
 
     /**
      * Activates when user clicks on one of the projected possible moves.
      * Calls Piece.move() and executes the board changes.
      * Shifts turns to the other player.
-     * @param selectedPiece - piece which was clicked on earlier during the move
      *
+     * @param selectedPiece - piece which was clicked on earlier during the move
      */
-    public void confirmMove(Piece selectedPiece, char turnColor) throws CloneNotSupportedException {
+    public boolean confirmMove(Piece selectedPiece, char turnColor, HashSet<Integer> movesToPutShadowOn) throws CloneNotSupportedException {
         Piece selectedDestinationPiece = Mouse.scanMousePosition(this);
-        HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(selectedPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(selectedPiece) : new HashSet<>();
-        HashSet<Integer> movesToPutShadowOn = selectedPiece.generatePossibleMoves(this, allowedMoves);
 
 
         if(movesToPutShadowOn.contains(selectedDestinationPiece.locationNumber())){
@@ -154,14 +151,21 @@ public class Board {
             Main.turnColor = Board.getOppositeColorChar(Main.turnColor);
             AttacksOnKing.pPiecesAndAllowedMoves.clear();
             AttacksOnKing.checkingPieces.clear();
+            return true;
         }
         else if (selectedDestinationPiece.pieceColor() == selectedPiece.pieceColor()) {
             AttacksOnKing.pPiecesAndAllowedMoves.clear();
             AttacksOnKing.checkingPieces.clear();
-            clickOnPiece(turnColor);
+            clickOnPiece(turnColor);// does not have anywhere to store selected piece
+            return false;
         }
-        ProgramRunner.visualizeBoard(this);
-
+        if(!movesToPutShadowOn.contains(selectedDestinationPiece.locationNumber()) || selectedDestinationPiece.pieceColor() != selectedPiece.pieceColor()) {
+            AttacksOnKing.pPiecesAndAllowedMoves.clear();
+            AttacksOnKing.checkingPieces.clear();
+            ProgramRunner.visualizeBoard(this);
+            return true;
+        }
+        return false;
     }
 
     public String toString() {

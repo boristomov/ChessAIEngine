@@ -114,6 +114,29 @@ public class Pawn implements Piece, Cloneable{
         }
         return possibleDestinations;
     }
+    public HashSet<Integer> generateCaptureMoves(Board board, HashSet<Integer> allowedMoves) {
+        HashSet<Integer> possibleDestinations = new HashSet<>();
+
+        optionsToMoveUW(board, possibleDestinations);
+        optionsToMoveUE(board, possibleDestinations);
+        if(pieceColor == 'W' && Board.getPieceRank(locationNumber) == 4){
+            possibleDestinations.addAll(enPassantLocations(board));
+        } else if (pieceColor == 'B' && Board.getPieceRank(locationNumber) == 3) {
+            possibleDestinations.addAll(enPassantLocations(board));
+        }
+        if(!allowedMoves.isEmpty()) {
+            HashSet<Integer> clone = (HashSet<Integer>) possibleDestinations.clone();
+            for (int i : clone) {
+                if (!allowedMoves.contains(i)) {
+                    possibleDestinations.remove(i);
+                }
+            }
+        }
+        else if(AttacksOnKing.pPiecesAndAllowedMoves.containsKey(this)){
+            return allowedMoves;
+        }
+        return possibleDestinations;
+    }
     public void optionsToMoveUW(Board board, HashSet<Integer> possibleDestinations){
         if(pieceColor == 'W') {
             Piece adjacentPieceW = board.getAdjacentPieceNW(locationNumber);

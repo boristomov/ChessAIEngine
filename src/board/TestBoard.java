@@ -219,4 +219,24 @@ public class TestBoard {
 
         return board;
     }
+    public static Board testPawnInFrontOfBlackPos(){
+        Board board = new Board(8);
+        Board.board[14].erase();
+        Board.board[14] = new EmptySpace(14);
+        Board.board[38] = new Pawn('W', 38);
+
+        return board;
+    }
+    public static Board testBQueenHorizontalCheck(){
+        Board board = new Board(8);
+        Board.board[4].erase();
+        Board.board[59].erase();
+        Board.board[4] = new EmptySpace(4);
+        Board.board[59] = new EmptySpace(59);
+        Board.board[29] = new Queen('B', 29);
+        Board.board[31] = new King('W', 31);
+
+
+        return board;
+    }
 }
