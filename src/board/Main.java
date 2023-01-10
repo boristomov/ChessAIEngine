@@ -7,9 +7,9 @@ import src.piece.*;
 
 public class Main {
     public static final File CWD = new File(System.getProperty("user.dir"));
-    public static char turnColor = 'W';
+    public static char turnColor = 'B';
     public static void main(String[] args) throws CloneNotSupportedException {
-        Board board = TestBoard.testBQueenHorizontal2();
+        Board board = TestBoard.testMinusOneError();
         System.out.println(board.toString());
         ProgramRunner.visualizeBoard(board);
         ProgramRunner.startTestGame(board);

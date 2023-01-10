@@ -143,7 +143,7 @@ public class AttacksOnKing {
     public static HashSet<Integer> arrayScopeS(Board board, Piece piece){
         HashSet<Integer> possibleDestinations = new HashSet<>();
         int moveLocation = piece.locationNumber();
-        while(moveLocation <= 63) {
+        while(moveLocation >= 0) {
             if(!Board.board[moveLocation].getClass().equals(King.class)) {
                 possibleDestinations.add(moveLocation);
                 moveLocation -= 8;
