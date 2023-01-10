@@ -116,6 +116,7 @@ public class BoardRender {
                 BS[x][y].draw(x * 8 + xOffset, y * 8 + yOffset);
             }
         }
+
         /**
          * User information bar: Evaluations. pieces taken, moves, etc.
          if(HUD){
@@ -129,6 +130,22 @@ public class BoardRender {
          StdDraw.line(0,Engine.HEIGHT - 3, Engine.WIDTH, Engine.HEIGHT - 3);
          }
          */
+        StdDraw.show();
+    }
+    public void renderFramePromotion(BoardSquare[][] BS) {
+        int numXTiles = BS.length;
+        int numYTiles = BS[0].length;
+        StdDraw.clear(new Color(0, 0, 0));
+        for (int x = 0; x < numXTiles; x += 1) {
+            for (int y = 0; y < numYTiles; y += 1) {
+                if (BS[x][y] == null) {
+                    throw new IllegalArgumentException("Tile at position x=" + x + ", y=" + y
+                            + " is null.");
+                }
+                BS[x][y].drawPromotionMenu(x * 32 + xOffset, y * 32 + yOffset);
+            }
+        }
+
         StdDraw.show();
     }
     public static BoardSquare[][] BoardToBSConverter(Board board){

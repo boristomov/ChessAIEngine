@@ -24,6 +24,16 @@ public class Rook implements Piece, Cloneable{
             Board.blackPieces.add(this);
         }
     }
+    public Rook(char pieceColor, int locationNumber, boolean addToPieces){
+        this.pieceColor = pieceColor;
+        this.PieceImage = "PieceImages/" + pieceColor + "Rook.png";
+        this.locationNumber = locationNumber;
+        if(pieceColor == 'W' && addToPieces){
+            Board.whitePieces.add(this);
+        }else{
+            Board.blackPieces.add(this);
+        }
+    }
     @Override
     public void move(Board board, int location) {
         Piece pieceAtDesiredLocation = Board.board[location];

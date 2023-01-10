@@ -221,7 +221,7 @@ public class Board {
 
     public Piece getAdjacentPieceW(int locationNumber) {
         int adjacentSquareNum = locationNumber - 1;
-        if (!(adjacentSquareNum < 0)) {
+        if (!(adjacentSquareNum < 0) && getPieceRank(adjacentSquareNum) == getPieceRank(locationNumber)) {
             return board[adjacentSquareNum];
         }
         return null;
@@ -229,7 +229,7 @@ public class Board {
 
     public Piece getAdjacentPieceE(int locationNumber) {
         int adjacentSquareNum = locationNumber + 1;
-        if (!(adjacentSquareNum > 63)) {
+        if (!(adjacentSquareNum > 63) && getPieceRank(adjacentSquareNum) == getPieceRank(locationNumber)) {
             return board[adjacentSquareNum];
         }
         return null;
@@ -237,7 +237,7 @@ public class Board {
 
     public Piece getAdjacentPieceNW(int locationNumber) {
         int adjacentSquareNum = locationNumber + Board.Size - 1;
-        if (!(adjacentSquareNum > 63)) {
+        if (!(adjacentSquareNum > 63) && getPieceFile(adjacentSquareNum) + 1 == getPieceFile(locationNumber)) {
             return board[adjacentSquareNum];
         }
         return null;
@@ -245,7 +245,7 @@ public class Board {
 
     public Piece getAdjacentPieceNE(int locationNumber) {
         int adjacentSquareNum = locationNumber + Board.Size + 1;
-        if (!(adjacentSquareNum > 63)) {
+        if (!(adjacentSquareNum > 63) && getPieceFile(adjacentSquareNum) - 1 == getPieceFile(locationNumber)) {
             return board[adjacentSquareNum];
         }
         return null;
@@ -253,7 +253,7 @@ public class Board {
 
     public Piece getAdjacentPieceSW(int locationNumber) {
         int adjacentSquareNum = locationNumber - Board.Size - 1;
-        if (!(adjacentSquareNum < 0)) {
+        if (!(adjacentSquareNum < 0) && getPieceFile(adjacentSquareNum) + 1 == getPieceFile(locationNumber)) {
             return board[adjacentSquareNum];
         }
         return null;
@@ -261,7 +261,7 @@ public class Board {
 
     public Piece getAdjacentPieceSE(int locationNumber) {
         int adjacentSquareNum = locationNumber - Board.Size + 1;
-        if (!(adjacentSquareNum < 0)) {
+        if (!(adjacentSquareNum < 0) && getPieceFile(adjacentSquareNum) - 1 == getPieceFile(locationNumber)) {
             return board[adjacentSquareNum];
         }
         return null;

@@ -24,6 +24,16 @@ public class Queen implements Piece, Cloneable {
             Board.blackPieces.add(this);
         }
     }
+    public Queen(char pieceColor, int locationNumber, boolean addToPieces) {
+        this.pieceColor = pieceColor;
+        this.PieceImage = "PieceImages/" + pieceColor + "Queen.png";
+        this.locationNumber = locationNumber;// if taken maybe -1
+        if(pieceColor == 'W' && addToPieces){
+            Board.whitePieces.add(this);
+        }else{
+            Board.blackPieces.add(this);
+        }
+    }
 
     @Override
     public void move(Board board, int newLocation) {

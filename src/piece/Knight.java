@@ -25,6 +25,16 @@ public class Knight implements Piece, Cloneable{
             Board.blackPieces.add(this);
         }
     }
+    public Knight(char pieceColor, int locationNumber, boolean AddToPieces){
+        this.pieceColor = pieceColor;
+        this.PieceImage = "PieceImages/" + pieceColor + "Knight.png";
+        this.locationNumber = locationNumber;
+        if(pieceColor == 'W' && AddToPieces){
+            Board.whitePieces.add(this);
+        }else{
+            Board.blackPieces.add(this);
+        }
+    }
     @Override
     public void move(Board board, int location) {
         Piece pieceAtDesiredLocation = Board.board[location];

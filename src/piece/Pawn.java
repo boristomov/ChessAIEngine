@@ -1,10 +1,12 @@
 package src.piece;
 
+import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashSet;
 
-import src.board.AttacksOnKing;
-import src.board.Board;
-import src.board.BoardChanges;
+import edu.princeton.cs.algs4.StdDraw;
+import src.board.*;
 
 
 public class Pawn implements Piece, Cloneable{
@@ -36,6 +38,7 @@ public class Pawn implements Piece, Cloneable{
     public void move(Board board, int location) {
     //check if the move is en passant ->if the piece behind is an opposite color pawn (en passant); promotion(rank 8/1) or just a normal capture;
         // also check if that was a double move
+
         Piece pieceAtDesiredLocation = Board.board[location];
         if(pieceAtDesiredLocation.getClass().equals(EmptySpace.class)){
             int offset = (pieceColor == 'W') ? -8: 8;
@@ -46,6 +49,10 @@ public class Pawn implements Piece, Cloneable{
         Board.board[locationNumber] = new EmptySpace(locationNumber);
         locationNumber = location;
         numberOfMovesMade ++;
+        if(isPromotion(location)){
+            promote(location);
+            return;
+        }
     }
     public boolean isPromotion(int destination){
         int rank = Board.getPieceRank(destination);
@@ -57,8 +64,45 @@ public class Pawn implements Piece, Cloneable{
         return false;
     }
 
-    public void promote(){
+    public void promote(int moveLocation){
         //interacts with click or keyboard
+        int lastRank = (pieceColor == 'W')? 7: 0;
+        if(Board.getPieceRank(moveLocation) == lastRank){
+           BoardSquare[][] menu = invokePromoteMenu(moveLocation);
+
+           Piece selectedPiece = null;
+           while(selectedPiece == null){
+               if(StdDraw.isMousePressed()) {
+                    StdDraw.pause(300);
+                    selectedPiece = BoardSquare.selectPiece(menu);
+                    StdDraw.pause(300);
+               }
+           }
+           // replacing piece on the board
+            this.erase();
+           Board.board[locationNumber] = selectedPiece;
+            if(pieceColor == 'W'){
+                Board.whitePieces.add(selectedPiece);
+            }else{
+                Board.blackPieces.add(selectedPiece);
+            }
+        }
+    }
+    private BoardSquare[][] invokePromoteMenu(int moveLocation){
+        BoardSquare[][] menu = new BoardSquare[2][2];
+        Color background = StdDraw.WHITE;
+        Piece queen  = new Queen(pieceColor, moveLocation, false);
+        Piece rook = new Rook(pieceColor, moveLocation, false);
+        Piece knight = new Knight(pieceColor, moveLocation, false);
+        Piece bishop = new Bishop(pieceColor, moveLocation, false);
+
+        menu[0][0] = new BoardSquare(queen, background, queen.pieceImage());
+        menu[0][1] = new BoardSquare(rook, background, rook.pieceImage());
+        menu[1][0] = new BoardSquare(knight, background, knight.pieceImage());
+        menu[1][1] = new BoardSquare(bishop, background, bishop.pieceImage());
+
+        ProgramRunner.visualizeBoardBSPromotion(menu);
+        return menu;
     }
     public boolean hasMoved(){
         return originalRank != Board.getPieceRank(locationNumber);
@@ -210,6 +254,9 @@ public class Pawn implements Piece, Cloneable{
                 return;
             }
             Piece adjacentPieceU2 = board.getAdjacentPieceN(adjacentPieceU1.locationNumber());
+            if(adjacentPieceU2 == null){
+                return;
+            }
             if (adjacentPieceU1.getClass().equals(EmptySpace.class) && adjacentPieceU2.getClass().equals(EmptySpace.class) && !hasMoved()) {
                 possibleDestinations.add(adjacentPieceU1.locationNumber());
                 possibleDestinations.add(adjacentPieceU2.locationNumber());

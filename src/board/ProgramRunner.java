@@ -26,6 +26,12 @@ public class ProgramRunner {
         render.renderFrame(BS);
         return BS;
     }
+    public static BoardSquare[][] visualizeBoardBSPromotion(BoardSquare[][] BS) {
+        BoardRender render = new BoardRender();
+        render.initialize(WIDTH, HEIGHT, 16, 16);
+        render.renderFramePromotion(BS);
+        return BS;
+    }
 
     public static void startGame() {
         //this is structured like this because of a future user interface which will be
@@ -64,7 +70,8 @@ public class ProgramRunner {
                 if(StdDraw.isMousePressed()) {
                     StdDraw.pause(300);
                     StdDraw.enableDoubleBuffering();
-                    board.clickOnPiece(Main.turnColor);
+                     board.clickOnPiece(Main.turnColor);
+                    System.out.println(Board.blackPieces.toString());
                     StdDraw.pause(300);
                 }
             }
@@ -74,6 +81,8 @@ public class ProgramRunner {
                 if (StdDraw.isMousePressed()) {
                     StdDraw.pause(300);
                     completed = board.confirmMove(selectedPiece, Main.turnColor, movesToPutShadowOn);
+                    System.out.println(Board.blackPieces.toString());
+                    System.out.println(Board.whitePieces.toString());
                     StdDraw.pause(300);
                 }
             }

@@ -38,6 +38,15 @@ public class Mouse implements MouseListener {
             BoardSquare[][] BS = BoardRender.BoardToBSConverter(board);
             return BS[x][y].pieceAtSquare();
         }
+    public static Piece scanMousePositionBS (BoardSquare[][] BS){
+        int x = (int) Math.floor(StdDraw.mouseX()/32);
+        int y = (int) Math.floor(StdDraw.mouseY()/32);
+
+        if (x >= WIDTH || y >= HEIGHT) {
+            return null;
+        }
+        return BS[x][y].pieceAtSquare();
+    }
     public static boolean isMousePressed() {
         return isMousePressed;
     }

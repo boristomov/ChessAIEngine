@@ -94,6 +94,18 @@ public class BoardSquare implements Serializable {
             }
         }
     }
+    public void drawPromotionMenu(double x, double y) {
+        StdDraw.setPenColor(backgroundColor);
+        StdDraw.filledSquare(x, y, 16);
+        if (!Objects.equals(filepath, "")) {
+            try {
+                StdDraw.picture(x, y, filepath);
+            } catch (IllegalArgumentException e) {
+                // Exception happens because the file can't be found. In this case, fail silently
+                // and just use the character and background color for the tile.
+            }
+        }
+    }
 
     /** Character representation of the tile. Used for drawing in text mode.
      * @return character representation
@@ -183,6 +195,9 @@ public class BoardSquare implements Serializable {
         }
 
         return copy;
+    }
+    public static Piece selectPiece(BoardSquare[][] BS){
+        return Mouse.scanMousePositionBS(BS);
     }
 
     public Piece pieceAtSquare() {

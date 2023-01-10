@@ -290,4 +290,19 @@ public class TestBoard {
 
         return board;
     }
+    public static Board testPawnPromotion(){
+        Board board = new Board();
+        Board.board[55] = new Pawn('W', 55);
+        Board.board[11] = new Pawn('W', 11);
+        Board.board[60] = new King('B', 60);
+        Board.board[4] = new King('W', 4);
+        return board;
+    }
+    public static Board testPawnPromotionRook(){
+        Board board = new Board();
+        Board.board[60] = new King('B', 60);
+        Board.board[4] = new King('W', 4);
+        Board.board[63] = new Rook('W', 63);
+        return board;
+    }
 }

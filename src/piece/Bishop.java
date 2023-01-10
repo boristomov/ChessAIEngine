@@ -25,6 +25,16 @@ public class Bishop implements Piece , Cloneable {
             Board.blackPieces.add(this);
         }
     }
+    public Bishop(char pieceColor, int locationNumber, boolean addToPieces){
+        this.pieceColor = pieceColor;
+        this.PieceImage = "PieceImages/" + pieceColor + "Bishop.png";
+        this.locationNumber = locationNumber;
+        if(pieceColor == 'W' && addToPieces){
+            Board.whitePieces.add(this);
+        }else{
+            Board.blackPieces.add(this);
+        }
+    }
     @Override
     public void move(Board board, int location) {
         Piece pieceAtDesiredLocation = Board.board[location];
