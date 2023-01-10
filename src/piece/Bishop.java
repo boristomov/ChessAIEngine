@@ -2,6 +2,7 @@ package src.piece;
 
 import src.board.AttacksOnKing;
 import src.board.Board;
+import src.board.BoardChanges;
 import src.piece.Piece;
 
 import java.util.ArrayList;
@@ -35,7 +36,16 @@ public class Bishop implements Piece , Cloneable {
 
     @Override
     public void erase() {
+        HashSet<Piece> setOfSameColorPieces = (pieceColor == 'W')? Board.whitePieces: Board.blackPieces;
+        if(setOfSameColorPieces.contains(this)){
+            setOfSameColorPieces.remove(this);
 
+        }
+        if(pieceColor == 'W') {
+            BoardChanges.erasedPiecesW.add(this);
+        }else{
+            BoardChanges.erasedPiecesB.add(this);
+        }
     }
 
     @Override

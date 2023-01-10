@@ -69,7 +69,7 @@ public class AttacksOnKing {
         possibleDestinations.add(piece.locationNumber());
         int currentAdjPieceFile = Board.getPieceFile(piece.locationNumber());
         int moveLocation = piece.locationNumber() + 7;
-        while(moveLocation <= 63 && Board.getPieceFile(moveLocation) - 1 == currentAdjPieceFile && !Board.board[moveLocation].getClass().equals(King.class)) {
+        while(moveLocation <= 63 && Board.getPieceFile(moveLocation) + 1 == currentAdjPieceFile && !Board.board[moveLocation].getClass().equals(King.class)) {
             possibleDestinations.add(moveLocation);
             currentAdjPieceFile = Board.getPieceFile(moveLocation);
             moveLocation += 7;
@@ -110,6 +110,179 @@ public class AttacksOnKing {
             possibleDestinations.add(moveLocation);
             currentAdjPieceFile = Board.getPieceFile(moveLocation);
             moveLocation -= 7;
+        }
+        return possibleDestinations;
+    }
+
+    /**
+     * Since dangerScope is used only for finding path across pinned pieces to the king, arrayScope(Direction)
+     * includes the location of the square past the kind in order to restrict its movement when checked,
+     * so that the king cannot move further in the same direction of attack.
+     * @param board
+     * @param piece
+     * @return
+     */
+    public static HashSet<Integer> arrayScopeN(Board board, Piece piece){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
+        int moveLocation = piece.locationNumber();
+        while(moveLocation <= 63) {
+            if(!Board.board[moveLocation].getClass().equals(King.class)) {
+                possibleDestinations.add(moveLocation);
+                moveLocation += 8;
+            }
+            else{
+                moveLocation += 8;
+                if(moveLocation <= 63 && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
+                    possibleDestinations.add(moveLocation);
+                    break;
+                }
+            }
+        }
+        return possibleDestinations;
+    }
+    public static HashSet<Integer> arrayScopeS(Board board, Piece piece){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
+        int moveLocation = piece.locationNumber();
+        while(moveLocation <= 63) {
+            if(!Board.board[moveLocation].getClass().equals(King.class)) {
+                possibleDestinations.add(moveLocation);
+                moveLocation -= 8;
+            }
+            else{
+                moveLocation -= 8;
+                if(moveLocation >= 0 && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
+                    possibleDestinations.add(moveLocation);
+                    break;
+                }
+            }
+        }
+        return possibleDestinations;
+    }
+    public static HashSet<Integer> arrayScopeE(Board board, Piece piece){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
+        possibleDestinations.add(piece.locationNumber());
+        int currentAdjPieceRank = Board.getPieceRank(piece.locationNumber());
+        int moveLocation = piece.locationNumber() + 1;
+        while(moveLocation <= 63 && Board.getPieceRank(moveLocation) == currentAdjPieceRank) {
+            if(!Board.board[moveLocation].getClass().equals(King.class)){
+                possibleDestinations.add(moveLocation);
+                currentAdjPieceRank = Board.getPieceRank(moveLocation);
+                moveLocation += 1;
+            }
+            else{
+                moveLocation += 1;
+                if(moveLocation <= 63 && Board.getPieceRank(moveLocation) == currentAdjPieceRank && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
+                    possibleDestinations.add(moveLocation);
+                    break;
+                }
+            }
+        }
+        return possibleDestinations;
+    }
+    public static HashSet<Integer> arrayScopeW(Board board, Piece piece){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
+        possibleDestinations.add(piece.locationNumber());
+        possibleDestinations.add(piece.locationNumber());
+        int currentAdjPieceRank = Board.getPieceRank(piece.locationNumber());
+        int moveLocation = piece.locationNumber() - 1;
+        while(moveLocation >= 0 && Board.getPieceRank(moveLocation) == currentAdjPieceRank) {
+            if(!Board.board[moveLocation].getClass().equals(King.class)){
+                possibleDestinations.add(moveLocation);
+                currentAdjPieceRank = Board.getPieceRank(moveLocation);
+                moveLocation -= 1;
+            }
+            else{
+                moveLocation -= 1;
+                if(moveLocation >= 0 && Board.getPieceRank(moveLocation) == currentAdjPieceRank && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
+                    possibleDestinations.add(moveLocation);
+                    break;
+                }
+            }
+        }
+        return possibleDestinations;
+    }
+    public static HashSet<Integer> arrayScopeNW(Board board, Piece piece){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
+        possibleDestinations.add(piece.locationNumber());
+        int currentAdjPieceFile = Board.getPieceFile(piece.locationNumber());
+        int moveLocation = piece.locationNumber() + 7;
+        while(moveLocation <= 63 && Board.getPieceFile(moveLocation) + 1 == currentAdjPieceFile) {
+            if(!Board.board[moveLocation].getClass().equals(King.class)){
+                possibleDestinations.add(moveLocation);
+                currentAdjPieceFile = Board.getPieceRank(moveLocation);
+                moveLocation += 7;
+            }
+            else{
+                moveLocation += 7;
+                if(moveLocation <= 63 && Board.getPieceRank(moveLocation) + 1 == currentAdjPieceFile && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
+                    possibleDestinations.add(moveLocation);
+                    break;
+                }
+            }
+        }
+        return possibleDestinations;
+    }
+    public static HashSet<Integer> arrayScopeNE(Board board, Piece piece){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
+        possibleDestinations.add(piece.locationNumber());
+        int currentAdjPieceFile = Board.getPieceFile(piece.locationNumber());
+        int moveLocation = piece.locationNumber() + 9;
+        while(moveLocation <= 63 && Board.getPieceFile(moveLocation) - 1 == currentAdjPieceFile) {
+            if(!Board.board[moveLocation].getClass().equals(King.class)){
+                possibleDestinations.add(moveLocation);
+                currentAdjPieceFile = Board.getPieceRank(moveLocation);
+                moveLocation += 9;
+            }
+            else{
+                moveLocation += 9;
+                if(moveLocation <= 63 && Board.getPieceRank(moveLocation) - 1 == currentAdjPieceFile && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
+                    possibleDestinations.add(moveLocation);
+                    break;
+                }
+            }
+        }
+        return possibleDestinations;
+    }
+    public static HashSet<Integer> arrayScopeSW(Board board, Piece piece){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
+        possibleDestinations.add(piece.locationNumber());
+        int currentAdjPieceFile = Board.getPieceFile(piece.locationNumber());
+        int moveLocation = piece.locationNumber() - 9;
+        while(moveLocation >= 0 && Board.getPieceFile(moveLocation) + 1 == currentAdjPieceFile) {
+            if(!Board.board[moveLocation].getClass().equals(King.class)) {
+                possibleDestinations.add(moveLocation);
+                currentAdjPieceFile = Board.getPieceFile(moveLocation);
+                moveLocation -= 9;
+            }
+            else{
+                moveLocation -= 9;
+                if(moveLocation >= 0 && Board.getPieceFile(moveLocation) + 1 == currentAdjPieceFile && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
+                    possibleDestinations.add(moveLocation);
+                    break;
+                }
+            }
+        }
+        return possibleDestinations;
+    }
+    public static HashSet<Integer> arrayScopeSE(Board board, Piece piece){
+        HashSet<Integer> possibleDestinations = new HashSet<>();
+        possibleDestinations.add(piece.locationNumber());
+        int currentAdjPieceFile = Board.getPieceFile(piece.locationNumber());
+        possibleDestinations.add(piece.locationNumber());
+        int moveLocation = piece.locationNumber() - 7;
+        while(moveLocation >= 0 && Board.getPieceFile(moveLocation) - 1 == currentAdjPieceFile) {
+            if(!Board.board[moveLocation].getClass().equals(King.class)){
+                possibleDestinations.add(moveLocation);
+                currentAdjPieceFile = Board.getPieceFile(moveLocation);
+                moveLocation -= 7;
+            }
+            else{
+                moveLocation -= 7;
+                if(moveLocation >= 0 && Board.getPieceFile(moveLocation) - 1 == currentAdjPieceFile && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
+                    possibleDestinations.add(moveLocation);
+                    break;
+                }
+            }
         }
         return possibleDestinations;
     }
@@ -363,6 +536,34 @@ public class AttacksOnKing {
         return (attackedSquares(board, turnColor, location).contains(location));
     }
     public static HashSet<Integer> attackedSquares(Board board, char turnColor, int location) throws CloneNotSupportedException {
+        AttacksOnKing.checkForPins(board, location);// wonder if there should be two locations added. Here this is the king location
+        HashSet<Integer> attackedSquares = new HashSet<>();
+
+        if(turnColor == 'W'){
+            for(Piece enemyPiece: Board.blackPieces){
+                if(enemyPiece.getClass().equals(King.class)){continue;}
+                HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(enemyPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(enemyPiece) : new HashSet<>();
+                HashSet<Integer> attackingMoves = enemyPiece.generatePossibleMoves(board, allowedMoves);
+                if(attackingMoves.contains(location)) {
+                    checkingPieces.add(enemyPiece);
+                }
+                attackedSquares.addAll(attackingMoves);
+            }
+        }
+        else{
+            for(Piece enemyPiece: Board.whitePieces){
+                if(enemyPiece.getClass().equals(King.class)){continue;}
+                HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(enemyPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(enemyPiece) : new HashSet<>();
+                HashSet<Integer> attackingMoves = enemyPiece.generatePossibleMoves(board, allowedMoves);
+                if(attackingMoves.contains(location)) {
+                    checkingPieces.add(enemyPiece);
+                }
+                attackedSquares.addAll(attackingMoves);
+            }
+        }
+        return attackedSquares;
+    }
+    public static HashSet<Integer> defendedSquares(Board board, char turnColor, int location) throws CloneNotSupportedException {
         AttacksOnKing.checkForPins(board, location);// wonder if there should be two locations added. Here this is the king location
         HashSet<Integer> attackedSquares = new HashSet<>();
 

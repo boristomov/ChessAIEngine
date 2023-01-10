@@ -1,6 +1,5 @@
 package src.piece;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import src.board.AttacksOnKing;
@@ -78,7 +77,16 @@ public class Pawn implements Piece, Cloneable{
     }
     @Override
     public void erase() {
+        HashSet<Piece> setOfSameColorPieces = (pieceColor == 'W')? Board.whitePieces: Board.blackPieces;
+        if(setOfSameColorPieces.contains(this)){
+            setOfSameColorPieces.remove(this);
 
+        }
+        if(pieceColor == 'W') {
+            BoardChanges.erasedPiecesW.add(this);
+        }else{
+            BoardChanges.erasedPiecesB.add(this);
+        }
     }
 
     @Override

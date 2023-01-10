@@ -206,6 +206,10 @@ public class TestBoard {
     }
     public static Board testWQueenCM(){
         Board board = new Board(8);
+        Board.board[3].erase();
+        Board.board[11].erase();
+        Board.board[60].erase();
+        Board.board[52].erase();
         Board.board[3] = new EmptySpace(3);
         Board.board[11] = new EmptySpace(11);
         Board.board[60] = new EmptySpace(60);

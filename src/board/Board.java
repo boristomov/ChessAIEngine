@@ -154,13 +154,13 @@ public class Board {
             Main.turnColor = Board.getOppositeColorChar(Main.turnColor);
             AttacksOnKing.pPiecesAndAllowedMoves.clear();
             AttacksOnKing.checkingPieces.clear();
-//            ProgramRunner.visualizeBoard(this);
         }
-//        else if (selectedDestinationPiece.pieceColor() == selectedPiece.pieceColor()) {
-//            AttacksOnKing.pPiecesAndAllowedMoves.clear();
-//            AttacksOnKing.checkingPieces.clear();
-//            clickOnPiece(turnColor);
-//        }
+        else if (selectedDestinationPiece.pieceColor() == selectedPiece.pieceColor()) {
+            AttacksOnKing.pPiecesAndAllowedMoves.clear();
+            AttacksOnKing.checkingPieces.clear();
+            clickOnPiece(turnColor);
+        }
+        ProgramRunner.visualizeBoard(this);
 
     }
 

@@ -36,7 +36,10 @@ public class Queen implements Piece, Cloneable {
 
     @Override
     public void erase() {
-//        locationNumber = (pieceColor == 'W') ? -1: -2;
+        HashSet<Piece> setOfSameColorPieces = (pieceColor == 'W')? Board.whitePieces: Board.blackPieces;
+        if(setOfSameColorPieces.contains(this)){
+            setOfSameColorPieces.remove(this);
+        }
         if(pieceColor == 'W') {
             BoardChanges.erasedPiecesW.add(this);
         }else{

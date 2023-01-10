@@ -57,7 +57,7 @@ public class ProgramRunner {
     public static void startTestGame(Board board) throws CloneNotSupportedException {
         while(true) {
             if (StdDraw.isMousePressed()) {
-                StdDraw.pause(250);
+                StdDraw.pause(300);
                 StdDraw.enableDoubleBuffering();
                 Piece selectedPiece = board.clickOnPiece( Main.turnColor);
                 StdDraw.show();
@@ -65,7 +65,7 @@ public class ProgramRunner {
                     StdDraw.pause(10);
                     if (StdDraw.isMousePressed()) {
                         System.out.println("confirm");
-                        StdDraw.pause(200);
+                        StdDraw.pause(300);
                         board.confirmMove(selectedPiece, Main.turnColor);
                         break;
                     }

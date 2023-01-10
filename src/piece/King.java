@@ -2,6 +2,7 @@ package src.piece;
 
 import src.board.AttacksOnKing;
 import src.board.Board;
+import src.board.BoardChanges;
 
 import java.util.HashSet;
 
@@ -44,7 +45,16 @@ public class King implements Piece, Cloneable{
 
     @Override
     public void erase() {
+        HashSet<Piece> setOfSameColorPieces = (pieceColor == 'W')? Board.whitePieces: Board.blackPieces;
+        if(setOfSameColorPieces.contains(this)){
+            setOfSameColorPieces.remove(this);
 
+        }
+        if(pieceColor == 'W') {
+            BoardChanges.erasedPiecesW.add(this);
+        }else{
+            BoardChanges.erasedPiecesB.add(this);
+        }
     }
 
     @Override
@@ -84,8 +94,7 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        AttacksOnKing.applyDanSfunc(board, )
-        if(adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor
@@ -104,7 +113,7 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor
@@ -123,7 +132,7 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor
@@ -142,7 +151,7 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor
@@ -161,7 +170,7 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor
@@ -180,7 +189,7 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor
@@ -199,7 +208,7 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor
@@ -218,7 +227,7 @@ public class King implements Piece, Cloneable{
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         Piece clone = adjacentPiece.cloneInOppositeColor();
         // and is not guarded by anything
-        if((adjacentPiece.getClass().equals(EmptySpace.class) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber()))) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor
@@ -264,5 +273,51 @@ public class King implements Piece, Cloneable{
     @Override
     public void changePieceColor() {
         pieceColor = Board.getOppositeColorChar(pieceColor);
+    }
+    public static HashSet<Integer> threatenedSquares(Board board, Piece king){
+        HashSet<Integer> interceptionScope = new HashSet<>();
+
+        for(Piece piece: AttacksOnKing.checkingPieces){
+            int pieceFile = Board.getPieceFile(piece.locationNumber());
+            int pieceRank = Board.getPieceRank(piece.locationNumber());
+            int kingFile = Board.getPieceFile(king.locationNumber());
+            int kingRank = Board.getPieceRank(king.locationNumber());
+
+            if(pieceFile == Board.getPieceFile(king.locationNumber())){
+                if(pieceRank > kingRank){
+                    interceptionScope.addAll(AttacksOnKing.arrayScopeS(board, piece));
+                }
+                else{
+                    interceptionScope.addAll(AttacksOnKing.arrayScopeN(board, piece));
+                }
+            }
+            else if(pieceRank == Board.getPieceRank(king.locationNumber())){
+                if(pieceFile > kingFile){
+                    interceptionScope.addAll(AttacksOnKing.arrayScopeW(board, piece));
+                }
+                else{
+                    interceptionScope.addAll(AttacksOnKing.arrayScopeE(board, piece));
+                }
+            }
+            if(pieceRank > kingRank && !piece.getClass().equals(Knight.class)){
+                if(pieceFile > kingFile){
+                    interceptionScope.addAll(AttacksOnKing.arrayScopeSW(board, piece));
+                }
+                else if(pieceFile < kingFile){
+                    interceptionScope.addAll(AttacksOnKing.arrayScopeSE(board, piece));
+                }
+            } else if(pieceRank < kingRank && !piece.getClass().equals(Knight.class)) {
+                if(pieceFile > kingFile){
+                    interceptionScope.addAll(AttacksOnKing.arrayScopeNW(board, piece));
+                }
+                else if(pieceFile < kingFile){
+                    interceptionScope.addAll(AttacksOnKing.arrayScopeNE(board, piece));
+                }
+            }
+            if(piece.getClass().equals(Knight.class)){
+                interceptionScope.add(piece.locationNumber());
+            }
+        }
+        return interceptionScope;
     }
 }
