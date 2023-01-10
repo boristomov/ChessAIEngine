@@ -239,4 +239,19 @@ public class TestBoard {
 
         return board;
     }
+    public static Board testBQueenHorizontalBlocked(){
+        Board board = new Board(8);
+        Board.board[4].erase();
+        Board.board[59].erase();
+        Board.board[4] = new EmptySpace(4);
+        Board.board[59] = new EmptySpace(59);
+        Board.board[54] = new EmptySpace(54);
+        Board.board[29] = new Queen('B', 29);
+        Board.board[30] = new Pawn('W', 30);
+        Board.board[31] = new King('W', 31);
+        Board.board[38] = new Pawn('B', 38);
+
+
+        return board;
+    }
 }

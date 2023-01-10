@@ -64,7 +64,7 @@ public class ProgramRunner {
                 if(StdDraw.isMousePressed()) {
                     StdDraw.pause(300);
                     StdDraw.enableDoubleBuffering();
-                    selectedPiece = board.clickOnPiece(Main.turnColor);
+                    board.clickOnPiece(Main.turnColor);
                     StdDraw.pause(300);
                 }
             }
