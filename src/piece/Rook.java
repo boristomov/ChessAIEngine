@@ -11,7 +11,7 @@ import java.util.HashSet;
 public class Rook implements Piece, Cloneable{
     public char pieceColor;
     public String PieceImage;
-    public char pieceAbbreviation = 'R';
+    public char pieceAbbreviation;
     public int pieceValue = 5;
     public int locationNumber;
     public Rook(char pieceColor, int locationNumber){
@@ -20,8 +20,10 @@ public class Rook implements Piece, Cloneable{
         this.locationNumber = locationNumber;
         if(pieceColor == 'W'){
             Board.whitePieces.add(this);
+            this.pieceAbbreviation = 'R';
         }else{
             Board.blackPieces.add(this);
+            this.pieceAbbreviation = 'r';
         }
     }
     public Rook(char pieceColor, int locationNumber, boolean addToPieces){

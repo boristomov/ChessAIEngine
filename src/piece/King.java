@@ -11,7 +11,7 @@ public class King implements Piece, Cloneable{
     public char pieceColor;
     public static boolean isMoved;
     public String PieceImage;
-    public char pieceAbbreviation = 'K';
+    public char pieceAbbreviation;
     public int pieceValue = 1000;
     public int locationNumber;
     public King(char pieceColor, int locationNumber){
@@ -21,9 +21,11 @@ public class King implements Piece, Cloneable{
         if(pieceColor == 'W'){
             Board.whitePieces.add(this);
             AttacksOnKing.WkingLocation = locationNumber;
+            this.pieceAbbreviation = 'K';
         }else{
             Board.blackPieces.add(this);
             AttacksOnKing.BkingLocation = locationNumber;
+            this.pieceAbbreviation = 'k';
         }
     }
     @Override

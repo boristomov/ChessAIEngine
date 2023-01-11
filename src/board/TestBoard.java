@@ -1,8 +1,112 @@
 package src.board;
 
+import edu.princeton.cs.algs4.StdDraw;
 import src.piece.*;
 
+import javax.xml.stream.events.Characters;
+import java.util.ArrayList;
+
 public class TestBoard {
+    public static Board FENStringBoardGenerator(String FEN) {
+        Board board = new Board();
+        String[] fields = FEN.split("/");
+        ArrayList<Character> FirstFelements = elementsFEN(fields[0]);
+        ArrayList<Character> SecondFelements = elementsFEN(fields[1]);
+        ArrayList<Character> ThirdFelements = elementsFEN(fields[2]);
+        ArrayList<Character> FourthFelements = elementsFEN(fields[3]);
+        ArrayList<Character> FifthFelements = elementsFEN(fields[4]);
+        ArrayList<Character> SixthFelements = elementsFEN(fields[5]);
+
+
+
+    }
+
+    private static void FirstFieldParser(ArrayList<Character> elements){
+        int currentRank = 7;
+        int currentFile = 0;
+        int currSquareNum;
+        for (char elem : elements) {
+            switch (elem) {
+                case 'r':
+                    currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                    Board.board[currSquareNum] = new Rook('B', currSquareNum);
+                    currentFile += 1;
+                    break;
+                case 'R':
+                    currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                    Board.board[currSquareNum] = new Rook('W', currSquareNum);
+                    break;
+                case 'q':
+                    currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                    Board.board[currSquareNum] = new Queen('B', currSquareNum);
+                    currentFile += 1;
+                    break;
+                case 'Q':
+                    currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                    Board.board[currSquareNum] = new Queen('W', currSquareNum);
+                    currentFile += 1;
+                    break;
+                case 'n':
+                    currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                    Board.board[currSquareNum] = new Knight('B', currSquareNum);
+                    currentFile += 1;
+                    break;
+                case 'N':
+                    currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                    Board.board[currSquareNum] = new Knight('W', currSquareNum);
+                    currentFile += 1;
+                    break;
+                case 'k':
+                    currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                    Board.board[currSquareNum] = new King('B', currSquareNum);
+                    currentFile += 1;
+                    break;
+                case 'K':
+                    currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                    Board.board[currSquareNum] = new King('W', currSquareNum);
+                    currentFile += 1;
+                    break;
+                case 'p':
+                    currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                    Board.board[currSquareNum] = new Pawn('B', currSquareNum);
+                    currentFile += 1;
+                    break;
+                case 'P':
+                    currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                    Board.board[currSquareNum] = new Pawn('P', currSquareNum);
+                    currentFile += 1;
+                    break;
+                case '/':
+                    currentRank -= 1;
+                    currentFile = 0;
+
+                default:
+                    if(Character.isDigit(elem)){
+                        int numEmptySpaces = Character.getNumericValue(elem);
+                        for()
+                    }
+                    break;
+            }
+        }
+    }
+    private static void SecondFieldParser(){
+
+    }
+    private static void ThirdFieldParser(){
+
+    }
+    private static void FourthFieldParser(){
+
+    }
+    private static void FifthFieldParser(){
+
+    }
+    private static void SixthFieldParser(){
+
+    }
+    private static ArrayList<Character> elementsFEN(String FEN){
+       return (ArrayList<Character>) FEN.chars();
+    }
     public static Board testQueenInMiddleBoard(){
         Board emptyBoard = new Board();
         emptyBoard.board[28] = new Queen('W',28);

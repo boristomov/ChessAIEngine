@@ -12,7 +12,7 @@ public class Bishop implements Piece , Cloneable {
     public char pieceColor;
 
     public String PieceImage;
-    public char pieceAbbreviation = 'B';
+    public char pieceAbbreviation;
     public int pieceValue = 3;
     public int locationNumber;
     public Bishop(char pieceColor, int locationNumber){
@@ -21,8 +21,10 @@ public class Bishop implements Piece , Cloneable {
         this.locationNumber = locationNumber;
         if(pieceColor == 'W'){
             Board.whitePieces.add(this);
+            this.pieceAbbreviation = 'B';
         }else{
             Board.blackPieces.add(this);
+            this.pieceAbbreviation = 'b';
         }
     }
     public Bishop(char pieceColor, int locationNumber, boolean addToPieces){

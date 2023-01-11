@@ -11,7 +11,7 @@ public class Queen implements Piece, Cloneable {
     public char pieceColor;
     public String PieceImage;
     public int pieceValue = 9;
-    public char pieceAbbreviation = 'Q';
+    public char pieceAbbreviation;
     public int locationNumber;
 
     public Queen(char pieceColor, int locationNumber) {
@@ -20,8 +20,10 @@ public class Queen implements Piece, Cloneable {
         this.locationNumber = locationNumber;// if taken maybe -1
         if(pieceColor == 'W'){
             Board.whitePieces.add(this);
+            this.pieceAbbreviation = 'Q';
         }else{
             Board.blackPieces.add(this);
+            this.pieceAbbreviation = 'q';
         }
     }
     public Queen(char pieceColor, int locationNumber, boolean addToPieces) {

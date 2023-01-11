@@ -14,6 +14,8 @@ public class Pawn implements Piece, Cloneable{
     public char pieceColor;
     public String PieceImage;
     public int locationNumber;
+    public char pieceAbbreviation;
+    public int pieceValue = 1;
     public int numberOfMovesMade = 0;
 
 
@@ -24,15 +26,15 @@ public class Pawn implements Piece, Cloneable{
         if(pieceColor == 'W'){
             Board.whitePieces.add(this);
             originalRank = 1;
+            this.pieceAbbreviation = 'P';
         }else{
             Board.blackPieces.add(this);
             originalRank = 6;
+            this.pieceAbbreviation = 'p';
         }
     }
 
-    public int pieceValue = 1;
 
-    public char pieceAbbreviation = 'P';
 
     @Override
     public void move(Board board, int location) {

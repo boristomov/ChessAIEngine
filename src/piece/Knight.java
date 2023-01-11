@@ -12,7 +12,7 @@ public class Knight implements Piece, Cloneable{
     public char pieceColor;
 
     public String PieceImage;
-    public char pieceAbbreviation = 'N';
+    public char pieceAbbreviation;
     public int pieceValue = 3;
     public int locationNumber;
     public Knight(char pieceColor, int locationNumber){
@@ -21,8 +21,10 @@ public class Knight implements Piece, Cloneable{
         this.locationNumber = locationNumber;
         if(pieceColor == 'W'){
             Board.whitePieces.add(this);
+            this.pieceAbbreviation = 'N';
         }else{
             Board.blackPieces.add(this);
+            this.pieceAbbreviation = 'n';
         }
     }
     public Knight(char pieceColor, int locationNumber, boolean AddToPieces){

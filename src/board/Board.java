@@ -180,6 +180,9 @@ public class Board {
     public Piece getPieceAtSquare(int squareNumber) {
         return board[squareNumber];
     }
+    public static int getBoardLocation(int rank, int file){
+        return rank * 8 + file;
+    }
 
     public static int getPieceFile(int locationNumber) {
         return locationNumber % Board.Size;
