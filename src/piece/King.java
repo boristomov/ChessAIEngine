@@ -262,6 +262,9 @@ public class King implements Piece, Cloneable{
     public String pieceImage() {
         return PieceImage;
     }
+    public static void attackN(HashSet<Integer> attackedSquares){
+        if()
+    }
     //KING PINNING.
 
     // returns the piece who is pinning;

@@ -71,7 +71,6 @@ public class ProgramRunner {
                     StdDraw.pause(300);
                     StdDraw.enableDoubleBuffering();
                      board.clickOnPiece(Main.turnColor);
-                    System.out.println(Board.blackPieces.toString());
                     StdDraw.pause(300);
                 }
             }
@@ -81,8 +80,6 @@ public class ProgramRunner {
                 if (StdDraw.isMousePressed()) {
                     StdDraw.pause(300);
                     completed = board.confirmMove(selectedPiece, Main.turnColor, movesToPutShadowOn);
-                    System.out.println(Board.blackPieces.toString());
-                    System.out.println(Board.whitePieces.toString());
                     StdDraw.pause(300);
                 }
             }

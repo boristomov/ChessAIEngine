@@ -29,11 +29,7 @@ public class Knight implements Piece, Cloneable{
         this.pieceColor = pieceColor;
         this.PieceImage = "PieceImages/" + pieceColor + "Knight.png";
         this.locationNumber = locationNumber;
-        if(pieceColor == 'W' && AddToPieces){
-            Board.whitePieces.add(this);
-        }else{
-            Board.blackPieces.add(this);
-        }
+        // no adding to piece lists
     }
     @Override
     public void move(Board board, int location) {

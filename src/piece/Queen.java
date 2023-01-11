@@ -28,11 +28,7 @@ public class Queen implements Piece, Cloneable {
         this.pieceColor = pieceColor;
         this.PieceImage = "PieceImages/" + pieceColor + "Queen.png";
         this.locationNumber = locationNumber;// if taken maybe -1
-        if(pieceColor == 'W' && addToPieces){
-            Board.whitePieces.add(this);
-        }else{
-            Board.blackPieces.add(this);
-        }
+        // no adding to piece lists
     }
 
     @Override

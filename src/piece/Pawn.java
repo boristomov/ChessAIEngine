@@ -100,7 +100,6 @@ public class Pawn implements Piece, Cloneable{
         menu[0][1] = new BoardSquare(rook, background, rook.pieceImage());
         menu[1][0] = new BoardSquare(knight, background, knight.pieceImage());
         menu[1][1] = new BoardSquare(bishop, background, bishop.pieceImage());
-
         ProgramRunner.visualizeBoardBSPromotion(menu);
         return menu;
     }

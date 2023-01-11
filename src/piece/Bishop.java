@@ -29,11 +29,7 @@ public class Bishop implements Piece , Cloneable {
         this.pieceColor = pieceColor;
         this.PieceImage = "PieceImages/" + pieceColor + "Bishop.png";
         this.locationNumber = locationNumber;
-        if(pieceColor == 'W' && addToPieces){
-            Board.whitePieces.add(this);
-        }else{
-            Board.blackPieces.add(this);
-        }
+        // no adding to piece lists
     }
     @Override
     public void move(Board board, int location) {

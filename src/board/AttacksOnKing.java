@@ -558,7 +558,7 @@ public class AttacksOnKing {
         }
         else{
             for(Piece enemyPiece: Board.whitePieces){
-                if(enemyPiece.getClass().equals(King.class)){continue;}
+//                if(enemyPiece.getClass().equals(King.class)){continue;}
                 HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(enemyPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(enemyPiece) : new HashSet<>();
                 HashSet<Integer> attackingMoves = enemyPiece.generatePossibleMoves(board, allowedMoves);
                 if(attackingMoves.contains(location)) {
