@@ -116,7 +116,8 @@ public class King implements Piece, Cloneable{
 
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         // and is not guarded by anything
-        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class)
+                && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor){
@@ -158,7 +159,9 @@ public class King implements Piece, Cloneable{
 
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         // and is not guarded by anything
-        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class)
+                && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber())
+                && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor){
@@ -243,7 +246,9 @@ public class King implements Piece, Cloneable{
 
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         // and is not guarded by anything
-        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class)
+                && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber())
+                && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor){
@@ -262,8 +267,66 @@ public class King implements Piece, Cloneable{
     public String pieceImage() {
         return PieceImage;
     }
-    public static void attackN(HashSet<Integer> attackedSquares){
-        if()
+    private void attackN(HashSet<Integer> attackedSquares, Board board){
+        Piece adjacentPiece = board.getAdjacentPieceN(locationNumber);
+        if(adjacentPiece != null){
+            attackedSquares.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void attackS(HashSet<Integer> attackedSquares, Board board){
+        Piece adjacentPiece = board.getAdjacentPieceS(locationNumber);
+        if(adjacentPiece != null){
+            attackedSquares.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void attackW(HashSet<Integer> attackedSquares, Board board){
+        Piece adjacentPiece = board.getAdjacentPieceW(locationNumber);
+        if(adjacentPiece != null){
+            attackedSquares.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void attackE(HashSet<Integer> attackedSquares, Board board){
+        Piece adjacentPiece = board.getAdjacentPieceE(locationNumber);
+        if(adjacentPiece != null){
+            attackedSquares.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void attackNW(HashSet<Integer> attackedSquares, Board board){
+        Piece adjacentPiece = board.getAdjacentPieceNW(locationNumber);
+        if(adjacentPiece != null){
+            attackedSquares.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void attackNE(HashSet<Integer> attackedSquares, Board board){
+        Piece adjacentPiece = board.getAdjacentPieceNE(locationNumber);
+        if(adjacentPiece != null){
+            attackedSquares.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void attackSW(HashSet<Integer> attackedSquares, Board board){
+        Piece adjacentPiece = board.getAdjacentPieceSW(locationNumber);
+        if(adjacentPiece != null){
+            attackedSquares.add(adjacentPiece.locationNumber());
+        }
+    }
+    private void attackSE(HashSet<Integer> attackedSquares, Board board){
+        Piece adjacentPiece = board.getAdjacentPieceSE(locationNumber);
+        if(adjacentPiece != null){
+            attackedSquares.add(adjacentPiece.locationNumber());
+        }
+    }
+    public HashSet<Integer> attacksInAllDirections(Board board){
+        HashSet<Integer> attackedSquares = new HashSet<>();
+        attackN(attackedSquares, board);
+        attackS(attackedSquares, board);
+        attackW(attackedSquares, board);
+        attackE(attackedSquares, board);
+        attackNW(attackedSquares, board);
+        attackNE(attackedSquares, board);
+        attackSW(attackedSquares, board);
+        attackSE(attackedSquares, board);
+
+        return attackedSquares;
     }
     //KING PINNING.
 

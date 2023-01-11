@@ -64,4 +64,8 @@ public class EmptySpace implements Piece, Cloneable{
     public Piece cloneInOppositeColor() throws CloneNotSupportedException {
         return new EmptySpace(locationNumber);
     }
+    @Override
+    public HashSet<Integer> attacksInAllDirections(Board board) {
+        return null;
+    }
 }

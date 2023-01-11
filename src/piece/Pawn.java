@@ -325,6 +325,10 @@ public class Pawn implements Piece, Cloneable{
     public void changePieceColor() {
         pieceColor = Board.getOppositeColorChar(pieceColor);
     }
+    @Override
+    public HashSet<Integer> attacksInAllDirections(Board board) {
+        return null;
+    }
 
     //en passant optimization: For white it can happen only on the 5th rank/ black 4th rank. Check only whenever we have
     //selected a pawn located on one of those ranks. Then check for a pawn of opposite color left and right.

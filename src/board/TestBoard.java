@@ -305,4 +305,18 @@ public class TestBoard {
         Board.board[63] = new Rook('W', 63);
         return board;
     }
+    public static Board testPawnPromotionWithoutCheck(){
+        Board board = new Board();
+        Board.board[60] = new King('B', 60);
+        Board.board[4] = new King('W', 4);
+        Board.board[63] = new Rook('W', 63);
+        return board;
+    }
+    public static Board testKingAndRookCM(){
+        Board board = new Board();
+        Board.board[31] = new King('B', 31);
+        Board.board[29] = new King('W', 29);
+        Board.board[62] = new Rook('W', 62);
+        return board;
+    }
 }

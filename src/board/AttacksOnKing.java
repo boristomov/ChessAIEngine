@@ -453,7 +453,7 @@ public class AttacksOnKing {
             HashSet<Integer> allowedMoves = applyDanSfunc(board, king);
             if(king.generatePossibleMoves(board, allowedMoves).isEmpty()){
                 // I think this king.loc arg is wrong. Use istracked func
-                if(checkingPieces.size() > 1 && !canCheckBeBlocked(board, allowedMoves, king, turnColor)){
+                if(checkingPieces.size() > 0 && !canCheckBeBlocked(board, allowedMoves, king, turnColor)){
                     return true;
                 }
             }
@@ -461,7 +461,7 @@ public class AttacksOnKing {
         return false;
     }
     public static boolean canCheckBeBlocked(Board board, HashSet<Integer> dangerScope, Piece king, char turnColor) throws CloneNotSupportedException {
-        HashSet<Integer> defendedSquares = attackedSquares(board, turnColor, king.locationNumber());
+        HashSet<Integer> defendedSquares = defendedSquares(board, turnColor, king.locationNumber());
         for(int i: dangerScope){
             if(defendedSquares.contains(i)){
                 return true;
@@ -541,7 +541,10 @@ public class AttacksOnKing {
 
         if(turnColor == 'W'){
             for(Piece enemyPiece: Board.blackPieces){
-                if(enemyPiece.getClass().equals(King.class)){continue;}
+                if(enemyPiece.getClass().equals(King.class)){
+                    attackedSquares.addAll(enemyPiece.attacksInAllDirections(board));
+                    continue;
+                }
                 HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(enemyPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(enemyPiece) : new HashSet<>();
                 HashSet<Integer> attackingMoves;
                 if(!enemyPiece.getClass().equals(Pawn.class)){
@@ -550,7 +553,7 @@ public class AttacksOnKing {
                 else{
                     attackingMoves = ((Pawn) enemyPiece).generateCaptureMoves(board, allowedMoves);
                 }
-                if(attackingMoves.contains(location)) {
+                if(attackingMoves.contains(location) && location == AttacksOnKing.WkingLocation) {
                     checkingPieces.add(enemyPiece);
                 }
                 attackedSquares.addAll(attackingMoves);
@@ -558,10 +561,13 @@ public class AttacksOnKing {
         }
         else{
             for(Piece enemyPiece: Board.whitePieces){
-//                if(enemyPiece.getClass().equals(King.class)){continue;}
+                if(enemyPiece.getClass().equals(King.class)){
+                    attackedSquares.addAll(enemyPiece.attacksInAllDirections(board));
+                    continue;
+                }
                 HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(enemyPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(enemyPiece) : new HashSet<>();
                 HashSet<Integer> attackingMoves = enemyPiece.generatePossibleMoves(board, allowedMoves);
-                if(attackingMoves.contains(location)) {
+                if(attackingMoves.contains(location) && location == AttacksOnKing.BkingLocation) {
                     checkingPieces.add(enemyPiece);
                 }
                 attackedSquares.addAll(attackingMoves);

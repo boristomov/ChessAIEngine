@@ -182,5 +182,9 @@ public class Rook implements Piece, Cloneable{
     public void changePieceColor() {
         pieceColor = Board.getOppositeColorChar(pieceColor);
     }
+    @Override
+    public HashSet<Integer> attacksInAllDirections(Board board) {
+        return null;
+    }
 
 }

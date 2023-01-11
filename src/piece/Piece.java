@@ -18,5 +18,6 @@ public interface Piece {
     public Piece cloneInOppositeColor() throws CloneNotSupportedException;
     public void changePieceColor();
     public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves) throws CloneNotSupportedException;
+    public HashSet<Integer> attacksInAllDirections(Board board);
 
 }
