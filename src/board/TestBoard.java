@@ -9,19 +9,22 @@ import java.util.ArrayList;
 public class TestBoard {
     public static Board FENStringBoardGenerator(String FEN) {
         Board board = new Board();
-        String[] fields = FEN.split("/");
-        ArrayList<Character> FirstFelements = elementsFEN(fields[0]);
-        ArrayList<Character> SecondFelements = elementsFEN(fields[1]);
-        ArrayList<Character> ThirdFelements = elementsFEN(fields[2]);
-        ArrayList<Character> FourthFelements = elementsFEN(fields[3]);
-        ArrayList<Character> FifthFelements = elementsFEN(fields[4]);
-        ArrayList<Character> SixthFelements = elementsFEN(fields[5]);
+        String[] fields = FEN.split(" ");
+        char[] FirstFelements = elementsFEN(fields[0]);
+        char[] SecondFelements = elementsFEN(fields[1]);
+        char[] ThirdFelements = elementsFEN(fields[2]);
+        char[] FourthFelements = elementsFEN(fields[3]);
+        char[] FifthFelements = elementsFEN(fields[4]);
+        char[] SixthFelements = elementsFEN(fields[5]);
 
-
-
+        board = FirstFieldParser(FirstFelements);
+        SecondFieldParser(SecondFelements);
+        ThirdFieldParser(board, ThirdFelements);
+    return board;
     }
 
-    private static void FirstFieldParser(ArrayList<Character> elements){
+    private static Board FirstFieldParser(char[] elements){
+        Board board = new Board();
         int currentRank = 7;
         int currentFile = 0;
         int currSquareNum;
@@ -83,17 +86,59 @@ public class TestBoard {
                 default:
                     if(Character.isDigit(elem)){
                         int numEmptySpaces = Character.getNumericValue(elem);
-                        for()
+                        for(int i = 1; i <= numEmptySpaces; i++){
+                            currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                            Board.board[currSquareNum] = new EmptySpace(currSquareNum);
+                            currentFile += 1;
+                        }
+                    }
+                    else{
+                        return board;
                     }
                     break;
             }
         }
+        return board;
     }
-    private static void SecondFieldParser(){
-
+    private static void SecondFieldParser(char[] element){
+        Main.turnColor = Character.toUpperCase(element[0]);
     }
-    private static void ThirdFieldParser(){
-
+    private static void ThirdFieldParser(Board board, char[] elements){
+        if(elements.length == 0){
+            return;
+        }
+        Piece king;
+        Piece rook;
+        for (char elem : elements) {
+            switch (elem) {
+                case 'q':
+                    king = Board.board[60];
+                    rook = Board.board[56];
+                    ((King) king).isMoved = false;
+                    ((Rook) rook).isMoved = false;
+                    break;
+                case 'Q':
+                    king = Board.board[4];
+                    rook = Board.board[0];
+                    ((King) king).isMoved = false;
+                    ((Rook) rook).isMoved = false;
+                    break;
+                case 'k':
+                    king = Board.board[60];
+                    rook = Board.board[63];
+                    ((King) king).isMoved = false;
+                    ((Rook) rook).isMoved = false;
+                    break;
+                case 'K':
+                    king = Board.board[4];
+                    rook = Board.board[7];
+                    ((King) king).isMoved = false;
+                    ((Rook) rook).isMoved = false;
+                    break;
+                default:
+                    return;
+            }
+        }
     }
     private static void FourthFieldParser(){
 
@@ -104,8 +149,8 @@ public class TestBoard {
     private static void SixthFieldParser(){
 
     }
-    private static ArrayList<Character> elementsFEN(String FEN){
-       return (ArrayList<Character>) FEN.chars();
+    private static char[] elementsFEN(String FEN){
+       return  FEN.toCharArray();
     }
     public static Board testQueenInMiddleBoard(){
         Board emptyBoard = new Board();
@@ -421,6 +466,19 @@ public class TestBoard {
         Board.board[31] = new King('B', 31);
         Board.board[29] = new King('W', 29);
         Board.board[62] = new Rook('W', 62);
+        return board;
+    }
+    public static Board testQueenTakingOlnPawnBug(){
+        Board board = new Board(8);
+        Board.board[52] = new EmptySpace(52);
+        Board.board[11] = new EmptySpace(11);
+        Board.board[36] = new Pawn('W', 36);
+
+        return board;
+    }
+    public static Board testFENString(){
+       Board board = FENStringBoardGenerator("rnbq1rk1/pppp1ppp/4pn2/8/1bPP4/2N5/PPQ1PPPP/R1B1KBNR w KQ - 4 5");
+
         return board;
     }
 }

@@ -10,6 +10,8 @@ import java.util.HashSet;
 
 public class Rook implements Piece, Cloneable{
     public char pieceColor;
+    public int originalLocation;
+    public boolean isMoved = false;
     public String PieceImage;
     public char pieceAbbreviation;
     public int pieceValue = 5;
@@ -39,6 +41,7 @@ public class Rook implements Piece, Cloneable{
         Board.board[location] = this;
         Board.board[locationNumber] = new EmptySpace(locationNumber);
         locationNumber = location;
+        this.isMoved = true;
     }
 
     @Override

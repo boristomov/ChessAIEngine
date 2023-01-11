@@ -3,13 +3,15 @@ package src.piece;
 import src.board.AttacksOnKing;
 import src.board.Board;
 import src.board.BoardChanges;
+import src.board.Main;
 
 import java.util.HashSet;
 
 public class King implements Piece, Cloneable{
 
     public char pieceColor;
-    public static boolean isMoved;
+    public boolean isMoved;
+    public int originalLocation;
     public String PieceImage;
     public char pieceAbbreviation;
     public int pieceValue = 1000;
@@ -22,15 +24,33 @@ public class King implements Piece, Cloneable{
             Board.whitePieces.add(this);
             AttacksOnKing.WkingLocation = locationNumber;
             this.pieceAbbreviation = 'K';
+            this.originalLocation = 4;
         }else{
             Board.blackPieces.add(this);
             AttacksOnKing.BkingLocation = locationNumber;
             this.pieceAbbreviation = 'k';
+            this.originalLocation = 60;
         }
     }
     @Override
     public void move(Board board, int location) {
-    //update king location in attacksonking
+        //Check for castling
+        int kingOffset = location - locationNumber;
+        int moveRank = Board.getPieceRank(location);
+        if(kingOffset > 1 && moveRank == 0){
+            castleKingSide(board, location);
+            this.isMoved = true;
+            //update location number
+            return;
+        }
+        else if(kingOffset < -1 && moveRank == 0){
+            castleQueenSide(board, location);
+            this.isMoved = true;
+            //update location number
+            return;
+        }
+
+        //Normal procedures when there is no castling.
         Piece pieceAtDesiredLocation = Board.board[location];
         pieceAtDesiredLocation.erase();
         Board.board[location] = this;
@@ -42,7 +62,37 @@ public class King implements Piece, Cloneable{
         else{
             AttacksOnKing.BkingLocation = locationNumber;
         }
-//        AttacksOnKing.checkingPieces.clear();
+        this.isMoved = true;
+    }
+    private void castleQueenSide(Board board, int moveLocation){
+        //King move
+        Board.board[moveLocation] = this;
+        Board.board[locationNumber] = new EmptySpace(locationNumber);
+        locationNumber = moveLocation;
+        if(pieceColor == 'W'){
+            AttacksOnKing.WkingLocation = locationNumber;
+        }
+        else{
+            AttacksOnKing.BkingLocation = locationNumber;
+        }
+        //Rook move
+        Piece rook = (pieceColor == 'W')? Board.board[0] : Board.board[56];
+        rook.move(board, moveLocation + 1);
+    }
+    private void castleKingSide(Board board, int moveLocation){
+        //King move
+        Board.board[moveLocation] = this;
+        Board.board[locationNumber] = new EmptySpace(locationNumber);
+        locationNumber = moveLocation;
+        if(pieceColor == 'W'){
+            AttacksOnKing.WkingLocation = locationNumber;
+        }
+        else{
+            AttacksOnKing.BkingLocation = locationNumber;
+        }
+        //Rook move
+        Piece rook = (pieceColor == 'W')? Board.board[7] : Board.board[63];
+        rook.move(board, moveLocation - 1);
     }
 
     @Override
@@ -71,18 +121,9 @@ public class King implements Piece, Cloneable{
         optionMoveNE(board, possibleDestinations);
         optionMoveSW(board, possibleDestinations);
         optionMoveSE(board, possibleDestinations);
-        //those allowed moves are different from the ones at the other pieces. These are as a result of the check.
-//        if(!restrictedMoves.isEmpty()) {
-//            HashSet<Integer> clone = (HashSet<Integer>) restrictedMoves.clone();
-//            for (int i : clone) {
-//                if (possibleDestinations.contains(i)) {
-//                    possibleDestinations.remove(i);
-//                }
-//            }
-//        }
-//        else{
-//            return possibleDestinations;
-//        }
+
+        optionsToCastleQueenSide(board, possibleDestinations);
+        optionsToCastleKingSide(board, possibleDestinations);
 
         return possibleDestinations;
     }
@@ -262,8 +303,60 @@ public class King implements Piece, Cloneable{
             board.replace(clone, adjacentPiece);
         }
     }
-    private void optionsToCastleQueenSide(Board board, HashSet<Integer> possibleDestinations){
+    private void optionsToCastleQueenSide(Board board, HashSet<Integer> possibleDestinations) throws CloneNotSupportedException {
         //king is not in check and there are no pieces intercepting its move when castling;
+        Piece rook = (pieceColor == 'W')? Board.board[0] : Board.board[56];
+        //if the piece at the rook's initial position is not a rook
+        if(!rook.getClass().equals(Rook.class)){
+            return;
+        }
+        //if the king is not in check and has not moved.
+        if(!isKingInCheck() && !isMoved){
+            //if the path to castling is safe and the rook has not moved.
+            if(isPathToCastleSafe(board, locationNumber, ((Rook) rook).locationNumber, true) && !((Rook) rook).isMoved){
+                possibleDestinations.add(locationNumber - 2);
+            }
+        }
+
+    }
+    private void optionsToCastleKingSide(Board board, HashSet<Integer> possibleDestinations) throws CloneNotSupportedException {
+        //king is not in check and there are no pieces intercepting its move when castling;
+        Piece rook = (pieceColor == 'W')? Board.board[7] : Board.board[63];
+        //if the piece at the rook's initial position is not a rook
+        if(!rook.getClass().equals(Rook.class)){
+            return;
+        }
+        //if the king is not in check and has not moved.
+        if(!isKingInCheck() && !isMoved){
+            //if the path to castling is safe and the rook has not moved.
+            if(!((Rook) rook).isMoved && isPathToCastleSafe(board, locationNumber, ((Rook) rook).locationNumber, false)){
+                possibleDestinations.add(locationNumber + 2);
+            }
+        }
+
+    }
+    private boolean isPathToCastleSafe(Board board, int kingLocation, int rookLocation, boolean queenSideCastle) throws CloneNotSupportedException {
+        if(queenSideCastle) {
+            for (int i = kingLocation - 1; i >= rookLocation + 1; i--) {
+                //if the pieces along the castling path are all empty spaces and none of them are targeted by opponent piece.
+                if (!Board.board[i].getClass().equals(EmptySpace.class) || AttacksOnKing.isPieceTargeted(board, pieceColor, i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        else {
+            for (int i = kingLocation + 1; i <= rookLocation - 1; i++) {
+                //if the pieces along the castling path are all empty spaces and none of them are targeted by opponent piece.
+                if (!Board.board[i].getClass().equals(EmptySpace.class) || AttacksOnKing.isPieceTargeted(board, pieceColor, i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+    private boolean isKingInCheck(){
+        return !AttacksOnKing.checkingPieces.isEmpty();
     }
     @Override
     public String pieceImage() {
