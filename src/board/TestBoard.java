@@ -76,13 +76,23 @@ public class TestBoard {
                     break;
                 case 'P':
                     currSquareNum = Board.getBoardLocation(currentRank, currentFile);
-                    Board.board[currSquareNum] = new Pawn('P', currSquareNum);
+                    Board.board[currSquareNum] = new Pawn('W', currSquareNum);
+                    currentFile += 1;
+                    break;
+                case 'b':
+                    currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                    Board.board[currSquareNum] = new Bishop('B', currSquareNum);
+                    currentFile += 1;
+                    break;
+                case 'B':
+                    currSquareNum = Board.getBoardLocation(currentRank, currentFile);
+                    Board.board[currSquareNum] = new Bishop('W', currSquareNum);
                     currentFile += 1;
                     break;
                 case '/':
                     currentRank -= 1;
                     currentFile = 0;
-
+                    break;
                 default:
                     if(Character.isDigit(elem)){
                         int numEmptySpaces = Character.getNumericValue(elem);
@@ -114,26 +124,26 @@ public class TestBoard {
                 case 'q':
                     king = Board.board[60];
                     rook = Board.board[56];
-                    ((King) king).isMoved = false;
-                    ((Rook) rook).isMoved = false;
+//                    ((King) king).isMoved = false;
+//                    ((Rook) rook).isMoved = false;
                     break;
                 case 'Q':
                     king = Board.board[4];
                     rook = Board.board[0];
-                    ((King) king).isMoved = false;
-                    ((Rook) rook).isMoved = false;
+//                    ((King) king).isMoved = false;
+//                    ((Rook) rook).isMoved = false;
                     break;
                 case 'k':
                     king = Board.board[60];
                     rook = Board.board[63];
-                    ((King) king).isMoved = false;
-                    ((Rook) rook).isMoved = false;
+//                    ((King) king).isMoved = false;
+//                    ((Rook) rook).isMoved = false;
                     break;
                 case 'K':
                     king = Board.board[4];
                     rook = Board.board[7];
-                    ((King) king).isMoved = false;
-                    ((Rook) rook).isMoved = false;
+//                    ((King) king).isMoved = false;
+//                    ((Rook) rook).isMoved = false;
                     break;
                 default:
                     return;
