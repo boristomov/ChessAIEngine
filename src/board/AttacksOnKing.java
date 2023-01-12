@@ -213,6 +213,7 @@ public class AttacksOnKing {
                 moveLocation += 7;
             }
             else{
+                currentAdjPieceFile = Board.getPieceFile(moveLocation);
                 moveLocation += 7;
                 if(moveLocation <= 63 && Board.getPieceRank(moveLocation) + 1 == currentAdjPieceFile && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
                     possibleDestinations.add(moveLocation);
@@ -234,6 +235,7 @@ public class AttacksOnKing {
                 moveLocation += 9;
             }
             else{
+                currentAdjPieceFile = Board.getPieceFile(moveLocation);
                 moveLocation += 9;
                 if(moveLocation <= 63 && Board.getPieceRank(moveLocation) - 1 == currentAdjPieceFile && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
                     possibleDestinations.add(moveLocation);

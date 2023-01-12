@@ -429,12 +429,9 @@ public class King implements Piece, Cloneable{
 
         return attackedSquares;
     }
+
+
     //KING PINNING.
-
-    // returns the piece who is pinning;
-    // after discovering an opposing color piece of a threading class (having encountered only 1 own color piece), goes back and calls a function which adds
-    // the pinned piece to AttacksOnKing hashmap.
-
 
     @Override
     public char pieceAbbreviation() {
