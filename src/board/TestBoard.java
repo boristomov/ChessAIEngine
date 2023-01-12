@@ -38,6 +38,7 @@ public class TestBoard {
                 case 'R':
                     currSquareNum = Board.getBoardLocation(currentRank, currentFile);
                     Board.board[currSquareNum] = new Rook('W', currSquareNum);
+                    currentFile += 1;
                     break;
                 case 'q':
                     currSquareNum = Board.getBoardLocation(currentRank, currentFile);
@@ -114,6 +115,7 @@ public class TestBoard {
         Main.turnColor = Character.toUpperCase(element[0]);
     }
     private static void ThirdFieldParser(Board board, char[] elements){
+        // have to set all isMoved variables to true where not indicated the right to castle;
         if(elements.length == 0){
             return;
         }
@@ -124,8 +126,8 @@ public class TestBoard {
                 case 'q':
                     king = Board.board[60];
                     rook = Board.board[56];
-//                    ((King) king).isMoved = false;
-//                    ((Rook) rook).isMoved = false;
+                    ((King) king).isMoved = false;
+                    ((Rook) rook).isMoved = false;
                     break;
                 case 'Q':
                     king = Board.board[4];
@@ -479,16 +481,18 @@ public class TestBoard {
         return board;
     }
     public static Board testQueenTakingOlnPawnBug(){
-        Board board = new Board(8);
-        Board.board[52] = new EmptySpace(52);
-        Board.board[11] = new EmptySpace(11);
-        Board.board[36] = new Pawn('W', 36);
-
-        return board;
+        return FENStringBoardGenerator("rnb1k2r/1p2pp1p/2pq1n1B/pQ1p4/3P4/5BP1/PPP1PP1P/RN4KR w LL - 4 5");
     }
     public static Board testFENString(){
        Board board = FENStringBoardGenerator("rnbq1rk1/pppp1ppp/4pn2/8/1bPP4/2N5/PPQ1PPPP/R1B1KBNR w KQ - 4 5");
-
+        return board;
+    }
+    public static Board testKingMoveBug(){
+        Board board = FENStringBoardGenerator("2r2bn1/ppp2kpr/3NpP2/3p1QBp/8/2P1P3/PP1K1PPP/R4BNR b KQ - 4 5");
+        return board;
+    }
+    public static Board testKingBehindSquareBug(){
+        Board board = FENStringBoardGenerator("2R3n1/pp5Q/1k1pp3/3p3p/7B/2P1P3/PP1K1PPP/R4BNR w KQ - 4 5");
         return board;
     }
 }

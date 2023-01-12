@@ -88,7 +88,7 @@ public class Queen implements Piece, Cloneable {
         while(adjacentPieceN.getClass().equals(EmptySpace.class)){
             possibleDestinations.add(adjacentPieceN.locationNumber());
             adjacentPieceN = board.getAdjacentPieceN(adjacentPieceN.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceN == null){
+            if(adjacentPieceN == null || adjacentPieceN.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -106,7 +106,7 @@ public class Queen implements Piece, Cloneable {
         while(adjacentPieceS.getClass().equals(EmptySpace.class)){
             possibleDestinations.add(adjacentPieceS.locationNumber());
             adjacentPieceS = board.getAdjacentPieceS(adjacentPieceS.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceS == null){
+            if(adjacentPieceS == null || adjacentPieceS.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -129,7 +129,7 @@ public class Queen implements Piece, Cloneable {
             possibleDestinations.add(adjacentPieceW.locationNumber());
             selectedPieceRank = Board.getPieceRank(locationNumber);
             adjacentPieceW = board.getAdjacentPieceW(adjacentPieceW.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceW == null || Board.getPieceRank(adjacentPieceW.locationNumber()) != selectedPieceRank){
+            if(adjacentPieceW == null || Board.getPieceRank(adjacentPieceW.locationNumber()) != selectedPieceRank || adjacentPieceW.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -152,7 +152,7 @@ public class Queen implements Piece, Cloneable {
             possibleDestinations.add(adjacentPieceE.locationNumber());
             adjacentPieceE = board.getAdjacentPieceE(adjacentPieceE.locationNumber()); //looks for the adjacent square to the one just checked.
             selectedPieceRank = Board.getPieceRank(locationNumber);
-            if(adjacentPieceE == null || Board.getPieceRank(adjacentPieceE.locationNumber()) != selectedPieceRank){
+            if(adjacentPieceE == null || Board.getPieceRank(adjacentPieceE.locationNumber()) != selectedPieceRank || adjacentPieceE.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -175,7 +175,7 @@ public class Queen implements Piece, Cloneable {
             possibleDestinations.add(adjacentPieceNW.locationNumber());
             currentAdjPieceFile = Board.getPieceFile(adjacentPieceNW.locationNumber());
             adjacentPieceNW = board.getAdjacentPieceNW(adjacentPieceNW.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceNW == null || Board.getPieceFile(adjacentPieceNW.locationNumber()) + 1 != currentAdjPieceFile){
+            if(adjacentPieceNW == null || Board.getPieceFile(adjacentPieceNW.locationNumber()) + 1 != currentAdjPieceFile || adjacentPieceNW.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -198,7 +198,7 @@ public class Queen implements Piece, Cloneable {
             possibleDestinations.add(adjacentPieceNE.locationNumber());
             currentAdjPieceFile = Board.getPieceFile(adjacentPieceNE.locationNumber());
             adjacentPieceNE = board.getAdjacentPieceNE(adjacentPieceNE.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceNE == null || Board.getPieceFile(adjacentPieceNE.locationNumber()) - 1 != currentAdjPieceFile){
+            if(adjacentPieceNE == null || Board.getPieceFile(adjacentPieceNE.locationNumber()) - 1 != currentAdjPieceFile || adjacentPieceNE.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -221,7 +221,7 @@ public class Queen implements Piece, Cloneable {
             possibleDestinations.add(adjacentPieceSW.locationNumber());
             currentAdjPieceFile = Board.getPieceFile(adjacentPieceSW.locationNumber());
             adjacentPieceSW = board.getAdjacentPieceSW(adjacentPieceSW.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceSW == null || Board.getPieceFile(adjacentPieceSW.locationNumber()) + 1 != currentAdjPieceFile){
+            if(adjacentPieceSW == null || Board.getPieceFile(adjacentPieceSW.locationNumber()) + 1 != currentAdjPieceFile || adjacentPieceSW.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -244,7 +244,7 @@ public class Queen implements Piece, Cloneable {
             possibleDestinations.add(adjacentPieceSE.locationNumber());
             currentAdjPieceFile = Board.getPieceFile(adjacentPieceSE.locationNumber());
             adjacentPieceSE = board.getAdjacentPieceSE(adjacentPieceSE.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceSE == null || Board.getPieceFile(adjacentPieceSE.locationNumber()) - 1 != currentAdjPieceFile){
+            if(adjacentPieceSE == null || Board.getPieceFile(adjacentPieceSE.locationNumber()) - 1 != currentAdjPieceFile || adjacentPieceSE.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
             possibleDestinations.add(adjacentPieceSE.locationNumber());

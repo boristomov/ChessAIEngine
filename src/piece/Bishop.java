@@ -90,7 +90,7 @@ public class Bishop implements Piece , Cloneable {
             possibleDestinations.add(adjacentPieceNW.locationNumber());
             currentAdjPieceFile = Board.getPieceFile(adjacentPieceNW.locationNumber());
             adjacentPieceNW = board.getAdjacentPieceNW(adjacentPieceNW.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceNW == null || Board.getPieceFile(adjacentPieceNW.locationNumber()) + 1 != currentAdjPieceFile){
+            if(adjacentPieceNW == null || Board.getPieceFile(adjacentPieceNW.locationNumber()) + 1 != currentAdjPieceFile || adjacentPieceNW.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -113,7 +113,7 @@ public class Bishop implements Piece , Cloneable {
             possibleDestinations.add(adjacentPieceNE.locationNumber());
             currentAdjPieceFile = Board.getPieceFile(adjacentPieceNE.locationNumber());
             adjacentPieceNE = board.getAdjacentPieceNE(adjacentPieceNE.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceNE == null || Board.getPieceFile(adjacentPieceNE.locationNumber()) - 1 != currentAdjPieceFile){
+            if(adjacentPieceNE == null || Board.getPieceFile(adjacentPieceNE.locationNumber()) - 1 != currentAdjPieceFile || adjacentPieceNE.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -136,7 +136,7 @@ public class Bishop implements Piece , Cloneable {
             possibleDestinations.add(adjacentPieceSW.locationNumber());
             currentAdjPieceFile = Board.getPieceFile(adjacentPieceSW.locationNumber());
             adjacentPieceSW = board.getAdjacentPieceSW(adjacentPieceSW.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceSW == null || Board.getPieceFile(adjacentPieceSW.locationNumber()) + 1 != currentAdjPieceFile){
+            if(adjacentPieceSW == null || Board.getPieceFile(adjacentPieceSW.locationNumber()) + 1 != currentAdjPieceFile || adjacentPieceSW.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -159,7 +159,7 @@ public class Bishop implements Piece , Cloneable {
             possibleDestinations.add(adjacentPieceSE.locationNumber());
             currentAdjPieceFile = Board.getPieceFile(adjacentPieceSE.locationNumber());
             adjacentPieceSE = board.getAdjacentPieceSE(adjacentPieceSE.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceSE == null || Board.getPieceFile(adjacentPieceSE.locationNumber()) - 1 != currentAdjPieceFile){
+            if(adjacentPieceSE == null || Board.getPieceFile(adjacentPieceSE.locationNumber()) - 1 != currentAdjPieceFile || adjacentPieceSE.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
             possibleDestinations.add(adjacentPieceSE.locationNumber());

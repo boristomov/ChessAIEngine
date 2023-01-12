@@ -269,6 +269,9 @@ public class Pawn implements Piece, Cloneable{
                 return;
             }
             Piece adjacentPieceU2 = board.getAdjacentPieceS(adjacentPieceU1.locationNumber());
+            if(adjacentPieceU2 == null){
+                return;
+            }
             if (adjacentPieceU1.getClass().equals(EmptySpace.class) && adjacentPieceU2.getClass().equals(EmptySpace.class) && !hasMoved()) {
                 possibleDestinations.add(adjacentPieceU1.locationNumber());
                 possibleDestinations.add(adjacentPieceU2.locationNumber());

@@ -37,13 +37,15 @@ public class King implements Piece, Cloneable{
         //Check for castling
         int kingOffset = location - locationNumber;
         int moveRank = Board.getPieceRank(location);
-        if(kingOffset > 1 && moveRank == 0){
+        int kingRank = Board.getPieceRank(locationNumber);
+        int originalRank = Board.getPieceRank(originalLocation);
+        if(kingOffset > 1 && (moveRank == 0 || moveRank == 7) && !isMoved && (kingRank == originalRank)){
             castleKingSide(board, location);
             this.isMoved = true;
             //update location number
             return;
         }
-        else if(kingOffset < -1 && moveRank == 0){
+        else if(kingOffset < -1 && (moveRank == 0 || moveRank == 7) && !isMoved &&(kingRank == originalRank)){
             castleQueenSide(board, location);
             this.isMoved = true;
             //update location number
@@ -181,7 +183,9 @@ public class King implements Piece, Cloneable{
 
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         // and is not guarded by anything
-        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class)
+                && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber())
+                && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor){
@@ -268,7 +272,9 @@ public class King implements Piece, Cloneable{
 
         char oppositeColor = Board.getOppositeColorChar(pieceColor);
         // and is not guarded by anything
-        if(adjacentPiece.getClass().equals(EmptySpace.class) && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber()) && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
+        if(adjacentPiece.getClass().equals(EmptySpace.class)
+                && !threatenedSquares(board, this).contains(adjacentPiece.locationNumber())
+                && !AttacksOnKing.isPieceTargeted(board, pieceColor, adjacentPiece.locationNumber())) {
             possibleDestinations.add(adjacentPiece.locationNumber());
         }
         else if(adjacentPiece.pieceColor() == oppositeColor){
@@ -311,7 +317,7 @@ public class King implements Piece, Cloneable{
             return;
         }
         //if the king is not in check and has not moved.
-        if(!isKingInCheck() && !isMoved){
+        if(!isKingInCheck() && !isMoved && (locationNumber == originalLocation)){
             //if the path to castling is safe and the rook has not moved.
             if(isPathToCastleSafe(board, locationNumber, ((Rook) rook).locationNumber, true) && !((Rook) rook).isMoved){
                 possibleDestinations.add(locationNumber - 2);
@@ -327,7 +333,7 @@ public class King implements Piece, Cloneable{
             return;
         }
         //if the king is not in check and has not moved.
-        if(!isKingInCheck() && !isMoved){
+        if(!isKingInCheck() && !isMoved && (locationNumber == originalLocation)){
             //if the path to castling is safe and the rook has not moved.
             if(!((Rook) rook).isMoved && isPathToCastleSafe(board, locationNumber, ((Rook) rook).locationNumber, false)){
                 possibleDestinations.add(locationNumber + 2);

@@ -255,8 +255,10 @@ public class AttacksOnKing {
                 moveLocation -= 9;
             }
             else{
+                currentAdjPieceFile = Board.getPieceFile(moveLocation);
                 moveLocation -= 9;
-                if(moveLocation >= 0 && Board.getPieceFile(moveLocation) + 1 == currentAdjPieceFile && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
+                if(moveLocation >= 0 && Board.getPieceFile(moveLocation) + 1 == currentAdjPieceFile
+                        && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
                     possibleDestinations.add(moveLocation);
                     break;
                 }
@@ -277,6 +279,7 @@ public class AttacksOnKing {
                 moveLocation -= 7;
             }
             else{
+                currentAdjPieceFile = Board.getPieceFile(moveLocation);
                 moveLocation -= 7;
                 if(moveLocation >= 0 && Board.getPieceFile(moveLocation) - 1 == currentAdjPieceFile && Board.board[moveLocation].getClass().equals(EmptySpace.class)){
                     possibleDestinations.add(moveLocation);
@@ -566,7 +569,13 @@ public class AttacksOnKing {
                     continue;
                 }
                 HashSet<Integer> allowedMoves = (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(enemyPiece))? AttacksOnKing.pPiecesAndAllowedMoves.get(enemyPiece) : new HashSet<>();
-                HashSet<Integer> attackingMoves = enemyPiece.generatePossibleMoves(board, allowedMoves);
+                HashSet<Integer> attackingMoves;
+                if(!enemyPiece.getClass().equals(Pawn.class)){
+                    attackingMoves = enemyPiece.generatePossibleMoves(board, allowedMoves);
+                }
+                else{
+                    attackingMoves = ((Pawn) enemyPiece).generateCaptureMoves(board, allowedMoves);
+                }
                 if(attackingMoves.contains(location) && location == AttacksOnKing.BkingLocation) {
                     checkingPieces.add(enemyPiece);
                 }

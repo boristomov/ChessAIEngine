@@ -86,7 +86,7 @@ public class Rook implements Piece, Cloneable{
         while(adjacentPieceN.getClass().equals(EmptySpace.class)){
             possibleDestinations.add(adjacentPieceN.locationNumber());
             adjacentPieceN = board.getAdjacentPieceN(adjacentPieceN.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceN == null){
+            if(adjacentPieceN == null || adjacentPieceN.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -104,7 +104,7 @@ public class Rook implements Piece, Cloneable{
         while(adjacentPieceS.getClass().equals(EmptySpace.class)){
             possibleDestinations.add(adjacentPieceS.locationNumber());
             adjacentPieceS = board.getAdjacentPieceS(adjacentPieceS.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceS == null){
+            if(adjacentPieceS == null || adjacentPieceS.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -127,7 +127,7 @@ public class Rook implements Piece, Cloneable{
             possibleDestinations.add(adjacentPieceW.locationNumber());
             selectedPieceRank = Board.getPieceRank(locationNumber);
             adjacentPieceW = board.getAdjacentPieceW(adjacentPieceW.locationNumber()); //looks for the adjacent square to the one just checked.
-            if(adjacentPieceW == null || Board.getPieceRank(adjacentPieceW.locationNumber()) != selectedPieceRank){
+            if(adjacentPieceW == null || Board.getPieceRank(adjacentPieceW.locationNumber()) != selectedPieceRank || adjacentPieceW.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
@@ -150,7 +150,7 @@ public class Rook implements Piece, Cloneable{
             possibleDestinations.add(adjacentPieceE.locationNumber());
             adjacentPieceE = board.getAdjacentPieceE(adjacentPieceE.locationNumber()); //looks for the adjacent square to the one just checked.
             selectedPieceRank = Board.getPieceRank(locationNumber);
-            if(adjacentPieceE == null || Board.getPieceRank(adjacentPieceE.locationNumber()) != selectedPieceRank){
+            if(adjacentPieceE == null || Board.getPieceRank(adjacentPieceE.locationNumber()) != selectedPieceRank || adjacentPieceE.pieceColor() == pieceColor){
                 return possibleDestinations;
             }
         }
