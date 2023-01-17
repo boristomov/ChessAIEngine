@@ -2,26 +2,37 @@ package src.piece;
 
 import src.board.Board;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
-public class EmptySpace implements Piece, Cloneable{
+/**
+ * Mostly unimplemented class representing an empty square on the board.
+ */
+
+public class EmptySpace implements Piece, Cloneable {
+    /**
+     * Piece color.
+     */
 
     public char pieceColor = 'e';
+    /**
+     * Piece standardized value according to chess engines and current software for position analysis.
+     * Needed for developing an evaluation feature.
+     */
 
-    public String PieceImage = "";
-
-
-    public EmptySpace(int locationNumber){
+    public int pieceValue = 0;
+    /**
+     * Piece abbreviation.
+     */
+    public char pieceAbbreviation = 'E';
+    /**
+     * Location index of the board square containing the piece.
+     */
+    public int locationNumber;
+    public EmptySpace(int locationNumber) {
         this.locationNumber = locationNumber;
     }
 
-    public int pieceValue = 0;
-
-    public char pieceAbbreviation = 'E';
-    public int locationNumber; //switches location number with the piece who goes on top of it.
-
-
+    // Interface methods.
     @Override
     public void move(Board board, int location) {
 
@@ -34,9 +45,9 @@ public class EmptySpace implements Piece, Cloneable{
 
     @Override
     public HashSet<Integer> generatePossibleMoves(Board board, HashSet<Integer> allowedMoves) {
-        HashSet<Integer> possibleDestinations = new HashSet<>();
-        return possibleDestinations;
+        return new HashSet<>();
     }
+
     @Override
     public String pieceImage() {
         return null;
@@ -46,10 +57,12 @@ public class EmptySpace implements Piece, Cloneable{
     public char pieceAbbreviation() {
         return pieceAbbreviation;
     }
+
     @Override
     public int locationNumber() {
         return locationNumber;
     }
+
     @Override
     public char pieceColor() {
         return pieceColor;
@@ -64,6 +77,7 @@ public class EmptySpace implements Piece, Cloneable{
     public Piece cloneInOppositeColor() throws CloneNotSupportedException {
         return new EmptySpace(locationNumber);
     }
+
     @Override
     public HashSet<Integer> attacksInAllDirections(Board board) {
         return null;

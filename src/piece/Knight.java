@@ -3,36 +3,54 @@ package src.piece;
 import src.board.AttacksOnKing;
 import src.board.Board;
 import src.board.BoardChanges;
-import src.piece.Piece;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
-public class Knight implements Piece, Cloneable{
+public class Knight implements Piece, Cloneable {
+    /**
+     * Piece color.
+     */
     public char pieceColor;
-
+    /**
+     * Piece PNG image filepath.
+     */
     public String PieceImage;
+    /**
+     * Piece abbreviation.
+     */
     public char pieceAbbreviation;
+    /**
+     * Piece standardized value according to chess engines and current software for position analysis.
+     * Needed for developing an evaluation feature.
+     */
     public int pieceValue = 3;
+    /**
+     * Location index of the board square containing the piece.
+     */
     public int locationNumber;
-    public Knight(char pieceColor, int locationNumber){
+
+    // Constructors.
+    public Knight(char pieceColor, int locationNumber) {
         this.pieceColor = pieceColor;
         this.PieceImage = "PieceImages/" + pieceColor + "Knight.png";
         this.locationNumber = locationNumber;
-        if(pieceColor == 'W'){
+        if (pieceColor == 'W') {
             Board.whitePieces.add(this);
             this.pieceAbbreviation = 'N';
-        }else{
+        } else {
             Board.blackPieces.add(this);
             this.pieceAbbreviation = 'n';
         }
     }
-    public Knight(char pieceColor, int locationNumber, boolean AddToPieces){
+
+    public Knight(char pieceColor, int locationNumber, boolean AddToPieces) {
         this.pieceColor = pieceColor;
         this.PieceImage = "PieceImages/" + pieceColor + "Knight.png";
         this.locationNumber = locationNumber;
         // no adding to piece lists
     }
+
+    // Interface methods.
     @Override
     public void move(Board board, int location) {
         Piece pieceAtDesiredLocation = Board.board[location];
@@ -44,14 +62,11 @@ public class Knight implements Piece, Cloneable{
 
     @Override
     public void erase() {
-        HashSet<Piece> setOfSameColorPieces = (pieceColor == 'W')? Board.whitePieces: Board.blackPieces;
-        if(setOfSameColorPieces.contains(this)){
-            setOfSameColorPieces.remove(this);
-
-        }
-        if(pieceColor == 'W') {
+        HashSet<Piece> setOfSameColorPieces = (pieceColor == 'W') ? Board.whitePieces : Board.blackPieces;
+        setOfSameColorPieces.remove(this);
+        if (pieceColor == 'W') {
             BoardChanges.erasedPiecesW.add(this);
-        }else{
+        } else {
             BoardChanges.erasedPiecesB.add(this);
         }
     }
@@ -67,100 +82,100 @@ public class Knight implements Piece, Cloneable{
         optionsToMoveSW2(board, possibleDestinations);
         optionsToMoveSE1(board, possibleDestinations);
         optionsToMoveSE2(board, possibleDestinations);
-        if(!allowedMoves.isEmpty()) {
+        if (!allowedMoves.isEmpty()) {
             HashSet<Integer> clone = (HashSet<Integer>) possibleDestinations.clone();
             for (int i : clone) {
                 if (!allowedMoves.contains(i)) {
                     possibleDestinations.remove(i);
                 }
             }
-        }
-        else if(AttacksOnKing.pPiecesAndAllowedMoves.containsKey(this)){
+        } else if (AttacksOnKing.pPiecesAndAllowedMoves.containsKey(this)) {
             return allowedMoves;
         }
         return possibleDestinations;
     }
-    public void optionsToMoveNW1(Board board, HashSet<Integer> possibleDestinations){
+
+    public void optionsToMoveNW1(Board board, HashSet<Integer> possibleDestinations) {
         int newLocation = locationNumber + Board.Size - 2;
         int selectedPieceRank = Board.getPieceRank(locationNumber);
-        if(newLocation > 63 || selectedPieceRank + 1 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor){
+        if (newLocation > 63 || selectedPieceRank + 1 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor) {
             return;
-        }
-        else{
+        } else {
             possibleDestinations.add(newLocation);
         }
 
     }
-    public void optionsToMoveNW2(Board board, HashSet<Integer> possibleDestinations){
-        int newLocation = locationNumber + 2 * Board.Size -1;
+
+    public void optionsToMoveNW2(Board board, HashSet<Integer> possibleDestinations) {
+        int newLocation = locationNumber + 2 * Board.Size - 1;
         int selectedPieceRank = Board.getPieceRank(locationNumber);
-        if(newLocation > 63 || selectedPieceRank + 2 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor){
+        if (newLocation > 63 || selectedPieceRank + 2 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor) {
             return;
-        }
-        else{
+        } else {
             possibleDestinations.add(newLocation);
         }
     }
-    public void optionsToMoveNE1(Board board, HashSet<Integer> possibleDestinations){
+
+    public void optionsToMoveNE1(Board board, HashSet<Integer> possibleDestinations) {
         int newLocation = locationNumber + Board.Size + 2;
         int selectedPieceRank = Board.getPieceRank(locationNumber);
-        if(newLocation > 63 || selectedPieceRank + 1 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor){
+        if (newLocation > 63 || selectedPieceRank + 1 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor) {
             return;
-        }
-        else{
+        } else {
             possibleDestinations.add(newLocation);
         }
     }
-    public void optionsToMoveNE2(Board board, HashSet<Integer> possibleDestinations){
+
+    public void optionsToMoveNE2(Board board, HashSet<Integer> possibleDestinations) {
         int newLocation = locationNumber + 2 * Board.Size + 1;
         int selectedPieceRank = Board.getPieceRank(locationNumber);
-        if(newLocation > 63 || selectedPieceRank + 2 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor){
+        if (newLocation > 63 || selectedPieceRank + 2 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor) {
             return;
-        }
-        else{
+        } else {
             possibleDestinations.add(newLocation);
         }
     }
-    public void optionsToMoveSW1(Board board, HashSet<Integer> possibleDestinations){
+
+    public void optionsToMoveSW1(Board board, HashSet<Integer> possibleDestinations) {
         int newLocation = locationNumber - Board.Size - 2;
         int selectedPieceRank = Board.getPieceRank(locationNumber);
-        if(newLocation < 0 || selectedPieceRank - 1 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor){
+        if (newLocation < 0 || selectedPieceRank - 1 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor) {
             return;
-        }
-        else{
+        } else {
             possibleDestinations.add(newLocation);
         }
     }
-    public void optionsToMoveSW2(Board board, HashSet<Integer> possibleDestinations){
+
+    public void optionsToMoveSW2(Board board, HashSet<Integer> possibleDestinations) {
         int newLocation = locationNumber - 2 * Board.Size - 1;
         int selectedPieceRank = Board.getPieceRank(locationNumber);
-        if(newLocation < 0 || selectedPieceRank - 2 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor){
+        if (newLocation < 0 || selectedPieceRank - 2 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor) {
             return;
-        }
-        else{
+        } else {
             possibleDestinations.add(newLocation);
         }
     }
-    public void optionsToMoveSE1(Board board, HashSet<Integer> possibleDestinations){
+
+    public void optionsToMoveSE1(Board board, HashSet<Integer> possibleDestinations) {
         int newLocation = locationNumber - Board.Size + 2;
         int selectedPieceRank = Board.getPieceRank(locationNumber);
-        if(newLocation < 0 || selectedPieceRank - 1 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor){
+        if (newLocation < 0 || selectedPieceRank - 1 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor) {
             return;
-        }
-        else{
+        } else {
             possibleDestinations.add(newLocation);
         }
     }
-    public void optionsToMoveSE2(Board board, HashSet<Integer> possibleDestinations){
+
+    public void optionsToMoveSE2(Board board, HashSet<Integer> possibleDestinations) {
         int newLocation = locationNumber - 2 * Board.Size + 1;
         int selectedPieceRank = Board.getPieceRank(locationNumber);
-        if(newLocation < 0 || selectedPieceRank - 2 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor){
+        if (newLocation < 0 || selectedPieceRank - 2 != Board.getPieceRank(newLocation) || Board.board[newLocation].pieceColor() == pieceColor) {
             return;
-        }
-        else{
+        } else {
             possibleDestinations.add(newLocation);
         }
     }
+
     @Override
     public String pieceImage() {
         return PieceImage;
@@ -170,14 +185,17 @@ public class Knight implements Piece, Cloneable{
     public char pieceAbbreviation() {
         return pieceAbbreviation;
     }
+
     @Override
     public int locationNumber() {
         return locationNumber;
     }
+
     @Override
     public char pieceColor() {
         return pieceColor;
     }
+
     @Override
     public Piece cloneInOppositeColor() throws CloneNotSupportedException {
         Piece clone = (Piece) this.clone();
@@ -190,6 +208,7 @@ public class Knight implements Piece, Cloneable{
         pieceColor = Board.getOppositeColorChar(pieceColor);
     }
 
+    // Method not used.
     @Override
     public HashSet<Integer> attacksInAllDirections(Board board) {
         return null;
