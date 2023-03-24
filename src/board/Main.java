@@ -20,7 +20,7 @@ public class Main {
      * user interface is complete, so that users can navigate using menu and keyboard/ mouse commands.
      */
     public static void main(String[] args) throws CloneNotSupportedException {
-        Board board = TestBoard.testFEN();
+        Board board = TestBoard.testPawnPromotion();
         System.out.println(board.toString());
         ProgramRunner.visualizeBoard(board);
         ProgramRunner.startTestGame(board);

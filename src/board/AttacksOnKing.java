@@ -422,7 +422,7 @@ public class AttacksOnKing {
         while (moveLocation <= 63 && Board.getPieceFile(moveLocation) + 1 == currentAdjPieceFile) {
             if (!Board.board[moveLocation].getClass().equals(King.class)) {
                 possibleDestinations.add(moveLocation);
-                currentAdjPieceFile = Board.getPieceRank(moveLocation);
+                currentAdjPieceFile = Board.getPieceFile(moveLocation);
                 moveLocation += 7;
             } else {
                 currentAdjPieceFile = Board.getPieceFile(moveLocation);
@@ -444,7 +444,7 @@ public class AttacksOnKing {
         while (moveLocation <= 63 && Board.getPieceFile(moveLocation) - 1 == currentAdjPieceFile) {
             if (!Board.board[moveLocation].getClass().equals(King.class)) {
                 possibleDestinations.add(moveLocation);
-                currentAdjPieceFile = Board.getPieceRank(moveLocation);
+                currentAdjPieceFile = Board.getPieceFile(moveLocation);
                 moveLocation += 9;
             } else {
                 currentAdjPieceFile = Board.getPieceFile(moveLocation);

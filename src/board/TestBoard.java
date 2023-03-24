@@ -564,5 +564,27 @@ public class TestBoard {
     public static Board testFEN() {
         return FENStringBoardGenerator("rn1q1rk1/pbpp1ppp/1p2pn2/6B1/2PP4/P1Q1P3/1P3PPP/R3KBNR b KQ - 0 8");
     }
+    public static Board testBobbyFisher92() {
+        return FENStringBoardGenerator("7r/1ppbqpkr/3p1Rp1/p1nPp1P1/2P1P2P/1PN3Q1/P3B3/1K5R b - - 0 26");
+    }
+    public static Board testKingInCheck() {
+        return FENStringBoardGenerator("2kr3r/1bpp1pp1/p1n4p/1p6/1bPPnB1q/PP2PN1P/5PP1/RQ2KB1R w KQ - 1 13");
+    }
+    public static Board testPPieceFen() {
+        return FENStringBoardGenerator("r1b1k1nr/ppppqppp/2n5/8/1bPp4/2NBPN2/PP3PPP/R1BQK2R w KQkq - 2 7");
+    }
+    public static Board testPPieceFenCaptureBack() {
+        return FENStringBoardGenerator("r4rk1/pbpp1ppp/1pn2q2/6N1/1bPP3P/8/PP1BPPP1/R2QKB1R w KQ - 5 10");
+    }
+
+    public static Board testSicilianDefense() {
+        return FENStringBoardGenerator("r1bqkbnr/pp1ppppp/2n5/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3");
+    }
+    public static Board testQueenGambit() {
+        return FENStringBoardGenerator("rnbqkb1r/ppp1pppp/5n2/3p4/2PP4/8/PP2PPPP/RNBQKBNR w KQkq - 1 3");
+    }
+    public static Board testLondonSystem() {
+        return FENStringBoardGenerator("rn1q1rk1/1p2ppbp/p5p1/2p5/2BPP1b1/1QP1B3/P3NPPP/R3K2R w KQ - 0 11");
+    }
 
 }
